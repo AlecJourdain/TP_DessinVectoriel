@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.3" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="ca.csf.dfc.classes.Rectangle" project="TP_DessinVectoriel" 
-    file="/TP_DessinVectoriel/src/ca/csf/dfc/classes/Rectangle.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="81" width="89" x="67" y="381"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="ca.csf.dfc.tp.Main" project="TP_DessinVectoriel" 
+  <class id="1" language="java" name="ca.csf.dfc.tp.Main" project="TP_DessinVectoriel" 
     file="/TP_DessinVectoriel/src/ca/csf/dfc/tp/Main.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="113" x="330" y="520"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
