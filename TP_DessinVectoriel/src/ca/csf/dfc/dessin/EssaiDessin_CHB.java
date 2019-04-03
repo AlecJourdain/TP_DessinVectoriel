@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ca.csf.dfc.classes;
+package ca.csf.dfc.dessin;
 
 import javax.swing.*;
 import java.awt.*;

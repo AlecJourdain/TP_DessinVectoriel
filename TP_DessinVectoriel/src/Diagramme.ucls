@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.3" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="ca.csf.dfc.tp.Main" project="TP_DessinVectoriel" 
-    file="/TP_DessinVectoriel/src/ca/csf/dfc/tp/Main.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="ca.csf.dfc.main.Main" project="TP_DessinVectoriel" 
+    file="/TP_DessinVectoriel/src/ca/csf/dfc/main/Main.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="113" x="330" y="520"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

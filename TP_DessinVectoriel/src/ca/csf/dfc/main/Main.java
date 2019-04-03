@@ -1,4 +1,4 @@
-package ca.csf.dfc.tp;
+package ca.csf.dfc.main;
 
 public class Main {
 
