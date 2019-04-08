@@ -201,7 +201,7 @@ public class Vue {
 		// btn_SelectionDessin
 		JButton btn_SelectionDessin = new JButton();		
 		btn_SelectionDessin.setIcon(Vue.chargerIcone("icons8-mouse-32.png"));	
-		btn_SelectionDessin.setRolloverIcon(Vue.chargerIcone("icons8-mouse-48.png"));
+		//btn_SelectionDessin.setRolloverIcon(Vue.chargerIcone("icons8-mouse-32.png"));
 		btn_SelectionDessin.setToolTipText("Selection Dessin");
 		panneauGauche.add(btn_SelectionDessin);
 		

@@ -3,7 +3,7 @@ package ca.csf.dfc.main;
 import javax.swing.SwingUtilities;
 
 import ca.csf.dfc.controleur.Controleur;
-import ca.csf.dfc.modele.ModeleDessinVect;
+import ca.csf.dfc.modele.Modele;
 import ca.csf.dfc.vueUtilisateur.Vue;
 
 
@@ -25,10 +25,10 @@ public class Main {
 public static void createAndShowGUI() throws Exception {
 		
 		// Cration Modele
-		ModeleDessinVect modele = new ModeleDessinVect();
+		Modele modele = new Modele();
         
         // Creation controlateur, avec modele
-		Controleur control = new Controleur ();
+		Controleur control = new Controleur (modele);
 		
 		//Creation de la view , avec modele et controlateur
 		new Vue( control);
