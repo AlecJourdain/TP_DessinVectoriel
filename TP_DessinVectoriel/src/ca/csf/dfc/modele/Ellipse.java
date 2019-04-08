@@ -1,4 +1,4 @@
-package ca.csf.dfc.dessin;
+package ca.csf.dfc.modele;
 
 public class Ellipse extends Forme{
 	public Ellipse() {

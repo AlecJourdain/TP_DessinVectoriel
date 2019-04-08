@@ -1,6 +1,6 @@
 package ca.csf.dfc.main;
 
-import ca.csf.dfc.ui.FenetrePrincipale;
+import ca.csf.dfc.vueUtilisateur.FenetrePrincipale;
 
 public class Main {
 

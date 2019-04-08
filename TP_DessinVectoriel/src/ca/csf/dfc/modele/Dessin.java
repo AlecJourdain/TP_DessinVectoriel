@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ca.csf.dfc.dessin;
+package ca.csf.dfc.modele;
 
 import java.util.ArrayList;
 

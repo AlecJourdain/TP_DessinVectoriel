@@ -1,4 +1,4 @@
-package ca.csf.dfc.dessin;
+package ca.csf.dfc.modele;
 
 public class Rectangle extends Forme {
 	public Rectangle() {

@@ -1,4 +1,4 @@
-package ca.csf.dfc.ui;
+package ca.csf.dfc.vueUtilisateur;
 
 import javax.swing.JPanel;
 
