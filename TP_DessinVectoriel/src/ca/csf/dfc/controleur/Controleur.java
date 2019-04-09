@@ -86,10 +86,10 @@ public class Controleur {
 				if(p_forme.getType() == FormeType.RECTANGLE ||
 						p_forme.getType() == FormeType.ELLIPSE) {
 				//... hauteur="..." ...
-				p_doc.writeAttribute("hauteur", p_forme.getHauteur());
+				//p_doc.writeAttribute("hauteur", p_forme.getHauteur());
 				
 				//... largeur="..." ...
-				p_doc.writeAttribute("largeur", p_forme.getLargeur());
+				//p_doc.writeAttribute("largeur", p_forme.getLargeur());
 				}
 				
 				// ... />
