@@ -21,8 +21,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+<<<<<<< Updated upstream
 import ca.csf.dfc.controleur.Controleur;
 import ca.csf.dfc.modele.IModele;
+=======
+import ca.csf.dfc.fonction.Controleur;
+>>>>>>> Stashed changes
 
 
 
