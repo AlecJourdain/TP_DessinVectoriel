@@ -33,17 +33,9 @@ public class Controleur {
 			this.m_Model = p_Modele;
 		}
 
-		/**
-		 * @param p_Largeur
-		 * @param p_Hauteur
-		 */
-		public void FichierNouveau() {
-			
-			
-			this.m_Model.setColorFondEspaceTravailDefault();
-			this.m_Model.setColorFondEspaceTravailDefault();
-			
-			
+
+		public IModele getModele() {
+			return this.m_Model;
 		}
 		
 		public static void ecrireFormes(XMLStreamWriter p_doc, ArrayList<Forme> p_dessin) throws XMLStreamException{

@@ -5,10 +5,7 @@ package ca.csf.dfc.modele;
 
 import java.awt.Color;
 
-/**
- * @author ManueLMaldonado
- *
- */
+
 public class Modele implements IModele {
 
 	
@@ -53,14 +50,16 @@ public class Modele implements IModele {
 	 * 
 	 */
 	public Modele() {
-		initialisationModele();
+		
+
+		EspaceTravailDefault();
 	}
 	
 	/* (non-Javadoc)
 	 * @see ca.csf.dfc.modele.IModele#initialisationModele()
 	 */
 	@Override
-	public void initialisationModele() {
+	public void EspaceTravailDefault() {
 		setDimensionEspaceTravailDefault();
 		setColorFondEspaceTravailDefault();
 	}
@@ -71,8 +70,10 @@ public class Modele implements IModele {
 	 */
 	@Override
 	public void setDimensionEspaceTravailDefault() {
-		this.setHauteurEspaceTravail(HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
-		this.setLargeurEspaceTravail(LARGEUR_DEFAULT_ESPACE_TRAVAIL);		
+		
+		this.setDimensionEspaceTravail(
+					HAUTEUR_DEFAULT_ESPACE_TRAVAIL,
+					LARGEUR_DEFAULT_ESPACE_TRAVAIL);
 	}
 	/* (non-Javadoc)
 	 * @see tp_dessin.model.IModeleDessinVect#setDimension(double, double)
@@ -80,7 +81,8 @@ public class Modele implements IModele {
 	@Override
 	public void setDimensionEspaceTravail(double p_Largeur, double p_Hauteur) {		
 		this.setHauteurEspaceTravail(p_Hauteur);
-		this.setLargeurEspaceTravail(p_Largeur);		
+		this.setLargeurEspaceTravail(p_Largeur);
+			
 	}
 	
 	/**
@@ -162,8 +164,9 @@ public class Modele implements IModele {
 	@Override
 	public void setColorFondEspaceTravail(Color p_colorFondEspaceTravail) {
 		this.m_colorFondEspaceTravail = p_colorFondEspaceTravail;
+		
 	}
-
+	
 
 
 }

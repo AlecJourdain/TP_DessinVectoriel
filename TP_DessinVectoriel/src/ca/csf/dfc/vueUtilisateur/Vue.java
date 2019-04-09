@@ -22,6 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import ca.csf.dfc.controleur.Controleur;
+import ca.csf.dfc.modele.IModele;
 
 
 
@@ -35,11 +36,13 @@ public class Vue {
 	private JFrame FenetrePrincipale;
 	private JPanel m_EspaceTravail;	
 	private Controleur m_Controleur;
+	private IModele  m_Modele;
 
 	public Vue( Controleur p_Controlateur) {
 		
 		
 		this.m_Controleur = p_Controlateur;
+		this.m_Modele = this.m_Controleur.getModele();
 		//parametrer initial
 		ParametrerFenetrePrincipale();
 		
@@ -133,7 +136,9 @@ public class Vue {
 		this.FenetrePrincipale.setJMenuBar(menuBar);
 		
 		//Actions pour les boutons		
-		itemFichierNouveau.addActionListener(new fichierNouveauListener());
+			itemFichierNouveau.addActionListener(e -> {
+					this.m_Modele.EspaceTravailDefault();				
+					updateEspaceTravail();	});
 		
 		
 	}
@@ -182,7 +187,9 @@ public class Vue {
 		this.FenetrePrincipale.add(panneauNorth, BorderLayout.NORTH);
 		
 		//Actions pour les boutons		
-		btn_NouveauDessin.addActionListener(new fichierNouveauListener());
+		btn_NouveauDessin.addActionListener(e -> {			
+					this.m_Modele.EspaceTravailDefault();					
+					updateEspaceTravail();});	
 	}
 	
 	
@@ -276,53 +283,48 @@ public class Vue {
 		
 		this.m_EspaceTravail = new JPanel();
 		this.FenetrePrincipale.add(m_EspaceTravail, BorderLayout.CENTER);
-		espaceTravailTaille();
+		
 		espaceTravailCouleurDeFond(Color.gray);		
 		
 	}
 	
 	/**
-	 * 
+	 * set la taille d'espace de travail
 	 */
-	private void espaceTravailTaille() {
-		this.m_EspaceTravail.setPreferredSize(new Dimension(	80,	60));
+	private void espaceTravailTaille(double p_Largeur, double p_Hauteur) {
+		int largeur = (int) Math.floor(p_Largeur);
+		int hauteur = (int) Math.floor(p_Hauteur);		
+		this.m_EspaceTravail.setPreferredSize(
+				new Dimension(	largeur,	hauteur));//*/
 	}
 	
-	/**
-	 * 
-	 */
-	/*private void espaceTravailTaille(int p_Largeur, int pHauteur) {
-		this.m_EspaceTravail.setPreferredSize(
-					new Dimension(p_Largeur	, pHauteur));
-	}//*/
-	
 	
 	/**
-	 * 
+	 * set le couleur d'espace de travail
 	 */
-	private void espaceTravailCouleurDeFond(Color p_color) {
-		
+	private void espaceTravailCouleurDeFond(Color p_color) {		
 		this.m_EspaceTravail.setBackground(p_color);
 	}
 	
 	
 
+	
+	
+	
 	/**
-	 * Classe pour l'event nouveau dessin
-	 * @author ManueLMaldonado
-	 *
+	 * update l'espace de travail
 	 */
-	private class fichierNouveauListener implements ActionListener
-    {
-		/**
-         * Appelee lorsqu'on clique sur le bouton.
-         */
-        @Override
-        public void actionPerformed (ActionEvent evento)
-        {
-			//this.m_Controleur.FichierNouveau();
-			espaceTravailTaille();
-			espaceTravailCouleurDeFond(Color.WHITE);					
-        }
-    }
+	public void updateEspaceTravail() {
+		
+		espaceTravailTaille(
+				this.m_Modele.getLargeur(),
+				this.m_Modele.getHauteur());
+		
+		espaceTravailCouleurDeFond(
+				this.m_Modele.getColorFondEspaceTravail());
+		
+		this.m_EspaceTravail.repaint();
+		//this.m_EspaceTravail.setVisible(true);
+		
+	}
 }

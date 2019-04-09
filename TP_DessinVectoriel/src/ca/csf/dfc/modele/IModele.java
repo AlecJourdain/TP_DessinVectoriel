@@ -8,14 +8,7 @@ import java.awt.Color;
 public interface IModele {
 	
 	
-	/**
-	 * Pour modifier les dimension de l'arrière plan.
-	 * 
-	 * @param p_Largeur la nouvelle largeur.
-	 * @param p_Hauteur la nouvelle hauteur.
-	 */
-	
-	void initialisationModele();
+void EspaceTravailDefault();
 	
 	//pour l'espace Travail
 	
