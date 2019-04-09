@@ -81,7 +81,7 @@ public class Vue {
 	 */
 	public void initialiserMenuBar() {
 		
-		//créer bar menu
+		//crï¿½er bar menu
 		JMenuBar menuBar=new JMenuBar();
 				
 		//choix dans la bar de menu Fichier
