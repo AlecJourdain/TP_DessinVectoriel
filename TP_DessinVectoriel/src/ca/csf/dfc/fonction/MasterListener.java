@@ -83,18 +83,12 @@ public static void ecrireFormes(XMLStreamWriter p_doc, ArrayList<Forme> p_dessin
 }
 
 
-<<<<<<< Updated upstream:TP_DessinVectoriel/src/ca/csf/dfc/controleur/Controleur.java
-		public IModele getModele() {
-			return this.m_Model;
-		}
-=======
 public void sauvegarderFormes(ArrayList<Forme> p_dessin){
 	
 	XMLStreamWriter doc = null;
 	
 	try {
 		FileWriter output = new FileWriter(new File("data.xml"));
->>>>>>> Stashed changes:TP_DessinVectoriel/src/ca/csf/dfc/fonction/MasterListener.java
 		
 		doc = XMLOutputFactory.newInstance().createXMLStreamWriter(output);
 				
