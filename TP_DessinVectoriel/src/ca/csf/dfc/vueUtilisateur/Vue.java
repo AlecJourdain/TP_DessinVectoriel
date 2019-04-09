@@ -255,12 +255,13 @@ public class Vue {
 	 * @param p_Image
 	 * @return icone
 	 */
-	private static Icon chargerIcone(String p_Image) {
-		Icon icone = null;        
-		String chemin = "/res/" + p_Image;		
-		URL url = Vue.class.getResource(chemin);		
+	private static ImageIcon chargerIcone(String p_Image) {
+		ImageIcon icone = null;        
+		
+		String chemin = ".\\src\\res\\" + p_Image;
+		
 		try {
-			icone = new ImageIcon(url);
+			icone = new ImageIcon(chemin);
 			
 		} catch (NullPointerException e) {
 			System.err.println("Image introuvable : " + chemin);
