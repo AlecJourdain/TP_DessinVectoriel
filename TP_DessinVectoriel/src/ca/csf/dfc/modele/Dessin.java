@@ -14,7 +14,7 @@ public class Dessin {
 	private ArrayList<Forme> m_formes;
 	
 	public Dessin() {
-		this.m_formes = new ArrayList<>();
+		this.m_formes = new ArrayList<Forme>();
 	}
 	
 	public Dessin(ArrayList<Forme> p_formes) {
