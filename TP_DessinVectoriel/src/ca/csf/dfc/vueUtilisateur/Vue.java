@@ -7,6 +7,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,7 +24,8 @@ import javax.swing.JPanel;
 
 import ca.csf.dfc.dessin.IModele;
 import ca.csf.dfc.fonctions.Controleur;
-import ca.csf.dfc.fonctions.MasterListener;
+import ca.csf.dfc.fonctions.Fonctionnalite;
+
 
 
 
@@ -33,7 +40,6 @@ public class Vue {
 	private JPanel m_EspaceTravail;	
 	private Controleur m_Controleur;
 	private IModele  m_Modele;
-	private MasterListener m_MasterListener;
 
 	public Vue( Controleur p_Controlateur) {
 		
@@ -160,14 +166,13 @@ public class Vue {
 		// btn_OpenDessin
 		JButton btn_OpenDessin = new JButton();		
 		btn_OpenDessin.setIcon(Vue.chargerIcone("icons8-open-view-32.png"));	
-		btn_OpenDessin.setToolTipText("btn_OpenDessin Dessin");
+		btn_OpenDessin.setToolTipText("Open Dessin");
 		panneauNorth.add(btn_OpenDessin);
 		
 		// btn_EnregistrerDessin
 		JButton btn_EnregistrerDessin = new JButton();		
 		btn_EnregistrerDessin.setIcon(Vue.chargerIcone("icons8-save-32.png"));	
 		btn_EnregistrerDessin.setToolTipText("Enregistrer Dessin");
-		btn_EnregistrerDessin.addActionListener(this.m_MasterListener);
 		panneauNorth.add(btn_EnregistrerDessin);
 
 		// btn_EnregistrerSousDessin
@@ -184,10 +189,13 @@ public class Vue {
 		
 		this.FenetrePrincipale.add(panneauNorth, BorderLayout.NORTH);
 		
-		//Actions pour les boutons		
+		//Actions pour les boutons
+		MasterListener masterListen = new MasterListener();
+		
 		btn_NouveauDessin.addActionListener(e -> {			
 					this.m_Modele.EspaceTravailDefault();					
 					updateEspaceTravail();});	
+		btn_EnregistrerDessin.addActionListener(masterListen);
 	}
 	
 	
@@ -325,4 +333,48 @@ public class Vue {
 		//this.m_EspaceTravail.setVisible(true);
 		
 	}
+	
+	
+	public class MasterListener implements ActionListener, MouseListener {
+		
+		Fonctionnalite fonctions = new Fonctionnalite();
+		
+
+		
+		@Override
+		public void actionPerformed(ActionEvent p_event) {
+			AbstractButton abstractBtn = (AbstractButton)p_event.getSource();
+			System.out.println(abstractBtn.getToolTipText());
+			
+			switch (abstractBtn.getToolTipText()) {
+			case "Enregistrer dessin":
+				
+			}
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent p_event) {
+			
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent p_event) {
+			
+		}
+		
+		@Override
+		public void mouseReleased(MouseEvent p_event) {
+			
+		}
+		@Override
+		public void mouseExited(MouseEvent p_event) {
+			
+		}
+		@Override
+		public void mouseClicked(MouseEvent p_event) {
+			
+		}
+
+	}
 }
+
