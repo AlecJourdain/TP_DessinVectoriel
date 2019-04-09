@@ -2,8 +2,8 @@ package ca.csf.dfc.main;
 
 import javax.swing.SwingUtilities;
 
+import ca.csf.dfc.dessin.Modele;
 import ca.csf.dfc.fonctions.Controleur;
-import ca.csf.dfc.modele.Modele;
 import ca.csf.dfc.vueUtilisateur.Vue;
 
 

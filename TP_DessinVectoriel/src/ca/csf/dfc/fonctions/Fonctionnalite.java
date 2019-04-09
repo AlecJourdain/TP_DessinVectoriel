@@ -9,8 +9,8 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import ca.csf.dfc.modele.Forme;
-import ca.csf.dfc.modele.FormeType;
+import ca.csf.dfc.dessin.Forme;
+import ca.csf.dfc.dessin.FormeType;
 
 public class Fonctionnalite {
 	

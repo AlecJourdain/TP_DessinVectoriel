@@ -1,7 +1,7 @@
 package ca.csf.dfc.fonctions;
 
 
-import ca.csf.dfc.modele.IModele;
+import ca.csf.dfc.dessin.IModele;
 
 
 

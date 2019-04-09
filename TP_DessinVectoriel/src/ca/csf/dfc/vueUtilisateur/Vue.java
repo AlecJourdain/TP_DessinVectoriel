@@ -15,9 +15,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
+import ca.csf.dfc.dessin.IModele;
 import ca.csf.dfc.fonctions.Controleur;
 import ca.csf.dfc.fonctions.MasterListener;
-import ca.csf.dfc.modele.IModele;
 
 
 

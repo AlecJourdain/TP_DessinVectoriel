@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ca.csf.dfc.modele;
+package ca.csf.dfc.dessin;
 
 /**
  * @author Coralie-Hong Brière
