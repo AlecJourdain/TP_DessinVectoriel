@@ -16,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import ca.csf.dfc.fonctions.Controleur;
+import ca.csf.dfc.fonctions.MasterListener;
 import ca.csf.dfc.modele.IModele;
 
 
@@ -31,6 +32,7 @@ public class Vue {
 	private JPanel m_EspaceTravail;	
 	private Controleur m_Controleur;
 	private IModele  m_Modele;
+	private MasterListener m_MasterListener;
 
 	public Vue( Controleur p_Controlateur) {
 		
@@ -164,6 +166,7 @@ public class Vue {
 		JButton btn_EnregistrerDessin = new JButton();		
 		btn_EnregistrerDessin.setIcon(Vue.chargerIcone("icons8-save-32.png"));	
 		btn_EnregistrerDessin.setToolTipText("Enregistrer Dessin");
+		btn_EnregistrerDessin.addActionListener(this.m_MasterListener);
 		panneauNorth.add(btn_EnregistrerDessin);
 
 		// btn_EnregistrerSousDessin
