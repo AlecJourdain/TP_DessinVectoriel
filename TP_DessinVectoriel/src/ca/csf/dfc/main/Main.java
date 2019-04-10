@@ -25,13 +25,13 @@ public class Main {
 public static void createAndShowGUI() throws Exception {
 		
 		// Cration Modele
-		Modele modele = new Modele();
+		//Modele modele = new Modele();
         
         // Creation controlateur, avec modele
-		Controleur control = new Controleur (modele);
+		//Controleur control = new Controleur (modele);
 		
 		//Creation de la view , avec modele et controlateur
-		new Vue( control);
+		//new Vue( control);
 	}
 
 
