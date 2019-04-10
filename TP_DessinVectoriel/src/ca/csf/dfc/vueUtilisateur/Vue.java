@@ -13,33 +13,41 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
 
 import ca.csf.dfc.dessin.IModele;
 import ca.csf.dfc.fonctions.Controleur;
 import ca.csf.dfc.fonctions.Fonctionnalite;
+import javafx.beans.value.ChangeListener;
 
 
 
 
 
-/**
- * @author ManueLMaldonado
- *
- */
+
 public class Vue {
 	
 	private JFrame FenetrePrincipale;
+	private JPanel m_panel_Centre;
 	private JPanel m_EspaceTravail;	
 	private Controleur m_Controleur;
 	private IModele  m_Modele;
+	
+	
+	
 
 	public Vue( Controleur p_Controlateur) {
 		
@@ -124,16 +132,60 @@ public class Vue {
 		menuSelection.addSeparator();
 		menuSelection.add(itemSelectionSuprimer);
 				
-		//choix dans la bar de menu Trait
-		JMenu menuTrait=new JMenu("Trait");
+		//choix dans la bar de menu Espace Travail
+		JMenu menuEspaceTravail=new JMenu("Espace travail");
 						
-		menuBar.add(menuTrait);
+		menuBar.add(menuEspaceTravail);
+		
+		//Largeur Espace de travail
+		int LargeurInitial = (int) Math.floor(this.m_Modele.getLargeurEspaceTravail());		
+		JSpinner spin_LargeurEspaceTravail = new JSpinner(new SpinnerNumberModel(LargeurInitial, 100, 900, 50));
+		JPanel panel_LargeurEspacetravail = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_LargeurEspacetravail.add(new JLabel("Largeur: "));
+		panel_LargeurEspacetravail.add(spin_LargeurEspaceTravail);	
+		/*spin_LargeurEspaceTravail.addChangeListener(new ChangeListener() {
+		      public void stateChanged(ChangeEvent e) {
+		    	  this.m_Modele.setLargeurEspacetravail((int)spin_LargeurEspaceTravail.getValue());
+		      }
+		    });//*/
+		/*spin_LargeurEspaceTravail.addChangeListener(e -> {			
+			this.m_Modele.setLargeurEspacetravail((int) spin_LargeurEspaceTravail.getValue());
+			
+			this.m_Modele.setDimensionEspaceTravail(500, 500);
+			updateEspaceTravail();
+		});//*/
+		
+		
+		//Largeur Espace de travail
+		int HauteurInitial = (int) Math.floor(this.m_Modele.getHauteurEspaceTravail());		
+		JSpinner spin_HauteurEspaceTravail = new JSpinner(new SpinnerNumberModel(HauteurInitial, 100, 650, 50));
+		JPanel panel_HauteurEspacetravail = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_HauteurEspacetravail.add(new JLabel("Hauteur: "));
+		panel_HauteurEspacetravail.add(spin_HauteurEspaceTravail);	
+
+		//couleur fond Espace travail
+		JButton btn_CouleurEspacetravail= new JButton();
+		JPanel panel_CouleurEspacetravail = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_CouleurEspacetravail.add(new JLabel("Couleur : "));
+		panel_CouleurEspacetravail.add(btn_CouleurEspacetravail);
+		btn_CouleurEspacetravail.setBackground(this.m_Modele.getColorFondEspaceTravailDefault());
+		btn_CouleurEspacetravail.addActionListener(e -> {			
+			Color couleurInitiale = this.m_Modele.getColorFondEspaceTravailDefault();
+			Color couleur = JColorChooser.showDialog(FenetrePrincipale, "Choisissez une couleur", couleurInitiale);
+			if (couleur != null) {				
+				btn_CouleurEspacetravail.setBackground(couleur);
+				this.m_Modele.setColorFondEspaceTravail(couleur);
+				updateEspaceTravail();				
+			}
+		});
+		
+		
+		
 						
-		JMenuItem itemTraitEpaisseur	=new JMenuItem("Epaisseur:");
-		JMenuItem itemTraitCouleur		=new JMenuItem("Couleur:");
-						
-		menuTrait.add(itemTraitEpaisseur);
-		menuTrait.add(itemTraitCouleur);
+		menuEspaceTravail.add(panel_LargeurEspacetravail);
+		menuEspaceTravail.add(panel_HauteurEspacetravail);
+		menuFichier.addSeparator();
+		menuEspaceTravail.add(panel_CouleurEspacetravail);
 		
 		//pour add au fenetre principal
 		this.FenetrePrincipale.setJMenuBar(menuBar);
@@ -258,10 +310,12 @@ public class Vue {
 	 */
 	private void intialiserPaneauCentre() {
 		
-		JPanel panel_Centre = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		panel_Centre.setOpaque(true);
-		panel_Centre.setBackground(Color.gray);
-		this.FenetrePrincipale.add(panel_Centre, BorderLayout.CENTER);
+		this.m_panel_Centre = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.m_panel_Centre.setOpaque(true);
+		this.m_panel_Centre.setBackground(Color.gray);		
+		this.m_panel_Centre.setBorder(BorderFactory.createTitledBorder(
+                						"Espace de Travail"));
+		this.FenetrePrincipale.add(m_panel_Centre, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -287,10 +341,13 @@ public class Vue {
 	 */
 	private void initialiserEspaceTravail() {
 		
-		this.m_EspaceTravail = new JPanel();
-		this.FenetrePrincipale.add(m_EspaceTravail, BorderLayout.CENTER);
-		
-		espaceTravailCouleurDeFond(Color.gray);		
+		this.m_EspaceTravail = new JPanel();		
+		this.m_EspaceTravail.setBorder(
+				BorderFactory.createLineBorder(Color.black,2));	
+		this.m_Modele.EspaceTravailDefault();					
+		updateEspaceTravail();	
+		this.m_panel_Centre.add(m_EspaceTravail);
+		this.m_EspaceTravail.setVisible(false);		
 		
 	}
 	
@@ -313,24 +370,20 @@ public class Vue {
 	}
 	
 	
-
-	
-	
-	
 	/**
 	 * update l'espace de travail
 	 */
 	public void updateEspaceTravail() {
 		
 		espaceTravailTaille(
-				this.m_Modele.getLargeur(),
-				this.m_Modele.getHauteur());
+				this.m_Modele.getLargeurEspaceTravail(),
+				this.m_Modele.getHauteurEspaceTravail());
 		
 		espaceTravailCouleurDeFond(
 				this.m_Modele.getColorFondEspaceTravail());
 		
 		this.m_EspaceTravail.repaint();
-		//this.m_EspaceTravail.setVisible(true);
+		this.m_EspaceTravail.setVisible(true);
 		
 	}
 	

@@ -11,17 +11,17 @@ public class Modele implements IModele {
 	
 
 	/**
-	 * 
+	 * Largeur par default d'espace de travail
 	 */
-	public static final double LARGEUR_DEFAULT_ESPACE_TRAVAIL = 80.0;
+	public static final double LARGEUR_DEFAULT_ESPACE_TRAVAIL = 900.0;
 
 	/**
-	 * 
+	 * Hauteur par default d'espace de travail
 	 */
-	public static final double HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 60.0;
+	public static final double HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 650.0;
 	
 	/**
-	 * 
+	 * Coleur par default d'espace de travail
 	 */
 	public static final Color COULEUR_DEFAULT_ESPACE_TRAVAIL = Color.WHITE;
 	
@@ -72,8 +72,8 @@ public class Modele implements IModele {
 	public void setDimensionEspaceTravailDefault() {
 		
 		this.setDimensionEspaceTravail(
-					HAUTEUR_DEFAULT_ESPACE_TRAVAIL,
-					LARGEUR_DEFAULT_ESPACE_TRAVAIL);
+				LARGEUR_DEFAULT_ESPACE_TRAVAIL,
+				HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
 	}
 	/* (non-Javadoc)
 	 * @see tp_dessin.model.IModeleDessinVect#setDimension(double, double)
@@ -120,25 +120,6 @@ public class Modele implements IModele {
 		}
 		this.m_LargeurEspaceTravail = p_Largeur;
 	}
-
-
-	/* (non-Javadoc)
-	 * @see ca.csf.dfc.modele.IModele#getLargeur()
-	 */
-	@Override
-	public double getLargeur() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see ca.csf.dfc.modele.IModele#getHauteur()
-	 */
-	@Override
-	public double getHauteur() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 
 
@@ -165,6 +146,17 @@ public class Modele implements IModele {
 	public void setColorFondEspaceTravail(Color p_colorFondEspaceTravail) {
 		this.m_colorFondEspaceTravail = p_colorFondEspaceTravail;
 		
+	}
+
+	@Override
+	public Color getColorFondEspaceTravailDefault() {
+		
+		return Modele.COULEUR_DEFAULT_ESPACE_TRAVAIL;
+	}
+
+	@Override
+	public void setLargeurEspacetravail(int p_Largeur) {
+		this.setLargeurEspaceTravail(p_Largeur);		
 	}
 	
 
