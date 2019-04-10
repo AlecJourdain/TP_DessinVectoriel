@@ -28,6 +28,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
+import ca.csf.dfc.dessin.Dessin;
 import ca.csf.dfc.dessin.IModele;
 import ca.csf.dfc.fonctions.Controleur;
 import ca.csf.dfc.fonctions.Fonctionnalite;
@@ -244,9 +245,7 @@ public class Vue {
 		//Actions pour les boutons
 		MasterListener masterListen = new MasterListener();
 		
-		btn_NouveauDessin.addActionListener(e -> {			
-					this.m_Modele.EspaceTravailDefault();					
-					updateEspaceTravail();});	
+		btn_NouveauDessin.addActionListener(masterListen);	
 		btn_EnregistrerDessin.addActionListener(masterListen);
 	}
 	
@@ -400,7 +399,29 @@ public class Vue {
 			System.out.println(abstractBtn.getToolTipText());
 			
 			switch (abstractBtn.getToolTipText()) {
-			case "Enregistrer dessin":
+			
+			case "Nouveau Dessin":
+				Vue.this.m_Modele.EspaceTravailDefault();					
+				updateEspaceTravail();
+				break;
+			
+			case "Open Dessin":
+				
+				break;
+			
+			case "Enregistrer Dessin":
+				
+				break;
+			
+			case "Enregistrer Sous Dessin":
+				
+				break;
+				
+			case "Exporter Dessin":
+				
+				break;
+				
+				
 				
 			}
 		}
