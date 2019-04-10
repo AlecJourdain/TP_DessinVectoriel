@@ -1,4 +1,4 @@
-package ca.csf.dfc.modele;
+package ca.csf.dfc.dessin;
 
 import java.awt.Color;
 
