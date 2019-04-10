@@ -40,13 +40,15 @@ public class Canevas extends JComponent{
 	private int m_epaisseurTrait = 2;
 	private FormeType m_formeTypeCourant = FormeType.RECTANGLE;
 	private boolean m_estModifie = false;
-	ArrayList<Forme> m_formes = new ArrayList<>();
+	ArrayList<Forme> m_formes = new ArrayList<Forme>();
 	Point premierPoint, pointFinal;
+	
 	
 	/**
 	 * Ctor
 	 */
 	public Canevas() {
+		
 		
 		/* un objet d'une classe anonyme dérivée de MouseAdapter est créé et transmis à la méthode addMouseListener
 		 * les méthodes mousePressed et mouseReleased sont redéfinies*/

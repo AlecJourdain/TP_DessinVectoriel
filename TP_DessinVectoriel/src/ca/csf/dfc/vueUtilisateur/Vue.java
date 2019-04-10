@@ -129,6 +129,8 @@ public class Vue extends JFrame {
 		JButton btn_NouveauDessin = new JButton();		
 		btn_NouveauDessin.setIcon(Vue.chargerIcone("icons8-add-32.png"));	
 		btn_NouveauDessin.setToolTipText("Nouveau Dessin");
+		btn_NouveauDessin.addActionListener(e -> { 
+			m_canevas.effacer();} );
 		panneauNorth.add(btn_NouveauDessin);
 
 		// btn_OuvrirDessin
