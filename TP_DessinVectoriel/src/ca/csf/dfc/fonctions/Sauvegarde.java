@@ -34,9 +34,8 @@ public class Sauvegarde {
 					p_forme.getCouleurTrait().toString());
 			
 			//... couleur_remplissage="..." ...
-			p_doc.writeAttribute("couleur_remplissage", 
-					p_forme.getCouleurRemplissage().toString());
-			
+			p_doc.writeAttribute("couleur_remplissage",Integer.toString(p_forme.getCouleurRemplissage().getRGB()));
+					
 			//... x1="..." ...
 			p_doc.writeAttribute("x1", 
 					Integer.toString(p_forme.getX1()));
