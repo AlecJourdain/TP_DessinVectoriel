@@ -24,6 +24,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
 import ca.csf.dfc.dessin.FormeType;
+import ca.csf.dfc.fonctions.Sauvegarde;
 
 /**
  * @author ManueLMaldonado
@@ -143,6 +144,10 @@ public class Vue extends JFrame {
 		JButton btn_EnregistrerDessin = new JButton();		
 		btn_EnregistrerDessin.setIcon(Vue.chargerIcone("icons8-save-32.png"));	
 		btn_EnregistrerDessin.setToolTipText("Enregistrer Dessin");
+		btn_EnregistrerDessin.addActionListener(e -> {
+				Sauvegarde sauvegarde = new Sauvegarde();
+				sauvegarde.sauvegarderFormesXML(m_canevas.m_formes);
+		});
 		panneauNorth.add(btn_EnregistrerDessin);
 
 		// btn_EnregistrerSousDessin

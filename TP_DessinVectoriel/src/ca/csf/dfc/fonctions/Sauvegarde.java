@@ -12,9 +12,11 @@ import javax.xml.stream.XMLStreamWriter;
 import ca.csf.dfc.dessin.Forme;
 import ca.csf.dfc.dessin.FormeType;
 
-public class Fonctionnalite {
+
+
+public class Sauvegarde {
 	
-	public static void ecrireFormes(XMLStreamWriter p_doc, ArrayList<Forme> p_dessin) throws XMLStreamException{
+	public static void ecrireFormesXML(XMLStreamWriter p_doc, ArrayList<Forme> p_dessin) throws XMLStreamException{
 		for (Forme p_forme : p_dessin) {
 			// <forme ...
 			p_doc.writeStartElement("forme");
@@ -71,7 +73,7 @@ public class Fonctionnalite {
 //				return this.m_Model;
 //			}
 
-	public void sauvegarderFormes(ArrayList<Forme> p_dessin){
+	public void sauvegarderFormesXML(ArrayList<Forme> p_tableauFormes){
 		
 		XMLStreamWriter doc = null;
 		
@@ -84,7 +86,7 @@ public class Fonctionnalite {
 			// <tableau_formes>
 			doc.writeStartElement("tableau_formes");
 			
-			ecrireFormes(doc, p_dessin);
+			ecrireFormesXML(doc, p_tableauFormes);
 
 			
 			// </tableau_formes>
@@ -107,8 +109,17 @@ public class Fonctionnalite {
 				}
 			}
 		}
+	}
+	
+	public void exporterFormesSVG(ArrayList<Forme> p_tableauForme) {
+		XMLStreamWriter doc = null;
 		
-
+		try {
+			FileWriter output = new FileWriter(new File("data.svg"));
+			
+		}catch(IOException exp) {
+			System.err.println("Erreur ecriture :" + exp);
+		}
 	}
 
 }
