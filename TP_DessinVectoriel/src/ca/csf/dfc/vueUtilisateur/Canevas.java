@@ -5,7 +5,9 @@ package ca.csf.dfc.vueUtilisateur;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -19,7 +21,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
@@ -35,6 +40,17 @@ public class Canevas extends JComponent{
 	
 	private static final long serialVersionUID = -1602873151367941910L;
 	
+	//Pour l'espace Travail
+	public static final int LARGEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
+	public static final int HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
+	public static final Color COULEUR_DEFAULT_ESPACE_TRAVAIL = Color.white;
+	private Dimension m_DimensionEspaceTravail;
+	private int m_LargeurEspaceTravail;
+	private int m_HauteurEspaceTravail;
+	
+	
+	
+	
 	private Color m_couleurTrait = Color.black;
 	private Color m_couleurRemplissage = Color.black;
 	private int m_epaisseurTrait = 2;
@@ -49,6 +65,9 @@ public class Canevas extends JComponent{
 	 */
 	public Canevas() {
 		
+		//Pour l'espacetravail
+		setDefaultEspaceTravail();
+
 		
 		/* un objet d'une classe anonyme dérivée de MouseAdapter est créé et transmis à la méthode addMouseListener
 		 * les méthodes mousePressed et mouseReleased sont redéfinies*/
@@ -262,5 +281,33 @@ public class Canevas extends JComponent{
 		return new Line2D.Float(x1, y1, x2, y2);
 		
 	}
+	
+	
+	
+	public void setDimensionEspaceTravail(int p_Largeur, int p_Hauteur) {		
+		this.setDimensionEspaceTravail(new Dimension(p_Largeur , p_Hauteur));
+	}
+	
+	public void setDimensionEspaceTravail(Dimension p_DimensionEspaceTravail) {		
+		this.m_DimensionEspaceTravail = p_DimensionEspaceTravail;
+		this.setPreferredSize(this.m_DimensionEspaceTravail);
+		this.setSize(this.m_DimensionEspaceTravail);
+	}
+	
+	public void setDefaultEspaceTravail() {	
+		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
+		this.setPreferredSize(this.m_DimensionEspaceTravail);		
+		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));		
+	}
+	
+	public Dimension getDimensionEspaceTravail() {
+		return this.m_DimensionEspaceTravail;
+	} 
+	
+	public int getLargeurEspaceTravail() {
+		return this.m_DimensionEspaceTravail.width;
+	}
+	
+	
 
 }

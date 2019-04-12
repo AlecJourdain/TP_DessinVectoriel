@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,35 +20,55 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import ca.csf.dfc.dessin.FormeType;
 import ca.csf.dfc.fonctions.Sauvegarde;
 
-/**
- * @author ManueLMaldonado
- *
- */
+
 public class Vue extends JFrame {
 	
 	private static final long serialVersionUID = 873083412301053821L;
-	private JMenuBar m_menuBarre;
-	private JMenu m_fichier, m_edition, m_trait;
-	private JMenuItem m_nouveau, m_ouvrir, m_enregistreXML, m_enregistreSous, m_exporter, m_quitter,
-					  m_selection, m_supprimer, m_epaisseur, m_couleurTrait;
-	private JButton btn_LigneDessin;
+	//private JMenuBar m_menuBarre;
+	//private JMenu m_fichier, m_edition, m_trait;
+	//private JMenuItem m_nouveau, m_ouvrir, m_enregistreXML, m_enregistreSous, m_exporter, m_quitter,
+					 // m_selection, m_supprimer, m_epaisseur, m_couleurTrait;
+	//private JButton btn_LigneDessin;
+	private JPanel m_panel_Centre;
 	private Canevas m_canevas;
 	/**
 	 * Ctor
 	 */
 	public Vue() {
+		
+		ParametrerVue();
+		intialiserPaneauCentre();
+		initialiserMenu();		
+		initialiserPaneauNordBoutonForms();
+		initialiserPaneauOuestBoutonForms();		
+	}
+	
+	
+
+	
+	/**
+	 * 
+	 */
+	private void ParametrerVue() {
 		this.setTitle("Dessin Vectoriel");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.initialiserMenu();
-		this.initialiserComposants(this.getContentPane());
+		this.setPreferredSize(new Dimension(800, 500));
+		this.setLocationRelativeTo(null);			
 	}
+	
 	
 	/**
 	 * Initialisation de la barre de menu
@@ -55,21 +76,21 @@ public class Vue extends JFrame {
 	private void initialiserMenu() {
 			
 		// Les sous-menus de la MenuBarre
-		m_fichier = new JMenu("Fichier");
-		m_edition = new JMenu("Édition");
-		m_trait=new JMenu("Trait");		
+		JMenu m_fichier 	= new JMenu("Fichier");
+		JMenu m_edition 	= new JMenu("Édition");
+		JMenu m_espaceTravail		= new JMenu("Espace Travail");	
+		
 		
 		// Les items de chaque sous-menu		
-		m_nouveau = new JMenuItem("Nouveau");
-		m_ouvrir = new JMenuItem("Ouvrir...");
-		m_enregistreXML	= new JMenuItem("Enregistrer au format XML...");
-		m_enregistreSous = new JMenuItem("Enregistrer sous...");
-		m_exporter = new JMenuItem("Exporter au format SVG...");
-		m_quitter = new JMenuItem("Quitter");
-		m_selection	= new JMenuItem("Sélection");
-		m_supprimer	= new JMenuItem("Supprimer");
-		m_epaisseur	= new JMenuItem("Epaisseur:");
-		m_couleurTrait = new JMenuItem("Couleur:");
+		JMenuItem m_nouveau 		= new JMenuItem("Nouveau");
+		JMenuItem m_ouvrir			= new JMenuItem("Ouvrir...");
+		JMenuItem m_enregistreXML	= new JMenuItem("Enregistrer au format XML...");
+		JMenuItem m_enregistreSous	= new JMenuItem("Enregistrer sous...");
+		JMenuItem m_exporter 		= new JMenuItem("Exporter au format SVG...");
+		JMenuItem m_quitter 		= new JMenuItem("Quitter");
+		JMenuItem m_selection		= new JMenuItem("Sélection");
+		JMenuItem m_supprimer		= new JMenuItem("Supprimer");
+		
 		
 		// Sous-menu Fichier
 		m_fichier.add(m_nouveau);
@@ -87,42 +108,67 @@ public class Vue extends JFrame {
 		m_edition.addSeparator();
 		m_edition.add(m_supprimer);
 		
-		// Sous-menu Trait
-		m_trait.add(m_epaisseur);
-		m_trait.add(m_couleurTrait);
+		
+		//Largeur Espace de travail		
+		int LargeurInitial = this.m_canevas.getDimensionEspaceTravail().width;
+		int HauteurInitial = this.m_canevas.getDimensionEspaceTravail().height;		
+		JSpinner spin_LargeurEspaceTravail = new JSpinner(new SpinnerNumberModel(LargeurInitial, 100, 10000, 50));
+		JPanel panel_LargeurEspacetravail = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_LargeurEspacetravail.add(new JLabel("Largeur: "));
+		panel_LargeurEspacetravail.add(spin_LargeurEspaceTravail);	
+						
+		//Hauteur Espace de travail		
+		JSpinner spin_HauteurEspaceTravail = new JSpinner(new SpinnerNumberModel(HauteurInitial, 100, 10000, 50));
+		JPanel panel_HauteurEspacetravail = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_HauteurEspacetravail.add(new JLabel("Hauteur: "));
+		panel_HauteurEspacetravail.add(spin_HauteurEspaceTravail);
+		
+		
+		
+		//Pour changer la taille
+		spin_LargeurEspaceTravail.addChangeListener(e -> {			
+					m_canevas.setDimensionEspaceTravail(
+							(int) spin_LargeurEspaceTravail.getValue(),
+							(int) spin_HauteurEspaceTravail.getValue());
+					m_canevas.revalidate();
+					m_canevas.repaint();
+					//
+					});
+						
+		spin_HauteurEspaceTravail.addChangeListener(e -> {			
+					m_canevas.setDimensionEspaceTravail(
+							(int) spin_LargeurEspaceTravail.getValue(),
+							(int) spin_HauteurEspaceTravail.getValue());
+					m_canevas.revalidate();
+					m_canevas.repaint();
+					//
+					});
+				
+		
+				
+		// Dimension espace Travail
+		m_espaceTravail.add(panel_LargeurEspacetravail);
+		m_espaceTravail.add(panel_HauteurEspacetravail);
+		m_espaceTravail.addSeparator();
 		
 		// Constitution de la barre de menu
-		m_menuBarre = new JMenuBar();
+		
+		JMenuBar m_menuBarre = new JMenuBar();
 		m_menuBarre.add(m_fichier);
 		m_menuBarre.add(m_edition);		
-		m_menuBarre.add(m_trait);
+		m_menuBarre.add(m_espaceTravail);
 
 		// ajout de la barre de menu à la Vue
 		this.setJMenuBar(m_menuBarre);
 	}
 	
-	/**
-	 * Initialisation des composants: panneaux de boutons et le canevas
-	 * @param p_conteneur
-	 */
-	private void initialiserComposants(Container p_conteneur) {
-		p_conteneur.setBackground(Color.white);
-		
-		m_canevas = new Canevas();
-		m_canevas.setPreferredSize(new Dimension(1024, 768));
-		m_canevas.setBorder(BorderFactory.createLineBorder(Color.lightGray));
-		p_conteneur.add(m_canevas, BorderLayout.CENTER);
-		
-		initialiserPaneauNordBoutonForms(p_conteneur);
-		initialiserPaneauOuestBoutonForms(p_conteneur);
-	}
 	
 	/**
 	 * Initialisation du panneau de boutons au nord de la fenêtre Vue
 	 */
-	private void initialiserPaneauNordBoutonForms(Container p_conteneur) {
+	private void initialiserPaneauNordBoutonForms() {
 		
-		JPanel panneauNorth = new JPanel();
+		JPanel panneauNorth = new JPanel();		
 		BoxLayout panneauNorthGrid = new BoxLayout(panneauNorth, BoxLayout.X_AXIS );
 		panneauNorth.setLayout(panneauNorthGrid);
 		
@@ -162,13 +208,14 @@ public class Vue extends JFrame {
 		btn_ExporterDessin.setToolTipText("Exporter Dessin");
 		panneauNorth.add(btn_ExporterDessin);//*/
 		
-		p_conteneur.add(panneauNorth, BorderLayout.NORTH);	
+		//p_conteneur.add(panneauNorth, BorderLayout.NORTH);
+		this.add(panneauNorth, BorderLayout.NORTH);
 	}
 
 	/**
 	 * Initialisation du panneau de boutons à l'ouest de la fenêtre Vue
 	 */
-	private void initialiserPaneauOuestBoutonForms(Container p_conteneur) {
+	private void initialiserPaneauOuestBoutonForms() {
 		
 		JPanel panneauGauche = new JPanel();
 		BoxLayout panneauEstGrid = new BoxLayout(panneauGauche, BoxLayout.Y_AXIS );
@@ -194,7 +241,8 @@ public class Vue extends JFrame {
 		panneauGauche.add(btn_EpaisseurDessin);	
 		
 		// btn_LigneDessin
-		btn_LigneDessin = new JButton();		
+		JButton btn_LigneDessin= new JButton();	
+		//btn_LigneDessin = new JButton();		
 		btn_LigneDessin.setIcon(Vue.chargerIcone("icons8-line-32.png"));	
 		btn_LigneDessin.setToolTipText("Ligne");
 		btn_LigneDessin.addActionListener(e -> {
@@ -220,8 +268,38 @@ public class Vue extends JFrame {
 		});
 		panneauGauche.add(btn_EllipseDessin);					
 		
-		p_conteneur.add(panneauGauche, BorderLayout.WEST);
+		this.add(panneauGauche, BorderLayout.WEST);
 	}
+	
+	/**
+	 * Centre du Fenetre 
+	 */
+	private void intialiserPaneauCentre() {			
+
+		//creation Paneau Centre
+		this.m_panel_Centre = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.m_panel_Centre.setOpaque(true);
+		this.m_panel_Centre.setBackground(Color.white);		
+		
+		//creation canevas
+		this.m_canevas = new Canevas();
+		this.m_panel_Centre.add(m_canevas, FlowLayout.LEFT);
+				
+		//creation scrollpanel
+		JScrollPane jScrollPaneCentre = new JScrollPane();		
+		jScrollPaneCentre.setViewportView(this.m_panel_Centre);		
+		jScrollPaneCentre.setVerticalScrollBar(new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 300));
+		jScrollPaneCentre.setHorizontalScrollBar(new JScrollBar(JScrollBar.HORIZONTAL, 30, 40, 0, 300));
+		//jScrollPaneCentre.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		//jScrollPaneCentre.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//jScrollPaneCentre.getViewport().setBackground(Color.gray);
+		
+		//Add scroll au JFrame
+		this.add(jScrollPaneCentre);//*/
+		
+	}	
+	
+	
 	
 	/**
 	 * @param p_Image
@@ -240,6 +318,6 @@ public class Vue extends JFrame {
 		}
 		return icone;
 	}
-
+	
 }
 
