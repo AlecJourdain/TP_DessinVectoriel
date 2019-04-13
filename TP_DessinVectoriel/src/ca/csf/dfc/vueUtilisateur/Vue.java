@@ -12,19 +12,14 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
+
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
 
-import ca.csf.dfc.dessin.Dessiner_Graph2D;
-import ca.csf.dfc.dessin.IDessiner;
 import ca.csf.dfc.fonctions.Sauvegarde;
 
 /**
@@ -40,6 +35,7 @@ public class Vue extends JFrame {
 					  m_selection, m_supprimer, m_epaisseur, m_couleurTrait;
 	private JButton btn_LigneDessin;
 	private Canevas m_canevas;
+
 
 	/**
 	 * Ctor
@@ -181,6 +177,10 @@ public class Vue extends JFrame {
 		btn_SelectionDessin.setIcon(Vue.chargerIcone("icons8-mouse-32.png"));	
 		//btn_SelectionDessin.setRolloverIcon(Vue.chargerIcone("icons8-mouse-32.png"));
 		btn_SelectionDessin.setToolTipText("Selection Dessin");
+		btn_SelectionDessin.addActionListener(e -> {
+			m_canevas.setModeAction(ModeAction.Creer);
+
+		});
 		panneauGauche.add(btn_SelectionDessin);
 		
 		// btn_RemplissageDessin
@@ -201,6 +201,7 @@ public class Vue extends JFrame {
 		btn_LigneDessin.setToolTipText("Ligne");
 		btn_LigneDessin.addActionListener(e -> {
 			m_canevas.setFormeTypeCourant("LIGNE");
+			m_canevas.setModeAction(ModeAction.Dessiner);
 		});
 		panneauGauche.add(btn_LigneDessin);
 				
@@ -210,6 +211,7 @@ public class Vue extends JFrame {
 		btn_RectangleDessin.setToolTipText("Rectangle");
 		btn_RectangleDessin.addActionListener(e -> {
 			m_canevas.setFormeTypeCourant("RECTANGLE");
+			m_canevas.setModeAction(ModeAction.Dessiner);
 		});
 		panneauGauche.add(btn_RectangleDessin);
 
@@ -219,6 +221,7 @@ public class Vue extends JFrame {
 		btn_EllipseDessin.setToolTipText("Ellipse");
 		btn_EllipseDessin.addActionListener(e -> {
 			m_canevas.setFormeTypeCourant("ELLIPSE");
+			m_canevas.setModeAction(ModeAction.Dessiner);
 		});
 		panneauGauche.add(btn_EllipseDessin);					
 		
