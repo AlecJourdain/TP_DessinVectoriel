@@ -4,26 +4,21 @@
 package ca.csf.dfc.vueUtilisateur;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-
 import javax.swing.JComponent;
-
+import ca.csf.dfc.dessin.Dessiner_Graph2D;
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
 import ca.csf.dfc.dessin.FormeType;
+import ca.csf.dfc.dessin.IDessiner;
 
 /**
  * @author Coralie-Hong Brière
@@ -42,6 +37,7 @@ public class Canevas extends JComponent{
 	private boolean m_estModifie = false;
 	ArrayList<Forme> m_formes = new ArrayList<Forme>();
 	Point premierPoint, pointFinal;
+	private IDessiner m_modeDessin;
 	
 	
 	/**
@@ -77,6 +73,8 @@ public class Canevas extends JComponent{
 				
 				// La forme créée est ajoutée à la liste de formes
 				m_formes.add(f);
+				
+				
 				
 				// Les points sont remis à null pour la création d'une prochaine forme
 				premierPoint = null;
@@ -178,38 +176,20 @@ public class Canevas extends JComponent{
 		
 		// ...sert à adoucir le rendu des lignes
 		graphSettings.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
 		graphSettings.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 		
+		this.m_modeDessin = new Dessiner_Graph2D(graphSettings);
+		
 		for (Forme f : m_formes) {
-			graphSettings.setPaint(f.getCouleurTrait());
-			graphSettings.setStroke(new BasicStroke(f.getEpaisseurTrait()));
-			
-			Shape s = null;
-			
-			switch(f.getType()) {
-				case LIGNE:
-					s = dessinerLigne(f.getX1(), f.getY1(), f.getX2(), f.getY2());
-					break;
-				case ELLIPSE:
-					s = dessinerEllipse(f.getX1(), f.getY1(), f.getX2(), f.getY2());
-					break;
-				case RECTANGLE:
-					s = dessinerRectangle(f.getX1(), f.getY1(), f.getX2(), f.getY2());
-					break;
-			}
-			
-			graphSettings.draw(s);
-			graphSettings.setPaint(f.getCouleurRemplissage());
-			graphSettings.fill(s);
+			f.dessiner(this.m_modeDessin);
 		}
 		
-		if (premierPoint != null && pointFinal != null) {
-			graphSettings.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-			graphSettings.setPaint(Color.lightGray);
-			Shape uneForme = dessinerRectangle(premierPoint.x, premierPoint.y, pointFinal.x, pointFinal.y);
-			graphSettings.draw(uneForme);
-		}
+//		if (premierPoint != null && pointFinal != null) {
+//			graphSettings.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+//			graphSettings.setPaint(Color.lightGray);
+//			Shape uneForme = dessinerRectangle(premierPoint.x, premierPoint.y, pointFinal.x, pointFinal.y);
+//			graphSettings.draw(uneForme);
+//		}
 	}
 	
 	public void effacer() {
@@ -237,30 +217,6 @@ public class Canevas extends JComponent{
 		return this.m_formes;
 	}
 	
-	private Rectangle2D.Float dessinerRectangle(int x1, int y1, int x2, int y2) {
-		int x = Math.min(x1, x2);
-		int y = Math.min(y1, y2);
-		
-		int largeur = Math.abs(x1-x2);
-		int hauteur = Math.abs(y1-y2);
-		
-		return new Rectangle2D.Float(x, y, largeur, hauteur);
-	}
-	
-	private Ellipse2D.Float dessinerEllipse(int x1, int y1, int x2, int y2) {
-		int x = Math.min(x1, x2);
-		int y = Math.min(y1, y2);
-		
-		int largeur = Math.abs(x1-x2);
-		int hauteur = Math.abs(y1-y2);
-		
-		return new Ellipse2D.Float(x, y, largeur, hauteur);
-	}
-	
-	private Line2D.Float dessinerLigne(int x1, int y1, int x2, int y2) {
-		
-		return new Line2D.Float(x1, y1, x2, y2);
-		
-	}
+
 
 }

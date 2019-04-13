@@ -23,7 +23,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
+import ca.csf.dfc.dessin.Dessiner_Graph2D;
 import ca.csf.dfc.dessin.FormeType;
+import ca.csf.dfc.dessin.IDessiner;
 import ca.csf.dfc.fonctions.Sauvegarde;
 
 /**
@@ -39,6 +41,7 @@ public class Vue extends JFrame {
 					  m_selection, m_supprimer, m_epaisseur, m_couleurTrait;
 	private JButton btn_LigneDessin;
 	private Canevas m_canevas;
+	private IDessiner m_ModeDessin;
 	/**
 	 * Ctor
 	 */

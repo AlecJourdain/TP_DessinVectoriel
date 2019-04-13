@@ -130,5 +130,8 @@ public abstract class Forme {
 	public FormeType getType() {
 		return this.m_type;
 	}
+	public void dessiner(IDessiner p_dessin) {
+		
+	}
 	
 }
