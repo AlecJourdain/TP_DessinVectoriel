@@ -17,7 +17,6 @@ import javax.swing.JComponent;
 import ca.csf.dfc.dessin.Dessiner_Graph2D;
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
-import ca.csf.dfc.dessin.FormeType;
 import ca.csf.dfc.dessin.IDessiner;
 
 /**
@@ -33,7 +32,7 @@ public class Canevas extends JComponent{
 	private Color m_couleurTrait = Color.black;
 	private Color m_couleurRemplissage = Color.black;
 	private int m_epaisseurTrait = 2;
-	private FormeType m_formeTypeCourant = FormeType.RECTANGLE;
+	private String m_formeTypeCourant = "RECTANGLE";
 	private boolean m_estModifie = false;
 	ArrayList<Forme> m_formes = new ArrayList<Forme>();
 	Point premierPoint, pointFinal;
@@ -165,7 +164,7 @@ public class Canevas extends JComponent{
 	 * Pour modifier le formeTypeCourant.
 	 * @param p_formeTypeCourant Nouvelle valeur.
 	 */
-	public void setFormeTypeCourant(FormeType p_formeTypeCourant) {
+	public void setFormeTypeCourant(String p_formeTypeCourant) {
 		this.m_formeTypeCourant = p_formeTypeCourant;
 	}
 	

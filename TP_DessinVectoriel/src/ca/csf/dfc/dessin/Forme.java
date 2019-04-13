@@ -7,7 +7,8 @@ import java.awt.Color;
  *
  */
 public abstract class Forme {
-	protected FormeType m_type;
+
+	protected String m_typeForme;
 	protected int m_x1;
 	protected int m_x2;
 	protected int m_y1;
@@ -127,8 +128,8 @@ public abstract class Forme {
 	 * Retourne le type
 	 * @return le type
 	 */
-	public FormeType getType() {
-		return this.m_type;
+	public String getType() {
+		return this.m_typeForme;
 	}
 	public void dessiner(IDessiner p_dessin) {
 		

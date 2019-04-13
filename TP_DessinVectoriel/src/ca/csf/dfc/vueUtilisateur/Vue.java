@@ -24,7 +24,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
 import ca.csf.dfc.dessin.Dessiner_Graph2D;
-import ca.csf.dfc.dessin.FormeType;
 import ca.csf.dfc.dessin.IDessiner;
 import ca.csf.dfc.fonctions.Sauvegarde;
 
@@ -41,7 +40,7 @@ public class Vue extends JFrame {
 					  m_selection, m_supprimer, m_epaisseur, m_couleurTrait;
 	private JButton btn_LigneDessin;
 	private Canevas m_canevas;
-	private IDessiner m_ModeDessin;
+
 	/**
 	 * Ctor
 	 */
@@ -201,7 +200,7 @@ public class Vue extends JFrame {
 		btn_LigneDessin.setIcon(Vue.chargerIcone("icons8-line-32.png"));	
 		btn_LigneDessin.setToolTipText("Ligne");
 		btn_LigneDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant(FormeType.LIGNE);
+			m_canevas.setFormeTypeCourant("LIGNE");
 		});
 		panneauGauche.add(btn_LigneDessin);
 				
@@ -210,7 +209,7 @@ public class Vue extends JFrame {
 		btn_RectangleDessin.setIcon(Vue.chargerIcone("icons8-rectangular-32.png"));	
 		btn_RectangleDessin.setToolTipText("Rectangle");
 		btn_RectangleDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant(FormeType.RECTANGLE);
+			m_canevas.setFormeTypeCourant("RECTANGLE");
 		});
 		panneauGauche.add(btn_RectangleDessin);
 
@@ -219,7 +218,7 @@ public class Vue extends JFrame {
 		btn_EllipseDessin.setIcon(Vue.chargerIcone("icons8-oval-32.png"));	
 		btn_EllipseDessin.setToolTipText("Ellipse");
 		btn_EllipseDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant(FormeType.ELLIPSE);
+			m_canevas.setFormeTypeCourant("ELLIPSE");
 		});
 		panneauGauche.add(btn_EllipseDessin);					
 		
