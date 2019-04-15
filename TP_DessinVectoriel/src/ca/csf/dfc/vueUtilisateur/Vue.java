@@ -13,7 +13,7 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -237,14 +237,32 @@ public class Vue extends JFrame {
 		});		
 			
 		// creer btn_RemplissageDessin
-		JButton btn_RemplissageDessin = new JButton();		
-		btn_RemplissageDessin.setIcon(Vue.chargerIcone("icons8-paint-palette-32.png"));	
-		btn_RemplissageDessin.setToolTipText("Couleur de remplissage");		
-			
+		JButton btn_CouleurRemplissageDessin = new JButton();		
+		btn_CouleurRemplissageDessin.setIcon(Vue.chargerIcone("icons8-paint-palette-32.png"));	
+		btn_CouleurRemplissageDessin.setToolTipText("Couleur de remplissage");
+		btn_CouleurRemplissageDessin.addActionListener(e -> {
+			Color couleurInitiale = this.m_canevas.getCouleurRemplisageForm();
+			Color couleur = JColorChooser.showDialog(this, "Choisissez une couleur", couleurInitiale);
+						if (couleur != null) {this.m_canevas.setCouleurRemplisageForm(couleur);}
+		});	
+		
+		// creer btn_RemplissageDessin
+		JButton btn_CouleurTraitDessin = new JButton();		
+		btn_CouleurTraitDessin.setIcon(Vue.chargerIcone("icons8-color-palette-32.png"));	
+		btn_CouleurTraitDessin.setToolTipText("Couleur de remplissage");
+		btn_CouleurTraitDessin.addActionListener(e -> {
+					Color couleurInitiale = this.m_canevas.getCouleurTraitForm();
+					Color couleur = JColorChooser.showDialog(this, "Choisissez une couleur", couleurInitiale);
+								if (couleur != null) {this.m_canevas.setCouleurTraitForm(couleur);}
+		});	
+		
 		// creer btn_EpaisseurDessin
 		JButton btn_EpaisseurDessin = new JButton();		
 		btn_EpaisseurDessin.setIcon(Vue.chargerIcone("icons8-merge-vertical-32.png"));	
-		btn_EpaisseurDessin.setToolTipText("Epaisseur du trait");		
+		btn_EpaisseurDessin.setToolTipText("Epaisseur du trait");
+		btn_EpaisseurDessin.addActionListener(e -> {
+			 new EpaisseurTrait(this.m_canevas);
+		});	
 			
 		// creer btn_LigneDessin
 		JButton btn_LigneDessin= new JButton();	
@@ -279,7 +297,8 @@ public class Vue extends JFrame {
 		
 		//additions boutons sur panneu gouche
 		panneauGauche.add(btn_SelectionDessin);
-		panneauGauche.add(btn_RemplissageDessin);
+		panneauGauche.add(btn_CouleurRemplissageDessin);
+		panneauGauche.add(btn_CouleurTraitDessin);		
 		panneauGauche.add(btn_EpaisseurDessin);	
 		panneauGauche.add(btn_LigneDessin);
 		panneauGauche.add(btn_RectangleDessin);
@@ -333,6 +352,10 @@ public class Vue extends JFrame {
 				System.err.println("Image introuvable : " + chemin);
 		}
 			return icone;
+	}
+	
+	public Canevas getCanevas() {
+		return this.m_canevas;
 	}
 	
 }
