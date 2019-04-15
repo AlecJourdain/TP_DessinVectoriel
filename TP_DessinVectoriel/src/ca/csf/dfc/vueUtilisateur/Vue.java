@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import javax.swing.JFrame;
-
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -82,11 +82,6 @@ public class Vue extends JFrame {
 	 */
 	private void initialiserMenu() {
 				
-		// Les sous-menus de la MenuBarre
-		JMenu m_fichier 	= new JMenu("Fichier");
-		JMenu m_edition 	= new JMenu("Édition");
-		JMenu m_espaceTravail		= new JMenu("Espace Travail");	
-			
 		// Les sous-menus de la MenuBarre
 		JMenu m_fichier 	= new JMenu("Fichier");
 		JMenu m_edition 	= new JMenu("Édition");
@@ -293,8 +288,7 @@ public class Vue extends JFrame {
 		this.add(panneauGauche, BorderLayout.WEST);
 	}
 		
-		this.add(panneauGauche, BorderLayout.WEST);
-	}
+		
 	
 	/**
 	 * Centre du Fenetre 
@@ -307,7 +301,7 @@ public class Vue extends JFrame {
 		this.m_panel_Centre.setBackground(Color.white);		
 		
 		//creation canevas
-		this.m_canevas = new Canevas();
+		this.m_canevas = new Canevas(m_listeFormesAdessiner);
 		this.m_panel_Centre.add(m_canevas, FlowLayout.LEFT);
 				
 		//creation scrollpanel
