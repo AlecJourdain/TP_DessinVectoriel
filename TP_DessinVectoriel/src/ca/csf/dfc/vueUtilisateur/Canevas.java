@@ -79,6 +79,7 @@ public class Canevas extends JComponent{
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
 						
 						for (Forme f : listeFormes) {
+							
 							if (f.contientPoint(m_premierPoint.x, m_premierPoint.y)) {
 								xAvantDpl = e.getX();
 								yAvantDpl = e.getY();
