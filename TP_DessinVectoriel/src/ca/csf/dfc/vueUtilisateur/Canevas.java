@@ -77,11 +77,16 @@ public class Canevas extends JComponent{
 					m_premierPoint = new Point(e.getX(), e.getY());
 					m_pointFinal = m_premierPoint;
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
+						
 						for (Forme f : listeFormes) {
 							if (f.contientPoint(m_premierPoint.x, m_premierPoint.y)) {
+								xAvantDpl = e.getX();
+								yAvantDpl = e.getY();
 								m_formeSelectionnee = f;
-								xAvantDpl = m_premierPoint.x;
-								yAvantDpl = m_premierPoint.y;
+								m_premierPoint.x = f.getX1();
+								m_premierPoint.y = f.getY1();
+								m_pointFinal.x = f.getX2();
+								m_pointFinal.y = f.getY2();
 							}
 						}
 					}
@@ -119,13 +124,17 @@ public class Canevas extends JComponent{
 					repaint();
 				}
 				if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
-					int x = e.getX();
-					int y = e.getY();
-					if (m_formeSelectionnee != null) {
-						m_formeSelectionnee.deplacerDe(x - xAvantDpl, y - yAvantDpl);
-						m_formeSelectionnee = null;
-						repaint();
+//					if (m_formeSelectionnee != null) {
+//						m_formeSelectionnee.deplacerDe(x - xAvantDpl, y - yAvantDpl);
+//						m_formeSelectionnee = null;
+//						
+//					}
+					for (Forme f : listeFormes) {
+						if(f.contientPoint(e.getX(), e.getY())) {
+							m_formeSelectionnee = f;
+						}
 					}
+					repaint();
 				}
 				
 			}
@@ -135,14 +144,33 @@ public class Canevas extends JComponent{
 		 * addMouseMotionListener la méthode mouseDragged est redéfinie*/
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
+				int nouveauX = e.getX() - xAvantDpl;
+				int nouveauY = e.getY() - yAvantDpl;
 				if (m_typeActionPerformee == TypeAction.DESSINER || m_typeActionPerformee == TypeAction.SELECTIONNER) {
 					m_pointFinal = new Point(e.getX(), e.getY());
+
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
-						if (m_formeSelectionnee != null) {
-							m_formeSelectionnee.deplacerDe(m_pointFinal.x - xAvantDpl, m_pointFinal.y - yAvantDpl);
-							xAvantDpl = m_pointFinal.x;
-							yAvantDpl = m_pointFinal.y;
+						for (Forme f : listeFormes) {
+							if(f.contientPoint(e.getX(), e.getY())) {
+								m_formeSelectionnee = f;
+								Forme nouvelleForme = FactoryForme.creationForme(m_formeTypeCourant);
+								nouvelleForme = f;
+								
+								nouvelleForme.setX1(nouvelleForme.getX1() + nouveauX);
+								nouvelleForme.setY1(nouvelleForme.getY1() + nouveauY);
+								nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
+								nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
+								listeFormes.set(listeFormes.indexOf(f), nouvelleForme);
+								xAvantDpl += nouveauX;
+								yAvantDpl += nouveauY;
+								m_premierPoint = m_pointFinal;
+							}
 						}
+//						if (m_formeSelectionnee != null) {
+//							m_formeSelectionnee.deplacerDe(m_pointFinal.x - xAvantDpl, m_pointFinal.y - yAvantDpl);
+//							xAvantDpl = m_pointFinal.x;
+//							yAvantDpl = m_pointFinal.y;
+//						}
 					}
 					repaint();
 				}
