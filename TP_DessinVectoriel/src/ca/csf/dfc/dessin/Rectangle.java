@@ -1,14 +1,18 @@
 package ca.csf.dfc.dessin;
 
+import java.awt.Graphics;
+
+import ca.csf.dfc.Dessiner.IDessiner;
+
 public class Rectangle extends Forme {
 	public Rectangle() {
 		super();
-		this.m_typeForme = "RECTANGLE";
+		this.m_type = 'R';
 	}
-	
+
 	@Override
-	public void dessiner(IDessiner p_dessin) {
-		p_dessin.dessinerRectangle(this.m_x1, this.m_y1, this.m_x2, this.m_y2, 
-				this.m_couleurRemplissage, this.m_couleurTrait, this.m_epaisseurTrait);
+	public void dessiner(IDessiner p_methodeDessin) {
+		p_methodeDessin.dessinerRectangle(this.getX1(), this.getY1(), this.getX2(), this.getY2(),
+				this.getCouleurTrait(), this.getEpaisseurTrait(), this.getCouleurRemplissage());
 	}
 }

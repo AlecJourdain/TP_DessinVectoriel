@@ -21,7 +21,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import ca.csf.dfc.fonctions.Sauvegarde;
+import ca.csf.dfc.JustOneEnum.TypeAction;
+import ca.csf.dfc.dessin.ListeDeFormes;
+
+//import ca.csf.dfc.dessin.FormeType;
+//import ca.csf.dfc.fonctions.Sauvegarde;
 
 /**
  * @author ManueLMaldonado
@@ -38,8 +42,7 @@ public class Vue extends JFrame {
 	//private JButton btn_LigneDessin;
 	private JPanel m_panel_Centre;
 	private Canevas m_canevas;
-
-
+	private ListeDeFormes m_listeFormesAdessiner;
 	/**
 	 * Ctor
 	 */
@@ -153,7 +156,19 @@ public class Vue extends JFrame {
 		// ajout de la barre de menu à la Vue
 		this.setJMenuBar(m_menuBarre);
 	}
-		
+	
+	/**
+	 * Initialisation des composants: panneaux de boutons et le canevas
+	 * @param p_conteneur
+	 */
+	private void initialiserComposants(Container p_conteneur) {
+		p_conteneur.setBackground(Color.white);
+
+		m_listeFormesAdessiner = new ListeDeFormes();
+		m_canevas = new Canevas(m_listeFormesAdessiner);
+		m_canevas.setPreferredSize(new Dimension(1024, 768));
+		m_canevas.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		p_conteneur.add(m_canevas, BorderLayout.CENTER);
 		
 	/**
 	 * Initialisation du panneau de boutons au nord de la fenêtre Vue
@@ -168,10 +183,10 @@ public class Vue extends JFrame {
 		JButton btn_NouveauDessin = new JButton();		
 		btn_NouveauDessin.setIcon(Vue.chargerIcone("icons8-add-32.png"));	
 		btn_NouveauDessin.setToolTipText("Nouveau Dessin");
-		btn_NouveauDessin.addActionListener(e -> { 
-			m_canevas.effacer();} );
-			panneauNorth.add(btn_NouveauDessin);
-	
+//		btn_NouveauDessin.addActionListener(e -> { 
+//			m_canevas.effacer();} );
+		panneauNorth.add(btn_NouveauDessin);
+
 		// btn_OuvrirDessin
 		JButton btn_OpenDessin = new JButton();		
 		btn_OpenDessin.setIcon(Vue.chargerIcone("icons8-open-view-32.png"));	
@@ -183,9 +198,9 @@ public class Vue extends JFrame {
 		btn_EnregistrerDessin.setIcon(Vue.chargerIcone("icons8-save-32.png"));	
 		btn_EnregistrerDessin.setToolTipText("Enregistrer Dessin");
 		btn_EnregistrerDessin.addActionListener(e -> {
-					Sauvegarde sauvegarde = new Sauvegarde();
-					sauvegarde.sauvegarderFormesXML(m_canevas.m_formes);
-			});
+//				Sauvegarde sauvegarde = new Sauvegarde();
+//				sauvegarde.sauvegarderFormesXML(m_canevas.m_formes);
+		});
 		panneauNorth.add(btn_EnregistrerDessin);
 
 		// btn_EnregistrerSousDessin
@@ -218,8 +233,9 @@ public class Vue extends JFrame {
 		btn_SelectionDessin.setIcon(Vue.chargerIcone("icons8-mouse-32.png"));	
 		btn_SelectionDessin.setToolTipText("Selection Dessin");
 		btn_SelectionDessin.addActionListener(e -> {
-			m_canevas.setModeAction(ModeAction.Creer);
-
+			m_canevas.setTypeActionPerformee(TypeAction.SELECTIONNER);
+			m_canevas.setFormeSelectionnee(null);
+			m_canevas.setFormeTypeCourant('X');
 		});
 		panneauGauche.add(btn_SelectionDessin);
 			
@@ -240,8 +256,9 @@ public class Vue extends JFrame {
 		btn_LigneDessin.setIcon(Vue.chargerIcone("icons8-line-32.png"));	
 		btn_LigneDessin.setToolTipText("Ligne");
 		btn_LigneDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant("LIGNE");
-			m_canevas.setModeAction(ModeAction.Dessiner);
+			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
+			m_canevas.setFormeSelectionnee(null);
+			m_canevas.setFormeTypeCourant('L');
 		});
 		panneauGauche.add(btn_LigneDessin);
 					
@@ -250,8 +267,9 @@ public class Vue extends JFrame {
 		btn_RectangleDessin.setIcon(Vue.chargerIcone("icons8-rectangular-32.png"));	
 		btn_RectangleDessin.setToolTipText("Rectangle");
 		btn_RectangleDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant("RECTANGLE");
-			m_canevas.setModeAction(ModeAction.Dessiner);
+			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
+			m_canevas.setFormeSelectionnee(null);
+			m_canevas.setFormeTypeCourant('R');
 		});
 		panneauGauche.add(btn_RectangleDessin);
 
@@ -260,8 +278,9 @@ public class Vue extends JFrame {
 		btn_EllipseDessin.setIcon(Vue.chargerIcone("icons8-oval-32.png"));	
 		btn_EllipseDessin.setToolTipText("Ellipse");
 		btn_EllipseDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant("ELLIPSE");
-			m_canevas.setModeAction(ModeAction.Dessiner);
+			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
+			m_canevas.setFormeSelectionnee(null);
+			m_canevas.setFormeTypeCourant('E');
 		});
 		panneauGauche.add(btn_EllipseDessin);					
 			

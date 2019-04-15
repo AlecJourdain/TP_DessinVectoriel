@@ -1,6 +1,7 @@
 package ca.csf.dfc.main;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+
 import ca.csf.dfc.vueUtilisateur.Vue;
 
 public class Main {

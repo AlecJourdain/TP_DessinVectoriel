@@ -62,54 +62,65 @@ public class Sauvegarde {
 //			public IModele getModele() {
 //				return this.m_Model;
 //			}
-
-	public void sauvegarderFormesXML(ArrayList<Forme> p_tableauFormes){
-		
-		XMLStreamWriter doc = null;
-		
-		try {
-			FileWriter output = new FileWriter(new File("data.xml"));
-
-			
-			doc = XMLOutputFactory.newInstance().createXMLStreamWriter(output);
-					
-			// <tableau_formes>
-			doc.writeStartElement("tableau_formes");
-			
-			ecrireFormesXML(doc, p_tableauFormes);
-
-			
-			// </tableau_formes>
-			doc.writeEndElement();
-			
-		} catch(IOException exp) {
-			System.err.println("Erreur ecriture : " + exp);
-			
-		} catch(XMLStreamException exp) {
-			System.err.println("Erreur dans le XML : " + exp);
-		} finally {
-			if(doc != null) {
-				try {
-					doc.flush();
-					doc.close();
-				} catch(XMLStreamException exp) {
-					System.err.println("Erreur lors de la fermeture : " + exp);
-				} finally {
-					doc = null;
-				}
-			}
-		}
-	}
-	
-	public void exporterFormesSVG(ArrayList<Forme> p_tableauForme) {
-		XMLStreamWriter doc = null;
-		
-		try {
-			FileWriter output = new FileWriter(new File("data.svg"));
-			
-		}catch(IOException exp) {
-			System.err.println("Erreur ecriture :" + exp);
-		}
-	}
-
-}
+//			
+//			// ... />
+//			p_doc.writeEndElement();
+//		}
+//	}
+//
+//	//
+//	//
+////			public IModele getModele() {
+////				return this.m_Model;
+////			}
+//
+//	public void sauvegarderFormesXML(ArrayList<Forme> p_tableauFormes){
+//		
+//		XMLStreamWriter doc = null;
+//		
+//		try {
+//			FileWriter output = new FileWriter(new File("data.xml"));
+//
+//			
+//			doc = XMLOutputFactory.newInstance().createXMLStreamWriter(output);
+//					
+//			// <tableau_formes>
+//			doc.writeStartElement("tableau_formes");
+//			
+//			ecrireFormesXML(doc, p_tableauFormes);
+//
+//			
+//			// </tableau_formes>
+//			doc.writeEndElement();
+//			
+//		} catch(IOException exp) {
+//			System.err.println("Erreur ecriture : " + exp);
+//			
+//		} catch(XMLStreamException exp) {
+//			System.err.println("Erreur dans le XML : " + exp);
+//		} finally {
+//			if(doc != null) {
+//				try {
+//					doc.flush();
+//					doc.close();
+//				} catch(XMLStreamException exp) {
+//					System.err.println("Erreur lors de la fermeture : " + exp);
+//				} finally {
+//					doc = null;
+//				}
+//			}
+//		}
+//	}
+//	
+//	public void exporterFormesSVG(ArrayList<Forme> p_tableauForme) {
+//		XMLStreamWriter doc = null;
+//		
+//		try {
+//			FileWriter output = new FileWriter(new File("data.svg"));
+//			
+//		}catch(IOException exp) {
+//			System.err.println("Erreur ecriture :" + exp);
+//		}
+//	}
+//
+//}
