@@ -54,7 +54,7 @@ public class Canevas extends JComponent{
 	
 	private Color m_couleurTrait = Color.black;
 	private Color m_couleurRemplissage = Color.black;
-	private int m_epaisseurTrait = 2;
+	private int m_epaisseurTrait;
 	
 	
 	private TypeAction m_typeActionPerformee;
