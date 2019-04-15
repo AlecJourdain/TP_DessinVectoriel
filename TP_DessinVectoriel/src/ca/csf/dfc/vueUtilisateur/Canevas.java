@@ -8,7 +8,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 
 import ca.csf.dfc.Dessiner.DessinerG2D;
 import ca.csf.dfc.JustOneEnum.TypeAction;
@@ -36,6 +40,16 @@ public class Canevas extends JComponent{
 
 	private ListeDeFormes m_listeFormesAdessiner;
 	
+	//Pour l'espace Travail
+	public static final int LARGEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
+	public static final int HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
+	public static final Color COULEUR_DEFAULT_ESPACE_TRAVAIL = Color.white;
+	private Dimension m_DimensionEspaceTravail;
+	private int m_LargeurEspaceTravail;
+	private int m_HauteurEspaceTravail;
+	
+	
+	
 	
 	private Color m_couleurTrait = Color.black;
 	private Color m_couleurRemplissage = Color.black;
@@ -56,6 +70,10 @@ public class Canevas extends JComponent{
 	public Canevas(ListeDeFormes ldf) {
 		m_listeFormesAdessiner = ldf;
 		ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
+		
+		//Pour l'espacetravail
+		setDefaultEspaceTravail();
+
 		
 		/* un objet d'une classe anonyme dérivée de MouseAdapter est créé et transmis à la méthode addMouseListener
 		 * les méthodes mousePressed et mouseReleased sont redéfinies*/
@@ -331,6 +349,63 @@ public class Canevas extends JComponent{
 //	public ArrayList<Forme> getFormes() {
 //		return this.m_formes;
 //	}
+	
+	public ArrayList<Forme> getFormes() {
+		return this.m_formes;
+	}
+	
+	private Rectangle2D.Float dessinerRectangle(int x1, int y1, int x2, int y2) {
+		int x = Math.min(x1, x2);
+		int y = Math.min(y1, y2);
+		
+		int largeur = Math.abs(x1-x2);
+		int hauteur = Math.abs(y1-y2);
+		
+		return new Rectangle2D.Float(x, y, largeur, hauteur);
+	}
+	
+	private Ellipse2D.Float dessinerEllipse(int x1, int y1, int x2, int y2) {
+		int x = Math.min(x1, x2);
+		int y = Math.min(y1, y2);
+		
+		int largeur = Math.abs(x1-x2);
+		int hauteur = Math.abs(y1-y2);
+		
+		return new Ellipse2D.Float(x, y, largeur, hauteur);
+	}
+	
+	private Line2D.Float dessinerLigne(int x1, int y1, int x2, int y2) {
+		
+		return new Line2D.Float(x1, y1, x2, y2);
+		
+	}
+	
+	
+	
+	public void setDimensionEspaceTravail(int p_Largeur, int p_Hauteur) {		
+		this.setDimensionEspaceTravail(new Dimension(p_Largeur , p_Hauteur));
+	}
+	
+	public void setDimensionEspaceTravail(Dimension p_DimensionEspaceTravail) {		
+		this.m_DimensionEspaceTravail = p_DimensionEspaceTravail;
+		this.setPreferredSize(this.m_DimensionEspaceTravail);
+		this.setSize(this.m_DimensionEspaceTravail);
+	}
+	
+	public void setDefaultEspaceTravail() {	
+		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
+		this.setPreferredSize(this.m_DimensionEspaceTravail);		
+		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));		
+	}
+	
+	public Dimension getDimensionEspaceTravail() {
+		return this.m_DimensionEspaceTravail;
+	} 
+	
+	public int getLargeurEspaceTravail() {
+		return this.m_DimensionEspaceTravail.width;
+	}
+	
 	
 
 
