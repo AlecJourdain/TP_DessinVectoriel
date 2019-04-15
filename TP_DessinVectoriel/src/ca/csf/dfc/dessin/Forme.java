@@ -1,22 +1,28 @@
 package ca.csf.dfc.dessin;
 
 import java.awt.Color;
+import java.awt.Graphics;
+
+import com.sun.javafx.geom.Shape;
+
+import ca.csf.dfc.Dessiner.IDessiner;
 
 /**
  * @author Coralie-Hong Brière
  *
  */
 public abstract class Forme {
-	protected FormeType m_type;
+	protected char m_type = 'X';
 	protected int m_x1;
 	protected int m_x2;
 	protected int m_y1;
 	protected int m_y2;
-	protected Color m_couleurTrait;
-	protected Color m_couleurRemplissage;
-	protected int m_epaisseurTrait;
+	protected Couleur m_couleurTrait;
+	protected Couleur m_couleurRemplissage;
+	protected float m_epaisseurTrait;
 	
 	public Forme() {};
+	public abstract void dessiner(IDessiner p_methodeDessin);
 	
 	/**
 	 * Retourne le x1
@@ -79,7 +85,7 @@ public abstract class Forme {
 	 * Retourne le couleurTrait
 	 * @return le couleurTrait
 	 */
-	public Color getCouleurTrait() {
+	public Couleur getCouleurTrait() {
 		return this.m_couleurTrait;
 	}
 
@@ -87,7 +93,7 @@ public abstract class Forme {
 	 * Pour modifier le couleurTrait
 	 * @param p_couleurTrait Nouvelle valeur
 	 */
-	public void setCouleurTrait(Color p_couleurTrait) {
+	public void setCouleurTrait(Couleur p_couleurTrait) {
 		this.m_couleurTrait = p_couleurTrait;
 	}
 
@@ -95,7 +101,7 @@ public abstract class Forme {
 	 * Retourne le couleurRemplissage
 	 * @return le couleurRemplissage
 	 */
-	public Color getCouleurRemplissage() {
+	public Couleur getCouleurRemplissage() {
 		return this.m_couleurRemplissage;
 	}
 
@@ -103,7 +109,7 @@ public abstract class Forme {
 	 * Pour modifier le couleurRemplissage
 	 * @param p_couleurRemplissage Nouvelle valeur
 	 */
-	public void setCouleurRemplissage(Color p_couleurRemplissage) {
+	public void setCouleurRemplissage(Couleur p_couleurRemplissage) {
 		this.m_couleurRemplissage = p_couleurRemplissage;
 	}
 
@@ -111,7 +117,7 @@ public abstract class Forme {
 	 * Retourne le epaisseurTrait
 	 * @return le epaisseurTrait
 	 */
-	public int getEpaisseurTrait() {
+	public float getEpaisseurTrait() {
 		return this.m_epaisseurTrait;
 	}
 
@@ -119,7 +125,7 @@ public abstract class Forme {
 	 * Pour modifier le epaisseurTrait
 	 * @param p_epaisseurTrait Nouvelle valeur
 	 */
-	public void setEpaisseurTrait(int p_epaisseurTrait) {
+	public void setEpaisseurTrait(float p_epaisseurTrait) {
 		this.m_epaisseurTrait = p_epaisseurTrait;
 	}
 
@@ -127,8 +133,31 @@ public abstract class Forme {
 	 * Retourne le type
 	 * @return le type
 	 */
-	public FormeType getType() {
+	public char getType() {
 		return this.m_type;
 	}
 	
+	public void redimensionner(int p_x1, int p_y1, int p_x2, int p_y2) {
+		this.m_x1 = p_x1;
+		this.m_y1 = p_y1;
+		this.m_x2 = p_x2;
+		this.m_y2 = p_y2;
+	}
+	
+	public void deplacerDe(int p_dplX, int p_dplY) {
+		this.m_x1 += p_dplX;
+		this.m_y1 += p_dplY;
+	}
+	
+	public boolean contientPoint(int p_x, int p_y) {
+		int largeur = Math.abs(this.m_x1 - this.m_x2);
+		int hauteur = Math.abs(this.m_y1 - this.m_y2);
+		
+		if (p_x >= this.m_x1 && p_x < this.m_x1 + largeur && p_y >= this.m_y1 && p_y < this.m_y1 + hauteur) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
