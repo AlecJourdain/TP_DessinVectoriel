@@ -28,7 +28,7 @@ public class charger {
 	private static final String ATTR_Y1 = "y1";
 	private static final String ATTR_Y2 = "y2";
 	
-	public Forme charger(File p_file) {
+	public Forme  lireForme(File p_file) {
 		Forme f = null;
 		XMLStreamReader doc = null;
 		
@@ -41,7 +41,7 @@ public class charger {
 	//	int couleurRemplissage;    couleur_remplissage
 	//	int couleurTrait;    couleur_trait
 		
-		f.getType();
+		
 		f.setX1(x1);
 		f.setX2(x2);
 		f.setY1(y1);
@@ -49,6 +49,10 @@ public class charger {
 		f.setEpaisseurTrait(epaisseurTrait);
 		
 		return f;
+		
+	}
+	
+	public void chargerXML() {
 		
 	}
 

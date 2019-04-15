@@ -10,7 +10,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import ca.csf.dfc.dessin.Forme;
-import ca.csf.dfc.dessin.FormeType;
 
 
 
@@ -52,14 +51,6 @@ public class Sauvegarde {
 			p_doc.writeAttribute("y2", 
 					Integer.toString(p_forme.getY2()));
 			
-			if(p_forme.getType() == FormeType.RECTANGLE ||
-					p_forme.getType() == FormeType.ELLIPSE) {
-			//... hauteur="..." ...
-			//p_doc.writeAttribute("hauteur", p_forme.getHauteur());
-			
-			//... largeur="..." ...
-			//p_doc.writeAttribute("largeur", p_forme.getLargeur());
-			}
 			
 			// ... />
 			p_doc.writeEndElement();

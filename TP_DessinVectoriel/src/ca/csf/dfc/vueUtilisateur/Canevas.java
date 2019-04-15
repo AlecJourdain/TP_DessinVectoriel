@@ -4,9 +4,8 @@
 package ca.csf.dfc.vueUtilisateur;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -15,17 +14,13 @@ import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-
+import ca.csf.dfc.dessin.Dessiner_Graph2D;
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
-import ca.csf.dfc.dessin.FormeType;
+import ca.csf.dfc.dessin.IDessiner;
 
 /**
  * @author Coralie-Hong Brière
@@ -47,55 +42,111 @@ public class Canevas extends JComponent{
 	private Color m_couleurTrait = Color.black;
 	private Color m_couleurRemplissage = Color.black;
 	private int m_epaisseurTrait = 2;
-	private FormeType m_formeTypeCourant = FormeType.RECTANGLE;
+	private String m_formeTypeCourant = "RECTANGLE";
 	private boolean m_estModifie = false;
 	ArrayList<Forme> m_formes = new ArrayList<Forme>();
 	Point premierPoint, pointFinal;
+	private IDessiner m_modeDessin;
+	private ModeAction m_modeAction = ModeAction.Dessiner;
+	private Shape m_formeSelectionner = null;
+	Cursor curseur;
+	private int m_selectionX;
+	private int m_selectionY;
 	
 	
 	/**
 	 * Ctor
 	 */
 	public Canevas() {
-		
-		//Pour l'espacetravail
-		setDefaultEspaceTravail();
-		
 		/* un objet d'une classe anonyme dérivée de MouseAdapter est créé et transmis à la méthode addMouseListener
 		 * les méthodes mousePressed et mouseReleased sont redéfinies*/
 		this.addMouseListener(new MouseAdapter () {
-			
 			public void mousePressed(MouseEvent e) {
-				premierPoint = new Point(e.getX(), e.getY());
-				pointFinal = premierPoint;
-				repaint();
+
+				if( m_modeAction == ModeAction.Dessiner) {
+					premierPoint = new Point(e.getX(), e.getY());
+					pointFinal = premierPoint;
+					repaint();
+				}
+				else if(m_modeAction == ModeAction.Creer){
+					m_selectionX = e.getX();
+					m_selectionY = e.getY();
+					for (Forme f : m_formes) {
+						Shape formeTempo = null;
+						if(f.getType() == "RECTANGLE") {
+							 formeTempo = new Rectangle2D.Float(f.getX1(), f.getY1(), f.getX2()-f.getX1(), f.getY2()-f.getY1());
+						}
+						
+						if(formeTempo.contains(e.getPoint())){
+							m_formeSelectionner = formeTempo;
+							premierPoint = new Point(f.getX1(), f.getY1());
+							pointFinal = new Point(f.getX2(), f.getY2());
+						}
+					}
+					repaint();
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if(m_modeAction == ModeAction.Dessiner) {
+					if (premierPoint == null) return; 
+					
+					if (premierPoint == pointFinal) return; 	// La souris n'a pas bougé
+					
+					// La forme est créée dès que la souris est relâchée
+					Forme f = FactoryForme.creationForme(m_formeTypeCourant);
+					
+					f.setX1(premierPoint.x);
+					f.setY1(premierPoint.y);
+					f.setX2(e.getX());
+					f.setY2(e.getY());
+					f.setCouleurRemplissage(m_couleurRemplissage);
+					f.setCouleurTrait(m_couleurTrait);
+					f.setEpaisseurTrait(m_epaisseurTrait);
+					
+					// La forme créée est ajoutée à la liste de formes
+					m_formes.add(f);
+					
+					
+					
+					// Les points sont remis à null pour la création d'une prochaine forme
+					premierPoint = null;
+					pointFinal = null;
+					
+					// Le boolean signale qu'il y a eu une modification
+					m_estModifie = true;
+					
+					repaint();
+				} else if(m_modeAction == ModeAction.Creer){
+					for (Forme f : m_formes) {
+						Shape formeTempo = null;
+						if(f.getType() == "RECTANGLE") {
+							 formeTempo = new Rectangle2D.Float(f.getX1(), f.getY1(), f.getX2()-f.getX1(), f.getY2()-f.getY1());
+						}
+						
+						if(formeTempo.contains(e.getPoint())){
+							m_formeSelectionner = formeTempo;
+						}
+						
+					}
+					repaint();
+				}
+
 			}
 			
-			public void mouseReleased(MouseEvent e) {
-				if (premierPoint == null) return; 			
-				if (premierPoint == pointFinal) return; 	// La souris n'a pas bougé
-				
-				// La forme est créée dès que la souris est relâchée
-				Forme f = FactoryForme.creationForme(m_formeTypeCourant);
-				
-				f.setX1(premierPoint.x);
-				f.setY1(premierPoint.y);
-				f.setX2(e.getX());
-				f.setY2(e.getY());
-				f.setCouleurRemplissage(m_couleurRemplissage);
-				f.setCouleurTrait(m_couleurTrait);
-				f.setEpaisseurTrait(m_epaisseurTrait);
-				
-				// La forme créée est ajoutée à la liste de formes
-				m_formes.add(f);
-				
-				// Les points sont remis à null pour la création d'une prochaine forme
-				premierPoint = null;
-				pointFinal = null;
-				
-				// Le boolean signale qu'il y a eu une modification
-				m_estModifie = true;
-				
+			public void mouseClicked(MouseEvent e) {
+				for (Forme f : m_formes) {
+					Shape formeTempo = null;
+					if(f.getType() == "RECTANGLE") {
+						 formeTempo = new Rectangle2D.Float(f.getX1(), f.getY1(), f.getX2()-f.getX1(), f.getY2()-f.getY1());
+					}
+					System.out.println(formeTempo.contains(e.getPoint()));
+					if(formeTempo.contains(e.getPoint())){
+						m_formeSelectionner = formeTempo;
+						premierPoint = new Point(f.getX1(), f.getY1());
+						pointFinal = new Point(f.getX2(), f.getY2());
+					}
+					
+				}
 				repaint();
 			}
 		});
@@ -104,12 +155,79 @@ public class Canevas extends JComponent{
 		 * addMouseMotionListener la méthode mouseDragged est redéfinie*/
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
-				pointFinal = new Point(e.getX(), e.getY());
-				repaint();
+				
+				if(m_modeAction == ModeAction.Dessiner) {
+					pointFinal = new Point(e.getX(), e.getY());
+					repaint();
+				}
+				else if(m_modeAction == ModeAction.Creer) {
+					int nouveauX = e.getX() - m_selectionX;
+					int nouveauY = e.getY() - m_selectionY;
+					for (Forme formeCourante : m_formes) {
+						premierPoint = new Point(formeCourante.getX1()+ pointFinal.x - premierPoint.x,
+								formeCourante.getY1() + pointFinal.y - premierPoint.y);
+						pointFinal = new Point(formeCourante.getX2(), formeCourante.getY2());
+						Shape formeTempo = null;
+						if(formeCourante.getType() == "RECTANGLE") {
+							 formeTempo = new Rectangle2D.Float(formeCourante.getX1(), formeCourante.getY1(),
+									 Math.abs(formeCourante.getX2()-formeCourante.getX1()),
+									 Math.abs(formeCourante.getY2()-formeCourante.getY1()));
+							 
+						}
+						
+						if(formeTempo.contains(e.getPoint())){
+							m_formeSelectionner = formeTempo;
+							
+							
+							
+							// La forme est créée dès que la souris est relâchée
+							Forme nouvelleForme = FactoryForme.creationForme(m_formeTypeCourant);
+							nouvelleForme = formeCourante;
+							
+							nouvelleForme.setX1(nouvelleForme.getX1() + nouveauX);
+							nouvelleForme.setY1(nouvelleForme.getY1() + nouveauY);
+							nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
+							nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
+							m_formes.set(m_formes.indexOf(formeCourante), nouvelleForme);
+							m_selectionX += nouveauX;
+							m_selectionY+= nouveauY;
+							premierPoint = pointFinal;
+						}
+						
+					}
+					repaint();
+				}
+			}
+			public void mouseMoved(MouseEvent e) {
+				if(m_modeAction == ModeAction.Creer) {
+					for (Forme formeCourante : m_formes) {
+						Shape formeTempo = null;
+						if(formeCourante.getType() == "RECTANGLE") {
+							 formeTempo = new Rectangle2D.Float(formeCourante.getX1(), formeCourante.getY1(),
+									 Math.abs(formeCourante.getX2()-formeCourante.getX1()),
+									 Math.abs(formeCourante.getY2()-formeCourante.getY1()));
+						}
+						if(formeTempo.contains(e.getPoint())){
+							
+							curseur = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+							
+						} else {
+							
+							curseur = Cursor.getDefaultCursor();
+						}
+						repaint();
+					}
+				}
 			}
 		});
+		
+		
 	}
 
+	public void setModeAction(ModeAction p_modeAction) {
+		this.m_modeAction = p_modeAction;
+	}
+	
 	/**
 	 * Retourne le couleurTrait.
 	 * @return le couleurTrait
@@ -178,7 +296,7 @@ public class Canevas extends JComponent{
 	 * Pour modifier le formeTypeCourant.
 	 * @param p_formeTypeCourant Nouvelle valeur.
 	 */
-	public void setFormeTypeCourant(FormeType p_formeTypeCourant) {
+	public void setFormeTypeCourant(String p_formeTypeCourant) {
 		this.m_formeTypeCourant = p_formeTypeCourant;
 	}
 	
@@ -187,40 +305,22 @@ public class Canevas extends JComponent{
 		// Classe qui définit les formes à dessiner du côté de Swing
 		Graphics2D graphSettings = (Graphics2D)g;
 		
+		// Modifie le curseur si jamais nous sommes sur une forme
+		
+		setCursor(curseur);
+		
+		
 		// ...sert à adoucir le rendu des lignes
 		graphSettings.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
 		graphSettings.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 		
+		this.m_modeDessin = new Dessiner_Graph2D(graphSettings);
+		
 		for (Forme f : m_formes) {
-			graphSettings.setPaint(f.getCouleurTrait());
-			graphSettings.setStroke(new BasicStroke(f.getEpaisseurTrait()));
-			
-			Shape s = null;
-			
-			switch(f.getType()) {
-				case LIGNE:
-					s = dessinerLigne(f.getX1(), f.getY1(), f.getX2(), f.getY2());
-					break;
-				case ELLIPSE:
-					s = dessinerEllipse(f.getX1(), f.getY1(), f.getX2(), f.getY2());
-					break;
-				case RECTANGLE:
-					s = dessinerRectangle(f.getX1(), f.getY1(), f.getX2(), f.getY2());
-					break;
-			}
-			
-			graphSettings.draw(s);
-			graphSettings.setPaint(f.getCouleurRemplissage());
-			graphSettings.fill(s);
+			f.dessiner(this.m_modeDessin);
 		}
 		
-		if (premierPoint != null && pointFinal != null) {
-			graphSettings.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-			graphSettings.setPaint(Color.lightGray);
-			Shape uneForme = dessinerRectangle(premierPoint.x, premierPoint.y, pointFinal.x, pointFinal.y);
-			graphSettings.draw(uneForme);
-		}
+
 	}
 	
 	public void effacer() {
@@ -248,56 +348,6 @@ public class Canevas extends JComponent{
 		return this.m_formes;
 	}
 	
-	private Rectangle2D.Float dessinerRectangle(int x1, int y1, int x2, int y2) {
-		int x = Math.min(x1, x2);
-		int y = Math.min(y1, y2);
-		
-		int largeur = Math.abs(x1-x2);
-		int hauteur = Math.abs(y1-y2);
-		
-		return new Rectangle2D.Float(x, y, largeur, hauteur);
-	}
-	
-	private Ellipse2D.Float dessinerEllipse(int x1, int y1, int x2, int y2) {
-		int x = Math.min(x1, x2);
-		int y = Math.min(y1, y2);
-		
-		int largeur = Math.abs(x1-x2);
-		int hauteur = Math.abs(y1-y2);
-		
-		return new Ellipse2D.Float(x, y, largeur, hauteur);
-	}
-	
-	private Line2D.Float dessinerLigne(int x1, int y1, int x2, int y2) {
-		
-		return new Line2D.Float(x1, y1, x2, y2);
-		
-	}
-	
-	
-	
-	public void setDimensionEspaceTravail(int p_Largeur, int p_Hauteur) {		
-		this.setDimensionEspaceTravail(new Dimension(p_Largeur , p_Hauteur));
-	}
-	
-	public void setDimensionEspaceTravail(Dimension p_DimensionEspaceTravail) {		
-		this.m_DimensionEspaceTravail = p_DimensionEspaceTravail;
-		this.setPreferredSize(this.m_DimensionEspaceTravail);
-		this.setSize(this.m_DimensionEspaceTravail);
-	}
-	
-	public void setDefaultEspaceTravail() {	
-		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
-		this.setPreferredSize(this.m_DimensionEspaceTravail);		
-		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));		
-	}
-	
-	public Dimension getDimensionEspaceTravail() {
-		return this.m_DimensionEspaceTravail;
-	} 
-	
-	public int getLargeurEspaceTravail() {
-		return this.m_DimensionEspaceTravail.width;
-	}
+
 
 }

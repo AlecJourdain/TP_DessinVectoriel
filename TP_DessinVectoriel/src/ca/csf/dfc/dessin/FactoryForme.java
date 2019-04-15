@@ -9,16 +9,16 @@ package ca.csf.dfc.dessin;
  */
 public class FactoryForme {
 	
-	public static Forme creationForme(FormeType p_typeForme) {
+	public static Forme creationForme(String p_typeForme) {
 		Forme forme = null;
 		switch(p_typeForme) {
-			case LIGNE:
+			case "LIGNE":
 				forme = new Ligne();
 				break;
-			case ELLIPSE:
+			case "ELLIPSE":
 				forme = new Ellipse();
 				break;
-			case RECTANGLE:
+			case "RECTANGLE":
 				forme = new Rectangle();
 				break;
 		}

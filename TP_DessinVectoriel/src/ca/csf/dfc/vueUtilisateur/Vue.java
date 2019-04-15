@@ -13,20 +13,14 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
+
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
 
-import ca.csf.dfc.dessin.FormeType;
 import ca.csf.dfc.fonctions.Sauvegarde;
 
 /**
@@ -44,6 +38,8 @@ public class Vue extends JFrame {
 	//private JButton btn_LigneDessin;
 	private JPanel m_panel_Centre;
 	private Canevas m_canevas;
+
+
 	/**
 	 * Ctor
 	 */
@@ -221,6 +217,10 @@ public class Vue extends JFrame {
 		JButton btn_SelectionDessin = new JButton();		
 		btn_SelectionDessin.setIcon(Vue.chargerIcone("icons8-mouse-32.png"));	
 		btn_SelectionDessin.setToolTipText("Selection Dessin");
+		btn_SelectionDessin.addActionListener(e -> {
+			m_canevas.setModeAction(ModeAction.Creer);
+
+		});
 		panneauGauche.add(btn_SelectionDessin);
 			
 		// btn_RemplissageDessin
@@ -240,7 +240,8 @@ public class Vue extends JFrame {
 		btn_LigneDessin.setIcon(Vue.chargerIcone("icons8-line-32.png"));	
 		btn_LigneDessin.setToolTipText("Ligne");
 		btn_LigneDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant(FormeType.LIGNE);
+			m_canevas.setFormeTypeCourant("LIGNE");
+			m_canevas.setModeAction(ModeAction.Dessiner);
 		});
 		panneauGauche.add(btn_LigneDessin);
 					
@@ -249,7 +250,8 @@ public class Vue extends JFrame {
 		btn_RectangleDessin.setIcon(Vue.chargerIcone("icons8-rectangular-32.png"));	
 		btn_RectangleDessin.setToolTipText("Rectangle");
 		btn_RectangleDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant(FormeType.RECTANGLE);
+			m_canevas.setFormeTypeCourant("RECTANGLE");
+			m_canevas.setModeAction(ModeAction.Dessiner);
 		});
 		panneauGauche.add(btn_RectangleDessin);
 
@@ -258,7 +260,8 @@ public class Vue extends JFrame {
 		btn_EllipseDessin.setIcon(Vue.chargerIcone("icons8-oval-32.png"));	
 		btn_EllipseDessin.setToolTipText("Ellipse");
 		btn_EllipseDessin.addActionListener(e -> {
-			m_canevas.setFormeTypeCourant(FormeType.ELLIPSE);
+			m_canevas.setFormeTypeCourant("ELLIPSE");
+			m_canevas.setModeAction(ModeAction.Dessiner);
 		});
 		panneauGauche.add(btn_EllipseDessin);					
 			
