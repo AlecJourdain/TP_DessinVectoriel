@@ -44,11 +44,6 @@ public class Canevas extends JComponent{
 	public static final int HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
 	public static final Color COULEUR_DEFAULT_ESPACE_TRAVAIL = Color.white;
 	private Dimension m_DimensionEspaceTravail;
-
-	
-	
-	
-	
 	private Color m_couleurTrait = Color.black;
 	private Color m_couleurRemplissage = Color.black;
 	private int m_epaisseurTrait = 2;
@@ -56,6 +51,7 @@ public class Canevas extends JComponent{
 	private TypeAction m_typeActionPerformee;
 	private String m_formeTypeCourant = "X";
 	private Forme m_formeSelectionnee = null;
+
 //	private boolean m_estModifie = false;
 	
 	Point m_premierPoint, m_pointFinal;			// Points enregistrés lors d'un DESSINER
@@ -81,19 +77,11 @@ public class Canevas extends JComponent{
 					m_premierPoint = new Point(e.getX(), e.getY());
 					m_pointFinal = m_premierPoint;
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
-						for (int i = listeFormes.size() -1; i >= 0; i--) {
-							Forme f = listeFormes.get(i);
+						for (Forme f : listeFormes) {
 							if (f.contientPoint(m_premierPoint.x, m_premierPoint.y)) {
 								m_formeSelectionnee = f;
 								xAvantDpl = m_premierPoint.x;
 								yAvantDpl = m_premierPoint.y;
-								if (e.isShiftDown()) {
-									for (int j = i; j < listeFormes.size() -1; j++) {
-										listeFormes.set(j, listeFormes.get(j+1));
-									}
-									int finDeListe = listeFormes.size();
-									listeFormes.add(finDeListe, f);
-								}
 							}
 						}
 					}
@@ -159,27 +147,6 @@ public class Canevas extends JComponent{
 					repaint();
 				}
 			}
-//			public void mouseMoved(MouseEvent e) {
-//				if(m_modeAction == ModeAction.Creer) {
-//					for (Forme formeCourante : m_formes) {
-//						Shape formeTempo = null;
-//						if(formeCourante.getType() == "RECTANGLE") {
-//							 formeTempo = new Rectangle2D.Float(formeCourante.getX1(), formeCourante.getY1(),
-//									 Math.abs(formeCourante.getX2()-formeCourante.getX1()),
-//									 Math.abs(formeCourante.getY2()-formeCourante.getY1()));
-//						}
-//						if(formeTempo.contains(e.getPoint())){
-//							
-//							curseur = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-//							
-//						} else {
-//							
-//							curseur = Cursor.getDefaultCursor();
-//						}
-//						repaint();
-//					}
-//				}
-//			}
 		});
 		
 		
