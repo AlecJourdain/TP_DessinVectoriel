@@ -5,11 +5,11 @@ package ca.csf.dfc.vueUtilisateur;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-import javax.swing.BorderFactory;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,12 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.KeyStroke;
+
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
 import ca.csf.dfc.dessin.ListeDeFormes;
@@ -169,6 +165,7 @@ public class Vue extends JFrame {
 		this.setJMenuBar(m_menuBarre);
 	}
 	
+
 	
 	/**
 	 * Initialisation du panneau de boutons au nord de la fenêtre Vue
@@ -235,7 +232,7 @@ public class Vue extends JFrame {
 		btn_SelectionDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.SELECTIONNER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant('X');
+			m_canevas.setFormeTypeCourant("X");
 		});
 		panneauGauche.add(btn_SelectionDessin);
 			
@@ -259,7 +256,7 @@ public class Vue extends JFrame {
 		btn_LigneDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant('L');
+			m_canevas.setFormeTypeCourant("L");
 		});
 		panneauGauche.add(btn_LigneDessin);
 					
@@ -270,7 +267,7 @@ public class Vue extends JFrame {
 		btn_RectangleDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant('R');
+			m_canevas.setFormeTypeCourant("R");
 		});
 		panneauGauche.add(btn_RectangleDessin);
 
@@ -281,7 +278,7 @@ public class Vue extends JFrame {
 		btn_EllipseDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant('E');
+			m_canevas.setFormeTypeCourant("E");
 		});
 		panneauGauche.add(btn_EllipseDessin);					
 			
@@ -301,6 +298,7 @@ public class Vue extends JFrame {
 		this.m_panel_Centre.setBackground(Color.white);		
 		
 		//creation canevas
+		this.m_listeFormesAdessiner = new ListeDeFormes();
 		this.m_canevas = new Canevas(m_listeFormesAdessiner);
 		this.m_panel_Centre.add(m_canevas, FlowLayout.LEFT);
 				

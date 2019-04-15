@@ -1,13 +1,12 @@
 package ca.csf.dfc.dessin;
 
-import java.awt.Graphics;
 
 import ca.csf.dfc.Dessiner.IDessiner;
 
 public class Ligne extends Forme{
 	public Ligne() {
 		super();
-		this.m_type = 'L';
+		this.m_type = "L";
 	}
 
 	@Override
