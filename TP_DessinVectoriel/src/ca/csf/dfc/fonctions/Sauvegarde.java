@@ -26,7 +26,7 @@ public class Sauvegarde {
 			
 			//... epaisseur_trait="..." ...
 			p_doc.writeAttribute("epaisseur_trait", 
-					Integer.toString(p_forme.getEpaisseurTrait()));
+					Float.toString(p_forme.getEpaisseurTrait()));
 			
 			//... couleur_trait="..." ...
 			p_doc.writeAttribute("couleur_trait", 
@@ -55,13 +55,12 @@ public class Sauvegarde {
 			// ... />
 			p_doc.writeEndElement();
 		}
-	}
+			
+			// ... />
+			p_doc.writeEndElement();
+		}
 
-	//
-	//
-//			public IModele getModele() {
-//				return this.m_Model;
-//			}
+
 
 	public void sauvegarderFormesXML(ArrayList<Forme> p_tableauFormes){
 		

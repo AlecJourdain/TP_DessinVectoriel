@@ -28,11 +28,11 @@ public class charger {
 	private static final String ATTR_Y1 = "y1";
 	private static final String ATTR_Y2 = "y2";
 	
-	public Forme  lireForme(File p_file) {
+	public Forme charger(File p_file) {
 		Forme f = null;
 		XMLStreamReader doc = null;
 		
-		String typeForme=doc.getAttributeValue("", ATTR_TYPEFORME);
+		String typeForme = doc.getAttributeValue("", ATTR_TYPEFORME);
 		int x1=Integer.parseInt(doc.getAttributeValue("", ATTR_X1));
 		int y1=Integer.parseInt(doc.getAttributeValue("", ATTR_Y1));
 		int x2=Integer.parseInt(doc.getAttributeValue("", ATTR_X2));
@@ -41,7 +41,7 @@ public class charger {
 	//	int couleurRemplissage;    couleur_remplissage
 	//	int couleurTrait;    couleur_trait
 		
-		
+		f.getType();
 		f.setX1(x1);
 		f.setX2(x2);
 		f.setY1(y1);
@@ -51,9 +51,7 @@ public class charger {
 		return f;
 		
 	}
-	
-	public void chargerXML() {
-		
-	}
 
 }
+
+

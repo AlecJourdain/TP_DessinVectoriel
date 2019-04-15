@@ -1,7 +1,9 @@
 package ca.csf.dfc.main;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+
 import ca.csf.dfc.vueUtilisateur.Vue;
+
 
 public class Main {
 
@@ -9,7 +11,9 @@ public class Main {
 		SwingUtilities.invokeLater(() -> {
 			Vue v = new Vue();
 			v.pack();
-			v.setVisible(true);
+			v.setVisible(true);//*/
+			
+
 		});
 	}
 }
