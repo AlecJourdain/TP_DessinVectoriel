@@ -221,11 +221,12 @@ public class Vue extends JFrame {
 	 */
 	private void initialiserPaneauOuestBoutonForms() {
 		
+		//parametrer panneuGauche
 		JPanel panneauGauche = new JPanel();
 		BoxLayout panneauEstGrid = new BoxLayout(panneauGauche, BoxLayout.Y_AXIS );
 		panneauGauche.setLayout(panneauEstGrid);
 			
-		// btn_SelectionDessin
+		// creer btn_SelectionDessin
 		JButton btn_SelectionDessin = new JButton();		
 		btn_SelectionDessin.setIcon(Vue.chargerIcone("icons8-mouse-32.png"));	
 		btn_SelectionDessin.setToolTipText("Selection Dessin");
@@ -233,22 +234,19 @@ public class Vue extends JFrame {
 			m_canevas.setTypeActionPerformee(TypeAction.SELECTIONNER);
 			m_canevas.setFormeSelectionnee(null);
 			m_canevas.setFormeTypeCourant("X");
-		});
-		panneauGauche.add(btn_SelectionDessin);
+		});		
 			
-		// btn_RemplissageDessin
+		// creer btn_RemplissageDessin
 		JButton btn_RemplissageDessin = new JButton();		
 		btn_RemplissageDessin.setIcon(Vue.chargerIcone("icons8-paint-palette-32.png"));	
-		btn_RemplissageDessin.setToolTipText("Couleur de remplissage");
-		panneauGauche.add(btn_RemplissageDessin);
+		btn_RemplissageDessin.setToolTipText("Couleur de remplissage");		
 			
-		// btn_EpaisseurDessin
+		// creer btn_EpaisseurDessin
 		JButton btn_EpaisseurDessin = new JButton();		
 		btn_EpaisseurDessin.setIcon(Vue.chargerIcone("icons8-merge-vertical-32.png"));	
-		btn_EpaisseurDessin.setToolTipText("Epaisseur du trait");
-		panneauGauche.add(btn_EpaisseurDessin);	
+		btn_EpaisseurDessin.setToolTipText("Epaisseur du trait");		
 			
-		// btn_LigneDessin
+		// creer btn_LigneDessin
 		JButton btn_LigneDessin= new JButton();	
 		//btn_LigneDessin = new JButton();		
 		btn_LigneDessin.setIcon(Vue.chargerIcone("icons8-line-32.png"));	
@@ -257,10 +255,9 @@ public class Vue extends JFrame {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
 			m_canevas.setFormeTypeCourant("L");
-		});
-		panneauGauche.add(btn_LigneDessin);
+		});		
 					
-		// btn_RectangleDessin
+		// creer btn_RectangleDessin
 		JButton btn_RectangleDessin = new JButton();		
 		btn_RectangleDessin.setIcon(Vue.chargerIcone("icons8-rectangular-32.png"));	
 		btn_RectangleDessin.setToolTipText("Rectangle");
@@ -268,10 +265,9 @@ public class Vue extends JFrame {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
 			m_canevas.setFormeTypeCourant("R");
-		});
-		panneauGauche.add(btn_RectangleDessin);
+		});		
 
-		// btn_EllipseDessin
+		// creer btn_EllipseDessin
 		JButton btn_EllipseDessin = new JButton();		
 		btn_EllipseDessin.setIcon(Vue.chargerIcone("icons8-oval-32.png"));	
 		btn_EllipseDessin.setToolTipText("Ellipse");
@@ -279,9 +275,17 @@ public class Vue extends JFrame {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
 			m_canevas.setFormeTypeCourant("E");
-		});
+		});		
+		
+		//additions boutons sur panneu gouche
+		panneauGauche.add(btn_SelectionDessin);
+		panneauGauche.add(btn_RemplissageDessin);
+		panneauGauche.add(btn_EpaisseurDessin);	
+		panneauGauche.add(btn_LigneDessin);
+		panneauGauche.add(btn_RectangleDessin);
 		panneauGauche.add(btn_EllipseDessin);					
-			
+		
+		//Addition sur la fanetre Principal
 		this.add(panneauGauche, BorderLayout.WEST);
 	}
 		
@@ -307,9 +311,7 @@ public class Vue extends JFrame {
 		jScrollPaneCentre.setViewportView(this.m_panel_Centre);		
 		jScrollPaneCentre.setVerticalScrollBar(new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 300));
 		jScrollPaneCentre.setHorizontalScrollBar(new JScrollBar(JScrollBar.HORIZONTAL, 30, 40, 0, 300));
-		//jScrollPaneCentre.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//jScrollPaneCentre.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		//jScrollPaneCentre.getViewport().setBackground(Color.gray);
+		
 		
 		//Add scroll au JFrame
 		this.add(jScrollPaneCentre);//*/
