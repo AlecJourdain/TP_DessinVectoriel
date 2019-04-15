@@ -1,13 +1,13 @@
 package ca.csf.dfc.dessin;
 
-import java.awt.Graphics;
+
 
 import ca.csf.dfc.Dessiner.IDessiner;
 
 public class Ellipse extends Forme{
 	public Ellipse() {
 		super();
-		this.m_type = 'E';
+		this.m_type = "E";
 	}
 
 	@Override

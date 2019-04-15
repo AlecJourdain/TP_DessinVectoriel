@@ -12,7 +12,6 @@ import javax.swing.JComponent;
 
 import ca.csf.dfc.Dessiner.DessinerG2D;
 import ca.csf.dfc.JustOneEnum.TypeAction;
-import ca.csf.dfc.dessin.Couleur;
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
 //import ca.csf.dfc.dessin.FormeType;
@@ -39,11 +38,11 @@ public class Canevas extends JComponent{
 	
 	
 	private Color m_couleurTrait = Color.black;
-	private Color m_couleurRemplissage = new Color(255, 255, 255, 0);
+	private Color m_couleurRemplissage = Color.black;
 	private int m_epaisseurTrait = 2;
 	
 	private TypeAction m_typeActionPerformee;
-	private char m_formeTypeCourant = 'X';
+	private String m_formeTypeCourant = "X";
 	private Forme m_formeSelectionnee = null;
 //	private boolean m_estModifie = false;
 	
@@ -86,52 +85,6 @@ public class Canevas extends JComponent{
 				}
 				
 			}
-			public void mouseReleased(MouseEvent e) {
-				if(m_modeAction == ModeAction.Dessiner) {
-					if (premierPoint == null) return; 
-					
-					if (premierPoint == pointFinal) return; 	// La souris n'a pas bougé
-					
-					// La forme est créée dès que la souris est relâchée
-					Forme f = FactoryForme.creationForme(m_formeTypeCourant);
-					
-					f.setX1(premierPoint.x);
-					f.setY1(premierPoint.y);
-					f.setX2(e.getX());
-					f.setY2(e.getY());
-					f.setCouleurRemplissage(m_couleurRemplissage);
-					f.setCouleurTrait(m_couleurTrait);
-					f.setEpaisseurTrait(m_epaisseurTrait);
-					
-					// La forme créée est ajoutée à la liste de formes
-					m_formes.add(f);
-					
-					
-					
-					// Les points sont remis à null pour la création d'une prochaine forme
-					premierPoint = null;
-					pointFinal = null;
-					
-					// Le boolean signale qu'il y a eu une modification
-					m_estModifie = true;
-					
-					repaint();
-				} else if(m_modeAction == ModeAction.Creer){
-					for (Forme f : m_formes) {
-						Shape formeTempo = null;
-						if(f.getType() == "RECTANGLE") {
-							 formeTempo = new Rectangle2D.Float(f.getX1(), f.getY1(), f.getX2()-f.getX1(), f.getY2()-f.getY1());
-						}
-						
-						if(formeTempo.contains(e.getPoint())){
-							m_formeSelectionner = formeTempo;
-						}
-						
-					}
-					repaint();
-				}
-
-			}
 			
 			public void mouseReleased(MouseEvent e) {
 				if (m_premierPoint == null) return;
@@ -144,16 +97,8 @@ public class Canevas extends JComponent{
 					f.setY1(m_premierPoint.y);
 					f.setX2(e.getX());
 					f.setY2(e.getY());
-					f.setCouleurRemplissage(new Couleur(
-							m_couleurRemplissage.getRed(),
-							m_couleurRemplissage.getGreen(),
-							m_couleurRemplissage.getBlue(),
-							m_couleurRemplissage.getAlpha()));
-					f.setCouleurTrait(new Couleur(
-							m_couleurTrait.getRed(),
-							m_couleurTrait.getGreen(),
-							m_couleurTrait.getBlue(),
-							m_couleurTrait.getAlpha()));
+					f.setCouleurRemplissage(m_couleurRemplissage);
+					f.setCouleurTrait(m_couleurTrait);
 					f.setEpaisseurTrait(m_epaisseurTrait);
 					
 //					// La forme créée est ajoutée à la liste de formes
@@ -198,27 +143,27 @@ public class Canevas extends JComponent{
 					repaint();
 				}
 			}
-			public void mouseMoved(MouseEvent e) {
-				if(m_modeAction == ModeAction.Creer) {
-					for (Forme formeCourante : m_formes) {
-						Shape formeTempo = null;
-						if(formeCourante.getType() == "RECTANGLE") {
-							 formeTempo = new Rectangle2D.Float(formeCourante.getX1(), formeCourante.getY1(),
-									 Math.abs(formeCourante.getX2()-formeCourante.getX1()),
-									 Math.abs(formeCourante.getY2()-formeCourante.getY1()));
-						}
-						if(formeTempo.contains(e.getPoint())){
-							
-							curseur = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-							
-						} else {
-							
-							curseur = Cursor.getDefaultCursor();
-						}
-						repaint();
-					}
-				}
-			}
+//			public void mouseMoved(MouseEvent e) {
+//				if(m_modeAction == ModeAction.Creer) {
+//					for (Forme formeCourante : m_formes) {
+//						Shape formeTempo = null;
+//						if(formeCourante.getType() == "RECTANGLE") {
+//							 formeTempo = new Rectangle2D.Float(formeCourante.getX1(), formeCourante.getY1(),
+//									 Math.abs(formeCourante.getX2()-formeCourante.getX1()),
+//									 Math.abs(formeCourante.getY2()-formeCourante.getY1()));
+//						}
+//						if(formeTempo.contains(e.getPoint())){
+//							
+//							curseur = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+//							
+//						} else {
+//							
+//							curseur = Cursor.getDefaultCursor();
+//						}
+//						repaint();
+//					}
+//				}
+//			}
 		});
 		
 		
@@ -292,7 +237,7 @@ public class Canevas extends JComponent{
 	 * Pour modifier le formeTypeCourant.
 	 * @param p_formeTypeCourant Nouvelle valeur.
 	 */
-	public void setFormeTypeCourant(char p_formeTypeCourant) {
+	public void setFormeTypeCourant(String p_formeTypeCourant) {
 		this.m_formeTypeCourant = p_formeTypeCourant;
 	}
 	
@@ -387,31 +332,7 @@ public class Canevas extends JComponent{
 //		return this.m_formes;
 //	}
 	
-//	private Rectangle2D.Float dessinerRectangle(int x1, int y1, int x2, int y2) {
-//		int x = Math.min(x1, x2);
-//		int y = Math.min(y1, y2);
-//		
-//		int largeur = Math.abs(x1-x2);
-//		int hauteur = Math.abs(y1-y2);
-//		
-//		return new Rectangle2D.Float(x, y, largeur, hauteur);
-//	}
-//	
-//	private Ellipse2D.Float dessinerEllipse(int x1, int y1, int x2, int y2) {
-//		int x = Math.min(x1, x2);
-//		int y = Math.min(y1, y2);
-//		
-//		int largeur = Math.abs(x1-x2);
-//		int hauteur = Math.abs(y1-y2);
-//		
-//		return new Ellipse2D.Float(x, y, largeur, hauteur);
-//	}
-//	
-//	private Line2D.Float dessinerLigne(int x1, int y1, int x2, int y2) {
-//		
-//		return new Line2D.Float(x1, y1, x2, y2);
-//		
-//	}
+
 
 
 }

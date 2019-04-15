@@ -1,9 +1,7 @@
 package ca.csf.dfc.dessin;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
-import com.sun.javafx.geom.Shape;
 
 import ca.csf.dfc.Dessiner.IDessiner;
 
@@ -12,17 +10,17 @@ import ca.csf.dfc.Dessiner.IDessiner;
  *
  */
 public abstract class Forme {
-	protected char m_type = 'X';
+	protected String m_type = "X";
 	protected int m_x1;
 	protected int m_x2;
 	protected int m_y1;
 	protected int m_y2;
-	protected Couleur m_couleurTrait;
-	protected Couleur m_couleurRemplissage;
+	protected Color m_couleurTrait;
+	protected Color m_couleurRemplissage;
 	protected float m_epaisseurTrait;
 	
 	public Forme() {};
-	public abstract void dessiner(IDessiner p_methodeDessin);
+	
 	
 	/**
 	 * Retourne le x1
@@ -85,7 +83,7 @@ public abstract class Forme {
 	 * Retourne le couleurTrait
 	 * @return le couleurTrait
 	 */
-	public Couleur getCouleurTrait() {
+	public Color getCouleurTrait() {
 		return this.m_couleurTrait;
 	}
 
@@ -93,7 +91,7 @@ public abstract class Forme {
 	 * Pour modifier le couleurTrait
 	 * @param p_couleurTrait Nouvelle valeur
 	 */
-	public void setCouleurTrait(Couleur p_couleurTrait) {
+	public void setCouleurTrait(Color p_couleurTrait) {
 		this.m_couleurTrait = p_couleurTrait;
 	}
 
@@ -101,7 +99,7 @@ public abstract class Forme {
 	 * Retourne le couleurRemplissage
 	 * @return le couleurRemplissage
 	 */
-	public Couleur getCouleurRemplissage() {
+	public Color getCouleurRemplissage() {
 		return this.m_couleurRemplissage;
 	}
 
@@ -109,7 +107,7 @@ public abstract class Forme {
 	 * Pour modifier le couleurRemplissage
 	 * @param p_couleurRemplissage Nouvelle valeur
 	 */
-	public void setCouleurRemplissage(Couleur p_couleurRemplissage) {
+	public void setCouleurRemplissage(Color p_couleurRemplissage) {
 		this.m_couleurRemplissage = p_couleurRemplissage;
 	}
 
@@ -133,7 +131,7 @@ public abstract class Forme {
 	 * Retourne le type
 	 * @return le type
 	 */
-	public char getType() {
+	public String getType() {
 		return this.m_type;
 	}
 	public void dessiner(IDessiner p_dessin) {

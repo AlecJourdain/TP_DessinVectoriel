@@ -1,13 +1,12 @@
 package ca.csf.dfc.dessin;
 
-import java.awt.Graphics;
 
 import ca.csf.dfc.Dessiner.IDessiner;
 
 public class Rectangle extends Forme {
 	public Rectangle() {
 		super();
-		this.m_type = 'R';
+		this.m_type = "R";
 	}
 
 	@Override
