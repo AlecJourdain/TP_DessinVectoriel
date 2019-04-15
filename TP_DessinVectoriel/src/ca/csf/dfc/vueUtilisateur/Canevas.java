@@ -51,15 +51,9 @@ public class Canevas extends JComponent{
 	 * Ctor
 	 */
 	public Canevas() {
-		
-		System.out.println(m_modeAction);
-		
-		
-		
 		/* un objet d'une classe anonyme dérivée de MouseAdapter est créé et transmis à la méthode addMouseListener
 		 * les méthodes mousePressed et mouseReleased sont redéfinies*/
 		this.addMouseListener(new MouseAdapter () {
-			
 			public void mousePressed(MouseEvent e) {
 
 				if( m_modeAction == ModeAction.Dessiner) {
@@ -81,16 +75,14 @@ public class Canevas extends JComponent{
 							premierPoint = new Point(f.getX1(), f.getY1());
 							pointFinal = new Point(f.getX2(), f.getY2());
 						}
-					
 					}
 					repaint();
-					
 				}
 			}
-			
 			public void mouseReleased(MouseEvent e) {
 				if(m_modeAction == ModeAction.Dessiner) {
-					if (premierPoint == null) return; 			
+					if (premierPoint == null) return; 
+					
 					if (premierPoint == pointFinal) return; 	// La souris n'a pas bougé
 					
 					// La forme est créée dès que la souris est relâchée
@@ -219,8 +211,6 @@ public class Canevas extends JComponent{
 						repaint();
 					}
 				}
-				
-				
 			}
 		});
 		
@@ -323,12 +313,7 @@ public class Canevas extends JComponent{
 			f.dessiner(this.m_modeDessin);
 		}
 		
-//		if (premierPoint != null && pointFinal != null) {
-//			graphSettings.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-//			graphSettings.setPaint(Color.lightGray);
-//			Shape uneForme = dessinerRectangle(premierPoint.x, premierPoint.y, pointFinal.x, pointFinal.y);
-//			graphSettings.draw(uneForme);
-//		}
+
 	}
 	
 	public void effacer() {
