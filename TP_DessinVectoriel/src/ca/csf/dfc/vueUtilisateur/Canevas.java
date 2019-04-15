@@ -44,15 +44,25 @@ public class Canevas extends JComponent{
 	public static final int HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
 	public static final Color COULEUR_DEFAULT_ESPACE_TRAVAIL = Color.white;
 	private Dimension m_DimensionEspaceTravail;
+
+	
+	
+	//Pour le couleur de remplisage des figures
+	public static final Color 	COLOR_DEFAULT_REMPLISAGE = Color.black;
+	public static final Color 	COLOR_DEFAULT_TRAIT = Color.black;
+	public static final int 	EPPAISSEUR_DEFAULT_REMPLISAGE = 2;
+	
 	private Color m_couleurTrait = Color.black;
 	private Color m_couleurRemplissage = Color.black;
-	private int m_epaisseurTrait = 2;
+	private int m_epaisseurTrait;
+	
 	
 	private TypeAction m_typeActionPerformee;
 	private String m_formeTypeCourant = "X";
 	private Forme m_formeSelectionnee = null;
-
-//	private boolean m_estModifie = false;
+	
+	
+	//	private boolean m_estModifie = false;
 	
 	Point m_premierPoint, m_pointFinal;			// Points enregistrés lors d'un DESSINER
 	int xAvantDpl;
@@ -345,7 +355,7 @@ public class Canevas extends JComponent{
 //	}
 	
 	
-	
+	//Pour le space travail
 	public void setDimensionEspaceTravail(int p_Largeur, int p_Hauteur) {		
 		this.setDimensionEspaceTravail(new Dimension(p_Largeur , p_Hauteur));
 	}
@@ -370,7 +380,29 @@ public class Canevas extends JComponent{
 		return this.m_DimensionEspaceTravail.width;
 	}
 	
+	//Pour le couleur de remplisage des forms
+	public void setCouleurRemplisageForm(Color p_couleur) {
+		this.m_couleurRemplissage = p_couleur;
+	}
+	public Color getCouleurRemplisageForm() {
+		return this.m_couleurRemplissage;
+	}
 	
+	//Pour le couleur de trait des forms
+	public void setCouleurTraitForm(Color p_couleur) {
+		this.m_couleurTrait = p_couleur;
+	}
+	public Color getCouleurTraitForm() {
+		return this.m_couleurTrait;
+	}
+	
+	//Pour l'epaisseur de trait des forms
+	public void setEpaisseurTraitForm(int p_eppaisseur) {
+		this.m_epaisseurTrait = p_eppaisseur;
+	}
+		public int getEpaisseurTraitForm() {
+			return this.m_epaisseurTrait;
+		}
 
 
 
