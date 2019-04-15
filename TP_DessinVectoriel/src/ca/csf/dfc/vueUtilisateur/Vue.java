@@ -324,7 +324,7 @@ public class Vue extends JFrame {
 	 */
 	private static ImageIcon chargerIcone(String p_Image) {
 		ImageIcon icone = null;        
-		String chemin = ".\\src\\res\\" + p_Image;
+		String chemin = "./src/res/" + p_Image;
 		try {
 			icone = new ImageIcon(chemin);
 		} catch (NullPointerException e) {
