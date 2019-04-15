@@ -20,6 +20,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 
 import javax.swing.SpinnerNumberModel;
@@ -322,7 +324,7 @@ public class Vue extends JFrame {
 	 */
 	private static ImageIcon chargerIcone(String p_Image) {
 		ImageIcon icone = null;        
-		String chemin = ".\\src\\res\\" + p_Image;
+		String chemin = "./src/res/" + p_Image;
 		try {
 			icone = new ImageIcon(chemin);
 		} catch (NullPointerException e) {
