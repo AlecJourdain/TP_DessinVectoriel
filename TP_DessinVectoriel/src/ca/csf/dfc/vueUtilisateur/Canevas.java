@@ -7,11 +7,16 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 import ca.csf.dfc.Dessiner.DessinerG2D;
 import ca.csf.dfc.JustOneEnum.TypeAction;
@@ -63,8 +68,20 @@ public class Canevas extends JComponent{
 	private Forme 		m_formeSelectionnee ;
 	private ArrayList<Forme> m_listeFormesAdessiner;
 	
-	//Pour dessiner
-	//private boolean m_estModifie = false;	
+	
+	private TypeAction m_typeActionPerformee;
+	private String m_formeTypeCourant = "X";
+	private Forme m_formeSelectionnee = null;
+	
+	private JPopupMenu menuClicDroitSouris;
+
+	/*
+	 * Ctor du menu popup du clic droit de la souris
+	 */
+	
+	
+	//	private boolean m_estModifie = false;
+	
 	Point m_premierPoint, m_pointFinal;			// Points enregistrés lors d'un DESSINER
 	int xAvantDpl;
 	int yAvantDpl;		// Enregistrent les coordonnées x,y de la position de la souris au départ d'un déplacement
@@ -72,7 +89,12 @@ public class Canevas extends JComponent{
 	/**
 	 * Ctor
 	 */
-	public Canevas() {
+	public Canevas(ListeDeFormes ldf) {
+		
+		
+		
+		m_listeFormesAdessiner = ldf;
+		ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		
 		//creation d'arrayList de Forms
 		this.m_listeFormesAdessiner = new ArrayList<Forme>();		
@@ -97,20 +119,52 @@ public class Canevas extends JComponent{
 					
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
 						
-						for (int i = m_listeFormesAdessiner.size() -1; i >= 0; i--) {
-							Forme f = m_listeFormesAdessiner.get(i);
-							
+						for (Forme f : listeFormes) {
 							if (f.contientPoint(m_premierPoint.x, m_premierPoint.y)) {
+								xAvantDpl = e.getX();
+								yAvantDpl = e.getY();
 								m_formeSelectionnee = f;
-								xAvantDpl = m_premierPoint.x;
-								yAvantDpl = m_premierPoint.y;
-								
-								if (e.isShiftDown()) {
-									for (int j = i; j < m_listeFormesAdessiner.size() -1; j++) {
-										m_listeFormesAdessiner.set(j, m_listeFormesAdessiner.get(j+1));
+								m_premierPoint.x = f.getX1();
+								m_premierPoint.y = f.getY1();
+								m_pointFinal.x = f.getX2();
+								m_pointFinal.y = f.getY2();
+								if(SwingUtilities.isRightMouseButton(e)) {
+									
+									if(menuClicDroitSouris == null) {
+										menuClicDroitSouris = new JPopupMenu();
+										JMenuItem menuItem = new JMenuItem("Modifier couleur de remplissage");
+										menuItem.addActionListener(g -> {
+											
+											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur", m_couleurRemplissage);
+											if (couleur != null) {
+												f.setCouleurRemplissage(couleur);
+												repaint();
+											}
+										});
+										menuClicDroitSouris.add(menuItem);
+										menuItem = new JMenuItem("Modifier couleur du trait");
+										menuItem.addActionListener(e_-> {
+											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur",m_couleurTrait);
+											if (couleur != null) {
+												f.setCouleurTrait(couleur);
+												repaint();
+											}
+										});
+										menuClicDroitSouris.add(menuItem);
+										menuItem = new JMenuItem("Modifier epaisseur du trait");
+										menuItem.addActionListener(e_-> {
+											String epaisseur;
+											epaisseur = JOptionPane.showInputDialog(Canevas.this, "Entrer l'epaisseur desire");
+											if (epaisseur != null) {
+												f.setEpaisseurTrait(Integer.parseInt(epaisseur));
+												repaint();
+											}
+										});
+										menuClicDroitSouris.add(menuItem);
 									}
-									int finDeListe = m_listeFormesAdessiner.size();
-									m_listeFormesAdessiner.add(finDeListe, f);
+									menuClicDroitSouris.show(e.getComponent(), e.getX(), e.getY());
+									menuClicDroitSouris = null;
+
 								}
 							}
 						}
@@ -118,7 +172,7 @@ public class Canevas extends JComponent{
 					repaint();
 				}				
 			}
-			
+
 			public void mouseReleased(MouseEvent e) {
 				
 				if (m_premierPoint == null) return;
@@ -150,14 +204,25 @@ public class Canevas extends JComponent{
 				}
 				
 				if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
-					int x = e.getX();
-					int y = e.getY();
-					if (m_formeSelectionnee != null) {
-						m_formeSelectionnee.deplacerDe(x - xAvantDpl, y - yAvantDpl);
-						m_formeSelectionnee = null;
-						repaint();
+//					if (m_formeSelectionnee != null) {
+//						m_formeSelectionnee.deplacerDe(x - xAvantDpl, y - yAvantDpl);
+//						m_formeSelectionnee = null;
+//						
+//					}
+					for (Forme f : listeFormes) {
+						if(f.contientPoint(e.getX(), e.getY())) {
+							m_formeSelectionnee = f;
+							if(SwingUtilities.isRightMouseButton(e)) {
+								
+								menuClicDroitSouris.show(e.getComponent(), e.getX(), e.getY());
+							}
+							
+						}
 					}
-				}				
+					
+					repaint();
+				}
+				
 			}
 		});
 		
@@ -165,39 +230,44 @@ public class Canevas extends JComponent{
 		 * addMouseMotionListener la méthode mouseDragged est redéfinie*/
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
+				int nouveauX = e.getX() - xAvantDpl;
+				int nouveauY = e.getY() - yAvantDpl;
 				if (m_typeActionPerformee == TypeAction.DESSINER || m_typeActionPerformee == TypeAction.SELECTIONNER) {
 					m_pointFinal = new Point(e.getX(), e.getY());
+
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
-						if (m_formeSelectionnee != null) {
-							m_formeSelectionnee.deplacerDe(m_pointFinal.x - xAvantDpl, m_pointFinal.y - yAvantDpl);
-							xAvantDpl = m_pointFinal.x;
-							yAvantDpl = m_pointFinal.y;
+						for (Forme f : listeFormes) {
+							if(f.contientPoint(e.getX(), e.getY())) {
+								m_formeSelectionnee = f;
+								Forme nouvelleForme = FactoryForme.creationForme(m_formeTypeCourant);
+								nouvelleForme = f;
+								if (e.getX() >= f.getX2()-10 ||  e.getY() >= f.getY2()-10) {
+									nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
+									nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
+									
+								} else {
+									nouvelleForme.setX1(nouvelleForme.getX1() + nouveauX);
+									nouvelleForme.setY1(nouvelleForme.getY1() + nouveauY);
+									nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
+									nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
+									
+								}
+								
+								listeFormes.set(listeFormes.indexOf(f), nouvelleForme);
+								xAvantDpl += nouveauX;
+								yAvantDpl += nouveauY;
+								m_premierPoint = m_pointFinal;
+							}
 						}
+//						if (m_formeSelectionnee != null) {
+//							m_formeSelectionnee.deplacerDe(m_pointFinal.x - xAvantDpl, m_pointFinal.y - yAvantDpl);
+//							xAvantDpl = m_pointFinal.x;
+//							yAvantDpl = m_pointFinal.y;
+//						}
 					}
 					repaint();
 				}
 			}
-//			public void mouseMoved(MouseEvent e) {
-//				if(m_modeAction == ModeAction.Creer) {
-//					for (Forme formeCourante : m_formes) {
-//						Shape formeTempo = null;
-//						if(formeCourante.getType() == "RECTANGLE") {
-//							 formeTempo = new Rectangle2D.Float(formeCourante.getX1(), formeCourante.getY1(),
-//									 Math.abs(formeCourante.getX2()-formeCourante.getX1()),
-//									 Math.abs(formeCourante.getY2()-formeCourante.getY1()));
-//						}
-//						if(formeTempo.contains(e.getPoint())){
-//							
-//							curseur = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-//							
-//						} else {
-//							
-//							curseur = Cursor.getDefaultCursor();
-//						}
-//						repaint();
-//					}
-//				}
-//			}
 		});
 		
 		
@@ -320,6 +390,8 @@ public class Canevas extends JComponent{
 		// Dessine les formes
 		m_listeFormesAdessiner.forEach(f -> f.dessiner(d2));
 
+		
+
 		// Guide pour le dessin lorsque l'utilisateur trace la forme
 		if (m_premierPoint != null && m_pointFinal != null && m_typeActionPerformee == TypeAction.DESSINER) {
 			afficherGuide(g2, d2);
@@ -381,7 +453,11 @@ public class Canevas extends JComponent{
 	public void setDefaultEspaceTravail() {	
 		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
 		this.setPreferredSize(this.m_DimensionEspaceTravail);		
-		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));		
+		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));	
+
+		
+		
+		
 	}
 	
 	public Dimension getDimensionEspaceTravail() {
