@@ -387,4 +387,14 @@ public class Canevas extends JComponent{
 		this.m_formeSelectionnee = FORMESELECTIONNE_DEFAULT;
 		this.m_listeFormesAdessiner.clear();
 	}
+	
+	public ArrayList<Forme> getFormes()
+	{
+		return this.m_listeFormesAdessiner;
+	}
+	
+	public void setFormes(ArrayList<Forme> p_formes) 
+	{
+		this.m_listeFormesAdessiner = p_formes;
+	}
 }

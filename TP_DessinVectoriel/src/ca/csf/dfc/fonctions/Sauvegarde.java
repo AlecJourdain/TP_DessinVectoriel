@@ -79,7 +79,7 @@ public class Sauvegarde {
 
 			
 			// </tableau_formes>
-			doc.writeEndElement();
+			//doc.writeEndElement();
 			
 		} catch(IOException exp) {
 			System.err.println("Erreur ecriture : " + exp);

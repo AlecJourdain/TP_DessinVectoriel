@@ -7,12 +7,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -23,10 +25,13 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileFilter;
+import javax.xml.stream.XMLStreamException;
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
 import ca.csf.dfc.dessin.Forme;
 import ca.csf.dfc.dessin.ListeDeFormes;
+import ca.csf.dfc.fonctions.Charger;
 import ca.csf.dfc.fonctions.Sauvegarde;
 
 
@@ -185,6 +190,30 @@ public class Vue extends JFrame {
 		JButton btn_OpenDessin = new JButton();		
 		btn_OpenDessin.setIcon(Vue.chargerIcone("icons8-open-view-32.png"));	
 		btn_OpenDessin.setToolTipText("Ouvrir Dessin");
+		btn_OpenDessin.addActionListener(e -> {
+			Charger charger = new Charger();
+			JFileChooser chooser = new JFileChooser();
+			chooser.setFileFilter(new FileFilter() {
+				@Override
+				public String getDescription() {
+					return String.format("Fichier XML (*.xml)");
+				}
+				@Override
+				public boolean accept(File p_Fichier) {
+					return p_Fichier.isDirectory() || p_Fichier.getPath().endsWith(".xml");
+				}
+			});
+			if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File file = chooser.getSelectedFile();
+				
+				try {
+					charger.charger(file, this.m_canevas);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 				
 		// btn_EnregistrerDessin
@@ -194,7 +223,7 @@ public class Vue extends JFrame {
 		btn_EnregistrerDessin.addActionListener(e -> {
 				Sauvegarde sauvegarde = new Sauvegarde();
 				//ListeDeFormes lf=new ListeDeFormes();
-				sauvegarde.sauvegarderFormesXML(m_listeFormesAdessiner.getListeFormes());
+				sauvegarde.sauvegarderFormesXML(this.m_canevas.getFormes());
 				//	ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		});
 		
