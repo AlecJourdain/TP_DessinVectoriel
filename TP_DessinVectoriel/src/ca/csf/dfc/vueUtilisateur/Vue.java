@@ -5,10 +5,8 @@ package ca.csf.dfc.vueUtilisateur;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -23,14 +21,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-
 import javax.swing.SpinnerNumberModel;
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
 import ca.csf.dfc.dessin.ListeDeFormes;
 
-//import ca.csf.dfc.dessin.FormeType;
-//import ca.csf.dfc.fonctions.Sauvegarde;
+
 
 /**
  * @author ManueLMaldonado
@@ -39,9 +35,10 @@ import ca.csf.dfc.dessin.ListeDeFormes;
 public class Vue extends JFrame {
 	
 	private static final long serialVersionUID = 873083412301053821L;
-	private JPanel m_panel_Centre;
+	
+	//Pour le Canvas element principal de la fenetre
 	private Canevas m_canevas;
-	private ListeDeFormes m_listeFormesAdessiner;
+	
 	/**
 	 * Ctor
 	 */
@@ -175,15 +172,17 @@ public class Vue extends JFrame {
 		JButton btn_NouveauDessin = new JButton();		
 		btn_NouveauDessin.setIcon(Vue.chargerIcone("icons8-add-32.png"));	
 		btn_NouveauDessin.setToolTipText("Nouveau Dessin");
-//		btn_NouveauDessin.addActionListener(e -> { 
-//			m_canevas.effacer();} );
-		panneauNorth.add(btn_NouveauDessin);
+		btn_NouveauDessin.addActionListener(e -> { 
+			this.m_canevas.setDefaultEspaceTravail();
+			this.m_canevas.setDefaultFormes();
+		});
+		
 
 		// btn_OuvrirDessin
 		JButton btn_OpenDessin = new JButton();		
 		btn_OpenDessin.setIcon(Vue.chargerIcone("icons8-open-view-32.png"));	
 		btn_OpenDessin.setToolTipText("Ouvrir Dessin");
-		panneauNorth.add(btn_OpenDessin);
+		
 				
 		// btn_EnregistrerDessin
 		JButton btn_EnregistrerDessin = new JButton();		
@@ -193,21 +192,30 @@ public class Vue extends JFrame {
 //				Sauvegarde sauvegarde = new Sauvegarde();
 //				sauvegarde.sauvegarderFormesXML(m_canevas.m_formes);
 		});
-		panneauNorth.add(btn_EnregistrerDessin);
+		
 
 		// btn_EnregistrerSousDessin
 		JButton btn_EnregistrerSousDessin = new JButton();		
 		btn_EnregistrerSousDessin.setIcon(Vue.chargerIcone("icons8-save-as-32.png"));	
 		btn_EnregistrerSousDessin.setToolTipText("Enregistrer Sous");
-		panneauNorth.add(btn_EnregistrerSousDessin);		
+				
 
 		// btn_ExporterDessin
 		JButton btn_ExporterDessin = new JButton();		
 		btn_ExporterDessin.setIcon(Vue.chargerIcone("icons8-export-32.png"));	
 		btn_ExporterDessin.setToolTipText("Exporter Dessin");
-		panneauNorth.add(btn_ExporterDessin);//*/
+		//*/
 		
-		//p_conteneur.add(panneauNorth, BorderLayout.NORTH);
+		
+		//additions boutons sur panneu North
+		panneauNorth.add(btn_NouveauDessin);
+		panneauNorth.add(btn_OpenDessin);
+		panneauNorth.add(btn_EnregistrerDessin);
+		panneauNorth.add(btn_EnregistrerSousDessin);
+		panneauNorth.add(btn_ExporterDessin);
+		
+		
+		//Addition sur la fanetre Principal
 		this.add(panneauNorth, BorderLayout.NORTH);
 	}
 
@@ -311,18 +319,19 @@ public class Vue extends JFrame {
 	private void intialiserPaneauCentre() {			
 
 		//creation Paneau Centre
-		this.m_panel_Centre = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		this.m_panel_Centre.setOpaque(true);
-		this.m_panel_Centre.setBackground(Color.white);		
+		JPanel m_panel_Centre = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		m_panel_Centre.setOpaque(true);
+		m_panel_Centre.setBackground(Color.white);		
 		
 		//creation canevas
-		this.m_listeFormesAdessiner = new ListeDeFormes();
-		this.m_canevas = new Canevas(m_listeFormesAdessiner);
-		this.m_panel_Centre.add(m_canevas, FlowLayout.LEFT);
+		//ListeDeFormes m_listeFormesAdessiner = new ListeDeFormes();
+		//m_canevas = new Canevas(m_listeFormesAdessiner);
+		m_canevas = new Canevas();
+		m_panel_Centre.add(m_canevas, FlowLayout.LEFT);
 				
 		//creation scrollpanel
 		JScrollPane jScrollPaneCentre = new JScrollPane();		
-		jScrollPaneCentre.setViewportView(this.m_panel_Centre);		
+		jScrollPaneCentre.setViewportView(m_panel_Centre);		
 		jScrollPaneCentre.setVerticalScrollBar(new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 300));
 		jScrollPaneCentre.setHorizontalScrollBar(new JScrollBar(JScrollBar.HORIZONTAL, 30, 40, 0, 300));
 		
@@ -346,11 +355,9 @@ public class Vue extends JFrame {
 		} catch (NullPointerException e) {
 				System.err.println("Image introuvable : " + chemin);
 		}
-			return icone;
+		return icone;
 	}
 	
-	public Canevas getCanevas() {
-		return this.m_canevas;
-	}
+	
 	
 }
