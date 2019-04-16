@@ -68,16 +68,8 @@ public class Canevas extends JComponent{
 	private ArrayList<Forme> m_listeFormesAdessiner;
 	
 	
-	
-	
 	private JPopupMenu menuClicDroitSouris;
 
-	/*
-	 * Ctor du menu popup du clic droit de la souris
-	 */
-	
-	
-	//	private boolean m_estModifie = false;
 	
 	Point m_premierPoint, m_pointFinal;			// Points enregistrés lors d'un DESSINER
 	int xAvantDpl;
@@ -88,10 +80,6 @@ public class Canevas extends JComponent{
 	 */
 	public Canevas() {
 		
-		
-		
-		//m_listeFormesAdessiner = ldf;
-		//ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		
 		//creation d'arrayList de Forms
 		this.m_listeFormesAdessiner = new ArrayList<Forme>();		
@@ -187,25 +175,17 @@ public class Canevas extends JComponent{
 					f.setEpaisseurTrait(m_epaisseurTrait);
 					
 //					// La forme créée est ajoutée à la liste de formes
-//					m_formes.add(f);
+
 					m_listeFormesAdessiner.add(f);
 					
 					// Les points sont remis à null pour la création d'une prochaine forme
 					m_premierPoint = null;
 					m_pointFinal = null;
 					
-//					// Le boolean signale qu'il y a eu une modification
-//					m_estModifie = true;
-					
 					repaint();
 				}
 				
 				if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
-//					if (m_formeSelectionnee != null) {
-//						m_formeSelectionnee.deplacerDe(x - xAvantDpl, y - yAvantDpl);
-//						m_formeSelectionnee = null;
-//						
-//					}
 					for (Forme f : m_listeFormesAdessiner) {
 						if(f.contientPoint(e.getX(), e.getY())) {
 							m_formeSelectionnee = f;
@@ -256,11 +236,6 @@ public class Canevas extends JComponent{
 								m_premierPoint = m_pointFinal;
 							}
 						}
-//						if (m_formeSelectionnee != null) {
-//							m_formeSelectionnee.deplacerDe(m_pointFinal.x - xAvantDpl, m_pointFinal.y - yAvantDpl);
-//							xAvantDpl = m_pointFinal.x;
-//							yAvantDpl = m_pointFinal.y;
-//						}
 					}
 					repaint();
 				}
@@ -269,70 +244,6 @@ public class Canevas extends JComponent{
 		
 		
 	}
-
-//	/**
-//	 * Retourne le couleurTrait.
-//	 * @return le couleurTrait
-//	 */
-//	public Color getCouleurTrait() {
-//		return this.m_couleurTrait;
-//	}
-//
-//	/**
-//	 * Pour modifier le couleurTrait.
-//	 * @param p_couleurTrait Nouvelle valeur.
-//	 */
-//	public void setCouleurTrait(Color p_couleurTrait) {
-//		this.m_couleurTrait = p_couleurTrait;
-//	}
-//
-//	/**
-//	 * Retourne le couleurRemplissage.
-//	 * @return le couleurRemplissage
-//	 */
-//	public Color getCouleurRemplissage() {
-//		return this.m_couleurRemplissage;
-//	}
-//
-//	/**
-//	 * Pour modifier le couleurRemplissage.
-//	 * @param p_couleurRemplissage Nouvelle valeur.
-//	 */
-//	public void setCouleurRemplissage(Color p_couleurRemplissage) {
-//		this.m_couleurRemplissage = p_couleurRemplissage;
-//	}
-//
-//	/**
-//	 * Retourne le epaisseurTrait.
-//	 * @return le epaisseurTrait
-//	 */
-//	public int getEpaisseurTrait() {
-//		return this.m_epaisseurTrait;
-//	}
-//
-//	/**
-//	 * Pour modifier le epaisseurTrait.
-//	 * @param p_epaisseurTrait Nouvelle valeur.
-//	 */
-//	public void setEpaisseurTrait(int p_epaisseurTrait) {
-//		this.m_epaisseurTrait = p_epaisseurTrait;
-//	}
-//
-//	/**
-//	 * Retourne le estModifie.
-//	 * @return le estModifie
-//	 */
-//	public boolean isEstModifie() {
-//		return this.m_estModifie;
-//	}
-//
-//	/**
-//	 * Pour modifier le estModifie.
-//	 * @param p_estModifie Nouvelle valeur.
-//	 */
-//	public void setEstModifie(boolean p_estModifie) {
-//		this.m_estModifie = p_estModifie;
-//	}
 
 	/**
 	 * Pour modifier le formeTypeCourant.
@@ -410,32 +321,6 @@ public class Canevas extends JComponent{
 		f.dessiner(d2);
 	}
 	
-//	public void effacer() {
-//		this.m_formes.clear();
-//		this.m_estModifie = false;
-//		repaint();
-//	}
-//	
-//	public void setFormes(ArrayList<Forme> p_formes) {
-//		// Supprime toutes les formes dans la liste
-//		m_formes.clear();
-//		
-//		// repeint l'aire de dessin
-//		repaint();
-//		
-//		// utilise la nouvelle liste de formes
-//		m_formes = null;
-//		m_formes = p_formes;
-//		
-//		m_estModifie = false;
-//		repaint();
-//	}
-//	
-//	public ArrayList<Forme> getFormes() {
-//		return this.m_formes;
-//	}
-	
-	
 	//Pour le space travail
 	public void setDimensionEspaceTravail(int p_Largeur, int p_Hauteur) {		
 		this.setDimensionEspaceTravail(new Dimension(p_Largeur , p_Hauteur));
@@ -488,6 +373,9 @@ public class Canevas extends JComponent{
 	public void setEpaisseurTraitForm(int p_eppaisseur) {
 		this.m_epaisseurTrait = p_eppaisseur;
 	}
+	/*
+	 * 
+	 */
 	public int getEpaisseurTraitForm() {
 		return this.m_epaisseurTrait;
 	}
