@@ -29,8 +29,8 @@ public class Sauvegarde {
 					Float.toString(p_forme.getEpaisseurTrait()));
 			
 			//... couleur_trait="..." ...
-			p_doc.writeAttribute("couleur_trait", 
-					p_forme.getCouleurTrait().toString());
+			p_doc.writeAttribute("couleur_trait", Integer.toString(p_forme.getCouleurTrait().getRGB()));
+					
 			
 			//... couleur_remplissage="..." ...
 			p_doc.writeAttribute("couleur_remplissage",Integer.toString(p_forme.getCouleurRemplissage().getRGB()));

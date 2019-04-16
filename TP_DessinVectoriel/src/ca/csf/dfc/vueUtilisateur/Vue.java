@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -24,7 +25,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
+import ca.csf.dfc.dessin.Forme;
 import ca.csf.dfc.dessin.ListeDeFormes;
+import ca.csf.dfc.fonctions.Sauvegarde;
 
 
 
@@ -189,8 +192,10 @@ public class Vue extends JFrame {
 		btn_EnregistrerDessin.setIcon(Vue.chargerIcone("icons8-save-32.png"));	
 		btn_EnregistrerDessin.setToolTipText("Enregistrer Dessin");
 		btn_EnregistrerDessin.addActionListener(e -> {
-//				Sauvegarde sauvegarde = new Sauvegarde();
-//				sauvegarde.sauvegarderFormesXML(m_canevas.m_formes);
+				Sauvegarde sauvegarde = new Sauvegarde();
+				//ListeDeFormes lf=new ListeDeFormes();
+				sauvegarde.sauvegarderFormesXML(m_listeFormesAdessiner.getListeFormes());
+				//	ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		});
 		
 
@@ -349,7 +354,7 @@ public class Vue extends JFrame {
 	 */
 	private static ImageIcon chargerIcone(String p_Image) {
 		ImageIcon icone = null;        
-		String chemin = ".\\src\\res\\" + p_Image;
+		String chemin = "./src/res/" + p_Image;
 		try {
 			icone = new ImageIcon(chemin);
 		} catch (NullPointerException e) {
