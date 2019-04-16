@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
@@ -16,7 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
-
 import ca.csf.dfc.Dessiner.DessinerG2D;
 import ca.csf.dfc.JustOneEnum.TypeAction;
 import ca.csf.dfc.dessin.FactoryForme;
@@ -34,7 +32,7 @@ public class Canevas extends JComponent{
 	private static final long serialVersionUID = -1602873151367941910L;
 	
 	
-	//?
+	//Viendra faire un fantome en pointille de la forme que nous dessinons
 	private static Stroke dashedStroke =
 			new BasicStroke(
 					1.0f,
@@ -44,39 +42,36 @@ public class Canevas extends JComponent{
 					new float[]{10.0f}, 
 					0.0f);	
 	
-	//Pour l'espace Travail
+	//Viendra donner les dimensions de l'espace de Travail
 	public static final int LARGEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
 	public static final int HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
 	public static final Color COULEUR_DEFAULT_ESPACE_TRAVAIL = Color.white;
 	private Dimension m_DimensionEspaceTravail;	
 	
-	//Pour le couleur de remplisage des figures
-	public static final Color 	COLOR_DEFAULT_REMPLISAGE = Color.black;
-	public static final Color 	COLOR_DEFAULT_TRAIT = Color.black;
-	public static final int 	EPPAISSEUR_DEFAULT_REMPLISAGE = 2;	
+	//Pour la couleur de remplissage et de trait des figures	
 	private Color 	m_couleurTrait 			= Color.black;
 	private Color 	m_couleurRemplissage 	= Color.black;
-	private int 	m_epaisseurTrait;
+	private int 	m_epaisseurTrait = 2;
 	
 	//Pour les formes
-	public static final TypeAction TYPEACTION_DEFAULT = TypeAction.ATTENDRE;
-	public static final String FORMETYPECOURANT_DEFAULT = "X";
-	public static final Forme FORMESELECTIONNE_DEFAULT = null;
+	public static final TypeAction TYPEACTION_PAR_DEFAUT = TypeAction.ATTENDRE;
+	public static final String FORMETYPECOURANT_PAR_DEFAUT = "X";
+	public static final Forme FORMESELECTIONNE_PAR_DEFAUT = null;
 	private TypeAction 	m_typeActionPerformee;
 	private String 		m_formeTypeCourant ;
 	private Forme 		m_formeSelectionnee ;
 	private ArrayList<Forme> m_listeFormesAdessiner;
 	
-	
+	// Menu Popup pour le clic droit de la souris lorsque nous sommes en mode selection
 	private JPopupMenu menuClicDroitSouris;
 
 	
-	Point m_premierPoint, m_pointFinal;			// Points enregistrés lors d'un DESSINER
+	Point m_premierPoint, m_pointFinal;			// Points enregistrés lorsque l'ont dessine
 	int xAvantDpl;
 	int yAvantDpl;		// Enregistrent les coordonnées x,y de la position de la souris au départ d'un déplacement
 
 	/**
-	 * Ctor
+	 * Ctor du Canevas
 	 */
 	public Canevas() {
 		
@@ -85,14 +80,12 @@ public class Canevas extends JComponent{
 		this.m_listeFormesAdessiner = new ArrayList<Forme>();		
 		
 		//Configuration par default
-		setDefaultFormes();
+		setCanevasParDefaut();
 		
-		//Pour l'espacetravail
-		setDefaultEspaceTravail();
+		//Pour l'espac etravail
+		setEspaceTravailParDefaut();
 
 		
-		/* un objet d'une classe anonyme dérivée de MouseAdapter est créé et transmis à la méthode addMouseListener
-		 * les méthodes mousePressed et mouseReleased sont redéfinies*/
 		this.addMouseListener(new MouseAdapter () {
 			
 			public void mousePressed(MouseEvent e) {
@@ -102,9 +95,9 @@ public class Canevas extends JComponent{
 					m_premierPoint = new Point(e.getX(), e.getY());
 					m_pointFinal = m_premierPoint;
 					
-					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
+					if (m_typeActionPerformee == TypeAction.SELECTIONNER) { 
 						
-						for (Forme f : m_listeFormesAdessiner) {
+						for (Forme f : m_listeFormesAdessiner) {							
 							if (f.contientPoint(m_premierPoint.x, m_premierPoint.y)) {
 								xAvantDpl = e.getX();
 								yAvantDpl = e.getY();
@@ -113,40 +106,11 @@ public class Canevas extends JComponent{
 								m_premierPoint.y = f.getY1();
 								m_pointFinal.x = f.getX2();
 								m_pointFinal.y = f.getY2();
-								if(SwingUtilities.isRightMouseButton(e)) {
-									
-									if(menuClicDroitSouris == null) {
-										menuClicDroitSouris = new JPopupMenu();
-										JMenuItem menuItem = new JMenuItem("Modifier couleur de remplissage");
-										menuItem.addActionListener(g -> {
-											
-											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur", m_couleurRemplissage);
-											if (couleur != null) {
-												f.setCouleurRemplissage(couleur);
-												repaint();
-											}
-										});
-										menuClicDroitSouris.add(menuItem);
-										menuItem = new JMenuItem("Modifier couleur du trait");
-										menuItem.addActionListener(e_-> {
-											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur",m_couleurTrait);
-											if (couleur != null) {
-												f.setCouleurTrait(couleur);
-												repaint();
-											}
-										});
-										menuClicDroitSouris.add(menuItem);
-										menuItem = new JMenuItem("Modifier epaisseur du trait");
-										menuItem.addActionListener(e_-> {
-											String epaisseur;
-											epaisseur = JOptionPane.showInputDialog(Canevas.this, "Entrer l'epaisseur desire");
-											if (epaisseur != null) {
-												f.setEpaisseurTrait(Integer.parseInt(epaisseur));
-												repaint();
-											}
-										});
-										menuClicDroitSouris.add(menuItem);
-									}
+								
+								// si le bouton clic droit de la souris est clique
+								// un menu popup s'ouvrira pour offrir les choix de modifications de la forme
+								if(SwingUtilities.isRightMouseButton(e)) { 
+									creerJPopupMenu(f);
 									menuClicDroitSouris.show(e.getComponent(), e.getX(), e.getY());
 									menuClicDroitSouris = null;
 
@@ -157,6 +121,7 @@ public class Canevas extends JComponent{
 					repaint();
 				}				
 			}
+			
 
 			public void mouseReleased(MouseEvent e) {
 				
@@ -189,17 +154,15 @@ public class Canevas extends JComponent{
 					for (Forme f : m_listeFormesAdessiner) {
 						if(f.contientPoint(e.getX(), e.getY())) {
 							m_formeSelectionnee = f;
+							// si le bouton clic droit de la souris est clique
+							// un menu popup s'ouvrira pour offrir les choix de modifications de la forme
 							if(SwingUtilities.isRightMouseButton(e)) {
-								
 								menuClicDroitSouris.show(e.getComponent(), e.getX(), e.getY());
 							}
-							
 						}
 					}
-					
 					repaint();
 				}
-				
 			}
 		});
 		
@@ -218,19 +181,20 @@ public class Canevas extends JComponent{
 								m_formeSelectionnee = f;
 								Forme nouvelleForme = FactoryForme.creationForme(m_formeTypeCourant);
 								nouvelleForme = f;
-								if (e.getX() >= f.getX2()-10 ||  e.getY() >= f.getY2()-10) {
+								// si nous sommes proches des bordures X2, Y2 la forme sera modifiee
+								if (e.getX() >= f.getX2()-20 ||  e.getY() >= f.getY2()-20) {
 									nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
 									nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
 									
-								} else {
+								} else { // sinon elle sera deplacee
 									nouvelleForme.setX1(nouvelleForme.getX1() + nouveauX);
 									nouvelleForme.setY1(nouvelleForme.getY1() + nouveauY);
 									nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
 									nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
 									
 								}
-								
-								m_listeFormesAdessiner.set(m_listeFormesAdessiner.indexOf(f), nouvelleForme);
+								//Remplace la forme par la nouvelle
+								m_listeFormesAdessiner.set(m_listeFormesAdessiner.indexOf(f), nouvelleForme); 
 								xAvantDpl += nouveauX;
 								yAvantDpl += nouveauY;
 								m_premierPoint = m_pointFinal;
@@ -245,6 +209,38 @@ public class Canevas extends JComponent{
 		
 	}
 
+	private void creerJPopupMenu(Forme p_forme_) {
+		menuClicDroitSouris = new JPopupMenu();
+		JMenuItem menuItem = new JMenuItem("Modifier couleur de remplissage");
+		menuItem.addActionListener(g -> {
+			Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur", m_couleurRemplissage);
+			if (couleur != null) {
+				p_forme_.setCouleurRemplissage(couleur);
+				repaint();
+			}
+		});
+		menuClicDroitSouris.add(menuItem);
+		menuItem = new JMenuItem("Modifier couleur du trait");
+		menuItem.addActionListener(e_-> {
+			Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur",m_couleurTrait);
+			if (couleur != null) {
+				p_forme_.setCouleurTrait(couleur);
+				repaint();
+			}
+		});
+		menuClicDroitSouris.add(menuItem);
+		menuItem = new JMenuItem("Modifier epaisseur du trait");
+		menuItem.addActionListener(e_-> {
+			String epaisseur;
+			epaisseur = JOptionPane.showInputDialog(Canevas.this, "Entrer l'epaisseur desire");
+			if (epaisseur != null) {
+				p_forme_.setEpaisseurTrait(Integer.parseInt(epaisseur));
+				repaint();
+			}
+		});
+		menuClicDroitSouris.add(menuItem);
+	}
+	
 	/**
 	 * Pour modifier le formeTypeCourant.
 	 * @param p_formeTypeCourant Nouvelle valeur.
@@ -321,7 +317,7 @@ public class Canevas extends JComponent{
 		f.dessiner(d2);
 	}
 	
-	//Pour le space travail
+	//Pour l'espace travail
 	public void setDimensionEspaceTravail(int p_Largeur, int p_Hauteur) {		
 		this.setDimensionEspaceTravail(new Dimension(p_Largeur , p_Hauteur));
 	}
@@ -332,7 +328,7 @@ public class Canevas extends JComponent{
 		this.setSize(this.m_DimensionEspaceTravail);
 	}
 	
-	public void setDefaultEspaceTravail() {	
+	public void setEspaceTravailParDefaut() {	
 		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
 		this.setPreferredSize(this.m_DimensionEspaceTravail);		
 		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));				
@@ -380,11 +376,11 @@ public class Canevas extends JComponent{
 		return this.m_epaisseurTrait;
 	}
 
-	public void setDefaultFormes() {
+	public void setCanevasParDefaut() {
 		//Configuration par default
-		this.m_typeActionPerformee = TYPEACTION_DEFAULT;
-		this.m_formeTypeCourant = FORMETYPECOURANT_DEFAULT;
-		this.m_formeSelectionnee = FORMESELECTIONNE_DEFAULT;
+		this.m_typeActionPerformee = TYPEACTION_PAR_DEFAUT;
+		this.m_formeTypeCourant = FORMETYPECOURANT_PAR_DEFAUT;
+		this.m_formeSelectionnee = FORMESELECTIONNE_PAR_DEFAUT;
 		this.m_listeFormesAdessiner.clear();
 	}
 }

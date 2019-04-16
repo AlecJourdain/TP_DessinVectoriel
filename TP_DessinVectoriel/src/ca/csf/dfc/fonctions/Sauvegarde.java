@@ -16,6 +16,7 @@ import ca.csf.dfc.dessin.Forme;
 public class Sauvegarde {
 	
 	public static void ecrireFormesXML(XMLStreamWriter p_doc, ArrayList<Forme> p_dessin) throws XMLStreamException{
+		
 		for (Forme p_forme : p_dessin) {
 			// <forme ...
 			p_doc.writeStartElement("forme");
