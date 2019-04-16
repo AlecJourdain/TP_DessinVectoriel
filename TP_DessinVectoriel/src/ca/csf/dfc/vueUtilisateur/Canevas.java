@@ -37,7 +37,7 @@ public class Canevas extends JComponent{
 					BasicStroke.JOIN_MITER,
 					10.0f, new float[]{10.0f}, 0.0f);
 
-	private ListeDeFormes m_listeFormesAdessiner;
+	ListeDeFormes m_listeFormesAdessiner;
 	
 	//Pour l'espace Travail
 	public static final int LARGEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
