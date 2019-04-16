@@ -21,8 +21,7 @@ import ca.csf.dfc.Dessiner.DessinerG2D;
 import ca.csf.dfc.JustOneEnum.TypeAction;
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
-//import ca.csf.dfc.dessin.FormeType;
-import ca.csf.dfc.dessin.ListeDeFormes;
+
 
 /**
  * @author Coralie-Hong Brière
@@ -33,32 +32,40 @@ import ca.csf.dfc.dessin.ListeDeFormes;
 public class Canevas extends JComponent{
 	
 	private static final long serialVersionUID = -1602873151367941910L;
-
+	
+	
+	//?
 	private static Stroke dashedStroke =
 			new BasicStroke(
 					1.0f,
 					BasicStroke.CAP_BUTT,
 					BasicStroke.JOIN_MITER,
-					10.0f, new float[]{10.0f}, 0.0f);
-
-	private ListeDeFormes m_listeFormesAdessiner;
+					10.0f, 
+					new float[]{10.0f}, 
+					0.0f);	
 	
 	//Pour l'espace Travail
 	public static final int LARGEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
 	public static final int HAUTEUR_DEFAULT_ESPACE_TRAVAIL = 2000;
 	public static final Color COULEUR_DEFAULT_ESPACE_TRAVAIL = Color.white;
-	private Dimension m_DimensionEspaceTravail;
-
-	
+	private Dimension m_DimensionEspaceTravail;	
 	
 	//Pour le couleur de remplisage des figures
 	public static final Color 	COLOR_DEFAULT_REMPLISAGE = Color.black;
 	public static final Color 	COLOR_DEFAULT_TRAIT = Color.black;
-	public static final int 	EPPAISSEUR_DEFAULT_REMPLISAGE = 2;
+	public static final int 	EPPAISSEUR_DEFAULT_REMPLISAGE = 2;	
+	private Color 	m_couleurTrait 			= Color.black;
+	private Color 	m_couleurRemplissage 	= Color.black;
+	private int 	m_epaisseurTrait;
 	
-	private Color m_couleurTrait = Color.black;
-	private Color m_couleurRemplissage = Color.black;
-	private int m_epaisseurTrait;
+	//Pour les formes
+	public static final TypeAction TYPEACTION_DEFAULT = TypeAction.ATTENDRE;
+	public static final String FORMETYPECOURANT_DEFAULT = "X";
+	public static final Forme FORMESELECTIONNE_DEFAULT = null;
+	private TypeAction 	m_typeActionPerformee;
+	private String 		m_formeTypeCourant ;
+	private Forme 		m_formeSelectionnee ;
+	private ArrayList<Forme> m_listeFormesAdessiner;
 	
 	
 	private TypeAction m_typeActionPerformee;
@@ -88,6 +95,12 @@ public class Canevas extends JComponent{
 		m_listeFormesAdessiner = ldf;
 		ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		
+		//creation d'arrayList de Forms
+		this.m_listeFormesAdessiner = new ArrayList<Forme>();		
+		
+		//Configuration par default
+		setDefaultFormes();
+		
 		//Pour l'espacetravail
 		setDefaultEspaceTravail();
 
@@ -95,10 +108,14 @@ public class Canevas extends JComponent{
 		/* un objet d'une classe anonyme dérivée de MouseAdapter est créé et transmis à la méthode addMouseListener
 		 * les méthodes mousePressed et mouseReleased sont redéfinies*/
 		this.addMouseListener(new MouseAdapter () {
+			
 			public void mousePressed(MouseEvent e) {
+				
 				if (m_typeActionPerformee == TypeAction.DESSINER || m_typeActionPerformee == TypeAction.SELECTIONNER) {
+					
 					m_premierPoint = new Point(e.getX(), e.getY());
 					m_pointFinal = m_premierPoint;
+					
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
 						
 						for (Forme f : listeFormes) {
@@ -152,11 +169,11 @@ public class Canevas extends JComponent{
 						}
 					}
 					repaint();
-				}
-				
+				}				
 			}
 
 			public void mouseReleased(MouseEvent e) {
+				
 				if (m_premierPoint == null) return;
 				if (m_premierPoint == m_pointFinal) return; 	// La souris n'a pas bougé
 				if (m_typeActionPerformee == TypeAction.DESSINER) {
@@ -173,7 +190,7 @@ public class Canevas extends JComponent{
 					
 //					// La forme créée est ajoutée à la liste de formes
 //					m_formes.add(f);
-					m_listeFormesAdessiner.ajouterUneForme(f);
+					m_listeFormesAdessiner.add(f);
 					
 					// Les points sont remis à null pour la création d'une prochaine forme
 					m_premierPoint = null;
@@ -184,6 +201,7 @@ public class Canevas extends JComponent{
 					
 					repaint();
 				}
+				
 				if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
 //					if (m_formeSelectionnee != null) {
 //						m_formeSelectionnee.deplacerDe(x - xAvantDpl, y - yAvantDpl);
@@ -369,7 +387,7 @@ public class Canevas extends JComponent{
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// Dessine les formes
-		m_listeFormesAdessiner.getListeFormes().forEach(f -> f.dessiner(d2));
+		m_listeFormesAdessiner.forEach(f -> f.dessiner(d2));
 
 		
 
@@ -445,6 +463,8 @@ public class Canevas extends JComponent{
 		return this.m_DimensionEspaceTravail.width;
 	}
 	
+	
+	
 	//Pour le couleur de remplisage des forms
 	public void setCouleurRemplisageForm(Color p_couleur) {
 		this.m_couleurRemplissage = p_couleur;
@@ -452,6 +472,9 @@ public class Canevas extends JComponent{
 	public Color getCouleurRemplisageForm() {
 		return this.m_couleurRemplissage;
 	}
+	
+	
+	
 	
 	//Pour le couleur de trait des forms
 	public void setCouleurTraitForm(Color p_couleur) {
@@ -461,11 +484,21 @@ public class Canevas extends JComponent{
 		return this.m_couleurTrait;
 	}
 	
+	
+	
 	//Pour l'epaisseur de trait des forms
 	public void setEpaisseurTraitForm(int p_eppaisseur) {
 		this.m_epaisseurTrait = p_eppaisseur;
 	}
-		public int getEpaisseurTraitForm() {
-			return this.m_epaisseurTrait;
-		}
+	public int getEpaisseurTraitForm() {
+		return this.m_epaisseurTrait;
+	}
+
+	public void setDefaultFormes() {
+		//Configuration par default
+		this.m_typeActionPerformee = TYPEACTION_DEFAULT;
+		this.m_formeTypeCourant = FORMETYPECOURANT_DEFAULT;
+		this.m_formeSelectionnee = FORMESELECTIONNE_DEFAULT;
+		this.m_listeFormesAdessiner.clear();
+	}
 }
