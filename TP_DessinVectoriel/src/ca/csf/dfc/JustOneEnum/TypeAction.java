@@ -12,5 +12,6 @@ package ca.csf.dfc.JustOneEnum;
 public enum TypeAction {
 	DESSINER,
 	SELECTIONNER,
-	REDIMENSIONNER
+	REDIMENSIONNER,
+	ATTENDRE
 }
