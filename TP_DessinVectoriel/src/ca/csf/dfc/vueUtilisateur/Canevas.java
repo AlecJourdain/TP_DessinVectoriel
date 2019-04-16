@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -435,11 +434,7 @@ public class Canevas extends JComponent{
 	public void setDefaultEspaceTravail() {	
 		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
 		this.setPreferredSize(this.m_DimensionEspaceTravail);		
-		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));	
-
-		
-		
-		
+		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));				
 	}
 	
 	public Dimension getDimensionEspaceTravail() {
@@ -473,7 +468,4 @@ public class Canevas extends JComponent{
 		public int getEpaisseurTraitForm() {
 			return this.m_epaisseurTrait;
 		}
-
-
-
 }
