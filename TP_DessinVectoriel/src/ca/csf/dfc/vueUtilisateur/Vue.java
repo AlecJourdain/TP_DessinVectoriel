@@ -39,11 +39,6 @@ import ca.csf.dfc.dessin.ListeDeFormes;
 public class Vue extends JFrame {
 	
 	private static final long serialVersionUID = 873083412301053821L;
-	//private JMenuBar m_menuBarre;
-	//private JMenu m_fichier, m_edition, m_trait;
-	//private JMenuItem m_nouveau, m_ouvrir, m_enregistreXML, m_enregistreSous, m_exporter, m_quitter,
-					 // m_selection, m_supprimer, m_epaisseur, m_couleurTrait;
-	//private JButton btn_LigneDessin;
 	private JPanel m_panel_Centre;
 	private Canevas m_canevas;
 	private ListeDeFormes m_listeFormesAdessiner;

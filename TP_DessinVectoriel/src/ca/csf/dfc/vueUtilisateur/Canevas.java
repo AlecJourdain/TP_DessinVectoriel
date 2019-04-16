@@ -7,11 +7,15 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 import ca.csf.dfc.Dessiner.DessinerG2D;
 import ca.csf.dfc.JustOneEnum.TypeAction;
@@ -61,6 +65,12 @@ public class Canevas extends JComponent{
 	private String m_formeTypeCourant = "X";
 	private Forme m_formeSelectionnee = null;
 	
+	private JPopupMenu menuClicDroitSouris;
+
+	/*
+	 * Ctor du menu popup du clic droit de la souris
+	 */
+	
 	
 	//	private boolean m_estModifie = false;
 	
@@ -72,6 +82,9 @@ public class Canevas extends JComponent{
 	 * Ctor
 	 */
 	public Canevas(ListeDeFormes ldf) {
+		
+		
+		
 		m_listeFormesAdessiner = ldf;
 		ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		
@@ -89,7 +102,6 @@ public class Canevas extends JComponent{
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
 						
 						for (Forme f : listeFormes) {
-							
 							if (f.contientPoint(m_premierPoint.x, m_premierPoint.y)) {
 								xAvantDpl = e.getX();
 								yAvantDpl = e.getY();
@@ -98,6 +110,34 @@ public class Canevas extends JComponent{
 								m_premierPoint.y = f.getY1();
 								m_pointFinal.x = f.getX2();
 								m_pointFinal.y = f.getY2();
+								if(SwingUtilities.isRightMouseButton(e)) {
+									
+									if(menuClicDroitSouris == null) {
+										menuClicDroitSouris = new JPopupMenu();
+										JMenuItem menuItem = new JMenuItem("modifier couleur de remplissage");
+										menuItem.addActionListener(g -> {
+											
+											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur", m_couleurRemplissage);
+											if (couleur != null) {
+												f.setCouleurRemplissage(couleur);
+												repaint();
+											}
+										});
+										menuClicDroitSouris.add(menuItem);
+										menuItem = new JMenuItem("modifier couleur du trait");
+										menuItem.addActionListener(e_-> {
+											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur",m_couleurTrait);
+											if (couleur != null) {
+												f.setCouleurTrait(couleur);
+												repaint();
+											}
+										});
+										menuClicDroitSouris.add(menuItem);
+									}
+									menuClicDroitSouris.show(e.getComponent(), e.getX(), e.getY());
+									menuClicDroitSouris = null;
+
+								}
 							}
 						}
 					}
@@ -105,7 +145,7 @@ public class Canevas extends JComponent{
 				}
 				
 			}
-			
+
 			public void mouseReleased(MouseEvent e) {
 				if (m_premierPoint == null) return;
 				if (m_premierPoint == m_pointFinal) return; 	// La souris n'a pas bougé
@@ -143,8 +183,14 @@ public class Canevas extends JComponent{
 					for (Forme f : listeFormes) {
 						if(f.contientPoint(e.getX(), e.getY())) {
 							m_formeSelectionnee = f;
+							if(SwingUtilities.isRightMouseButton(e)) {
+								
+								menuClicDroitSouris.show(e.getComponent(), e.getX(), e.getY());
+							}
+							
 						}
 					}
+					
 					repaint();
 				}
 				
@@ -166,11 +212,18 @@ public class Canevas extends JComponent{
 								m_formeSelectionnee = f;
 								Forme nouvelleForme = FactoryForme.creationForme(m_formeTypeCourant);
 								nouvelleForme = f;
+								if (e.getX() >= f.getX2()-10 ||  e.getY() >= f.getY2()-10) {
+									nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
+									nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
+									
+								} else {
+									nouvelleForme.setX1(nouvelleForme.getX1() + nouveauX);
+									nouvelleForme.setY1(nouvelleForme.getY1() + nouveauY);
+									nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
+									nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
+									
+								}
 								
-								nouvelleForme.setX1(nouvelleForme.getX1() + nouveauX);
-								nouvelleForme.setY1(nouvelleForme.getY1() + nouveauY);
-								nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
-								nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
 								listeFormes.set(listeFormes.indexOf(f), nouvelleForme);
 								xAvantDpl += nouveauX;
 								yAvantDpl += nouveauY;
@@ -308,6 +361,8 @@ public class Canevas extends JComponent{
 		// Dessine les formes
 		m_listeFormesAdessiner.getListeFormes().forEach(f -> f.dessiner(d2));
 
+		
+
 		// Guide pour le dessin lorsque l'utilisateur trace la forme
 		if (m_premierPoint != null && m_pointFinal != null && m_typeActionPerformee == TypeAction.DESSINER) {
 			afficherGuide(g2, d2);
@@ -369,7 +424,11 @@ public class Canevas extends JComponent{
 	public void setDefaultEspaceTravail() {	
 		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
 		this.setPreferredSize(this.m_DimensionEspaceTravail);		
-		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));		
+		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));	
+
+		
+		
+		
 	}
 	
 	public Dimension getDimensionEspaceTravail() {
