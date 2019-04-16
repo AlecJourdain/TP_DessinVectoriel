@@ -69,9 +69,7 @@ public class Canevas extends JComponent{
 	private ArrayList<Forme> m_listeFormesAdessiner;
 	
 	
-	private TypeAction m_typeActionPerformee;
-	private String m_formeTypeCourant = "X";
-	private Forme m_formeSelectionnee = null;
+	
 	
 	private JPopupMenu menuClicDroitSouris;
 
@@ -89,12 +87,12 @@ public class Canevas extends JComponent{
 	/**
 	 * Ctor
 	 */
-	public Canevas(ListeDeFormes ldf) {
+	public Canevas() {
 		
 		
 		
-		m_listeFormesAdessiner = ldf;
-		ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
+		//m_listeFormesAdessiner = ldf;
+		//ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		
 		//creation d'arrayList de Forms
 		this.m_listeFormesAdessiner = new ArrayList<Forme>();		
@@ -119,7 +117,7 @@ public class Canevas extends JComponent{
 					
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
 						
-						for (Forme f : listeFormes) {
+						for (Forme f : m_listeFormesAdessiner) {
 							if (f.contientPoint(m_premierPoint.x, m_premierPoint.y)) {
 								xAvantDpl = e.getX();
 								yAvantDpl = e.getY();
@@ -209,7 +207,7 @@ public class Canevas extends JComponent{
 //						m_formeSelectionnee = null;
 //						
 //					}
-					for (Forme f : listeFormes) {
+					for (Forme f : m_listeFormesAdessiner) {
 						if(f.contientPoint(e.getX(), e.getY())) {
 							m_formeSelectionnee = f;
 							if(SwingUtilities.isRightMouseButton(e)) {
@@ -236,7 +234,7 @@ public class Canevas extends JComponent{
 					m_pointFinal = new Point(e.getX(), e.getY());
 
 					if (m_typeActionPerformee == TypeAction.SELECTIONNER) {
-						for (Forme f : listeFormes) {
+						for (Forme f : m_listeFormesAdessiner) {
 							if(f.contientPoint(e.getX(), e.getY())) {
 								m_formeSelectionnee = f;
 								Forme nouvelleForme = FactoryForme.creationForme(m_formeTypeCourant);
@@ -253,7 +251,7 @@ public class Canevas extends JComponent{
 									
 								}
 								
-								listeFormes.set(listeFormes.indexOf(f), nouvelleForme);
+								m_listeFormesAdessiner.set(m_listeFormesAdessiner.indexOf(f), nouvelleForme);
 								xAvantDpl += nouveauX;
 								yAvantDpl += nouveauY;
 								m_premierPoint = m_pointFinal;
