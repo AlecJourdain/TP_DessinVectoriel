@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -114,7 +115,7 @@ public class Canevas extends JComponent{
 									
 									if(menuClicDroitSouris == null) {
 										menuClicDroitSouris = new JPopupMenu();
-										JMenuItem menuItem = new JMenuItem("modifier couleur de remplissage");
+										JMenuItem menuItem = new JMenuItem("Modifier couleur de remplissage");
 										menuItem.addActionListener(g -> {
 											
 											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur", m_couleurRemplissage);
@@ -124,11 +125,21 @@ public class Canevas extends JComponent{
 											}
 										});
 										menuClicDroitSouris.add(menuItem);
-										menuItem = new JMenuItem("modifier couleur du trait");
+										menuItem = new JMenuItem("Modifier couleur du trait");
 										menuItem.addActionListener(e_-> {
 											Color couleur = JColorChooser.showDialog(Canevas.this, "Choisissez une couleur",m_couleurTrait);
 											if (couleur != null) {
 												f.setCouleurTrait(couleur);
+												repaint();
+											}
+										});
+										menuClicDroitSouris.add(menuItem);
+										menuItem = new JMenuItem("Modifier epaisseur du trait");
+										menuItem.addActionListener(e_-> {
+											String epaisseur;
+											epaisseur = JOptionPane.showInputDialog(Canevas.this, "Entrer l'epaisseur desire");
+											if (epaisseur != null) {
+												f.setEpaisseurTrait(Integer.parseInt(epaisseur));
 												repaint();
 											}
 										});
