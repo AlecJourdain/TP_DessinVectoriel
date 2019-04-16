@@ -497,6 +497,14 @@ public class Canevas extends JComponent{
 		return this.m_epaisseurTrait;
 	}
 
+	/**
+	 * Retourne le listeFormesAdessiner
+	 * @return le listeFormesAdessiner
+	 */
+	public ArrayList<Forme> getListeFormesAdessiner() {
+		return this.m_listeFormesAdessiner;
+	}
+
 	public void setDefaultFormes() {
 		//Configuration par default
 		this.m_typeActionPerformee = TYPEACTION_DEFAULT;

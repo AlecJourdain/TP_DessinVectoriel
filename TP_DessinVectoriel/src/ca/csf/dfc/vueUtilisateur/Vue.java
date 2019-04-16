@@ -24,7 +24,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
-import ca.csf.dfc.dessin.ListeDeFormes;
+import ca.csf.dfc.fonctions.ExporterSVG;
+import ca.csf.dfc.fonctions.Sauvegarde;
+
 
 
 
@@ -189,8 +191,8 @@ public class Vue extends JFrame {
 		btn_EnregistrerDessin.setIcon(Vue.chargerIcone("icons8-save-32.png"));	
 		btn_EnregistrerDessin.setToolTipText("Enregistrer Dessin");
 		btn_EnregistrerDessin.addActionListener(e -> {
-//				Sauvegarde sauvegarde = new Sauvegarde();
-//				sauvegarde.sauvegarderFormesXML(m_canevas.m_formes);
+				Sauvegarde sauvegarde = new Sauvegarde();
+				sauvegarde.sauvegarderFormesXML(m_canevas.getListeFormesAdessiner());
 		});
 		
 
@@ -204,6 +206,11 @@ public class Vue extends JFrame {
 		JButton btn_ExporterDessin = new JButton();		
 		btn_ExporterDessin.setIcon(Vue.chargerIcone("icons8-export-32.png"));	
 		btn_ExporterDessin.setToolTipText("Exporter Dessin");
+		btn_ExporterDessin.addActionListener(e -> {
+			ExporterSVG exporte = new ExporterSVG();
+			exporte.ecrireFichierSVG(m_canevas.getListeFormesAdessiner());
+			
+		});
 		//*/
 		
 		
