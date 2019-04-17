@@ -62,14 +62,14 @@ public class Sauvegarde {
 			p_doc.writeEndElement();
 		}
 
+	
 
-
-	public void sauvegarderFormesXML(Canevas p_canevas){
+	public void sauvegarderFormesXML(Canevas p_canevas,String p_name){
 		
 		XMLStreamWriter doc = null;
 		
 		try {
-			FileWriter output = new FileWriter(new File("data.xml"));
+			FileWriter output = new FileWriter(new File(p_name));
 
 			
 			doc = XMLOutputFactory.newInstance().createXMLStreamWriter(output);
