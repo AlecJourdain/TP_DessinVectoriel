@@ -296,10 +296,10 @@ public class Vue extends JFrame {
 		btn_OpenDessin.setIcon(Vue.chargerIcone("icons8-open-view-32.png"));	
 		btn_OpenDessin.setToolTipText("Ouvrir Dessin");
 		btn_OpenDessin.addActionListener(e -> {
-<<<<<<< HEAD
+
 			ouvrirDessin();			
-=======
-			Charger charger = new Charger();
+
+			/*Charger charger = new Charger();
 			JFileChooser chooser = new JFileChooser();
 			chooser.setFileFilter(new FileFilter() {
 				@Override
@@ -320,8 +320,8 @@ public class Vue extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
->>>>>>> 8a881d70d56f3ee95ef2dce10f317586c36172ed
+			}//*/
+
 		});
 		
 				
