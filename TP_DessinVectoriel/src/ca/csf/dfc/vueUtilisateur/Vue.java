@@ -296,7 +296,32 @@ public class Vue extends JFrame {
 		btn_OpenDessin.setIcon(Vue.chargerIcone("icons8-open-view-32.png"));	
 		btn_OpenDessin.setToolTipText("Ouvrir Dessin");
 		btn_OpenDessin.addActionListener(e -> {
+<<<<<<< HEAD
 			ouvrirDessin();			
+=======
+			Charger charger = new Charger();
+			JFileChooser chooser = new JFileChooser();
+			chooser.setFileFilter(new FileFilter() {
+				@Override
+				public String getDescription() {
+					return String.format("Fichier XML (*.xml)");
+				}
+				@Override
+				public boolean accept(File p_Fichier) {
+					return p_Fichier.isDirectory() || p_Fichier.getPath().endsWith(".xml");
+				}
+			});
+			if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File file = chooser.getSelectedFile();
+				
+				try {
+					charger.chargerFormes(file, this.m_canevas);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+>>>>>>> 8a881d70d56f3ee95ef2dce10f317586c36172ed
 		});
 		
 				
