@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -182,7 +183,7 @@ public class Canevas extends JComponent{
 								Forme nouvelleForme = FactoryForme.creationForme(m_formeTypeCourant);
 								nouvelleForme = f;
 								// si nous sommes proches des bordures X2, Y2 la forme sera modifiee
-								if (e.getX() >= f.getX2()-20 ||  e.getY() >= f.getY2()-20) {
+								if (e.getX() > f.getX2()-20 ||  e.getY() > f.getY2()-20) {
 									nouvelleForme.setX2(nouvelleForme.getX2() + nouveauX);
 									nouvelleForme.setY2(nouvelleForme.getY2() + nouveauY);
 									
@@ -230,9 +231,11 @@ public class Canevas extends JComponent{
 		});
 		menuClicDroitSouris.add(menuItem);
 		menuItem = new JMenuItem("Modifier epaisseur du trait");
+		ImageIcon icon = new ImageIcon("./src/res/icons8-merge-vertical-32.png");
 		menuItem.addActionListener(e_-> {
 			String epaisseur;
-			epaisseur = JOptionPane.showInputDialog(Canevas.this, "Entrer l'epaisseur desire");
+			epaisseur = (String)JOptionPane.showInputDialog(null, "Entrer l'epaisseur desire", "Modification epaisseur du trait",
+					JOptionPane.INFORMATION_MESSAGE, icon, null, null);
 			if (epaisseur != null) {
 				p_forme_.setEpaisseurTrait(Integer.parseInt(epaisseur));
 				repaint();
