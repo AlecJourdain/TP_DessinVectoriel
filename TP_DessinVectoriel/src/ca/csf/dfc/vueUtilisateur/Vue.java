@@ -207,7 +207,7 @@ public class Vue extends JFrame {
 				File file = chooser.getSelectedFile();
 				
 				try {
-					charger.charger(file, this.m_canevas);
+					charger.chargerFormes(file, this.m_canevas);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
