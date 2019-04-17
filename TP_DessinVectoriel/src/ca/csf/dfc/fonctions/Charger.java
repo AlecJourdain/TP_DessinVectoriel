@@ -38,6 +38,11 @@ public class Charger {
 		XMLStreamReader doc = XMLInputFactory.newInstance().createXMLStreamReader(input);
 		doc.next();
 		doc.next();
+		int hauteur=Integer.parseInt(doc.getAttributeValue("","hauteur"));
+		int largeur=Integer.parseInt(doc.getAttributeValue("","largeur"));
+		doc.next();
+		doc.next();
+		p_canevas.setDimensionEspaceTravail(largeur, hauteur);
 		while (doc.isStartElement()) {
 			formes.add(charger(doc));
 			doc.next();

@@ -10,6 +10,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import ca.csf.dfc.dessin.Forme;
+import ca.csf.dfc.vueUtilisateur.Canevas;
 
 
 
@@ -62,7 +63,7 @@ public class Sauvegarde {
 
 
 
-	public void sauvegarderFormesXML(ArrayList<Forme> p_tableauFormes){
+	public void sauvegarderFormesXML(Canevas p_canevas){
 		
 		XMLStreamWriter doc = null;
 		
@@ -72,10 +73,17 @@ public class Sauvegarde {
 			
 			doc = XMLOutputFactory.newInstance().createXMLStreamWriter(output);
 					
+			
 			// <tableau_formes>
 			doc.writeStartElement("tableau_formes");
+			int hauteur=p_canevas.getDimensionEspaceTravail().height;
+			int largeur=p_canevas.getDimensionEspaceTravail().width;
 			
-			ecrireFormesXML(doc, p_tableauFormes);
+			doc.writeStartElement("dimensions");
+			doc.writeAttribute("hauteur",String.valueOf(hauteur));
+			doc.writeAttribute("largeur",String.valueOf(largeur));
+			doc.writeEndElement();
+			ecrireFormesXML(doc, p_canevas.getFormes());
 
 			
 			// </tableau_formes>
