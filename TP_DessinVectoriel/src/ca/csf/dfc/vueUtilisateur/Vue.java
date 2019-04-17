@@ -223,7 +223,7 @@ public class Vue extends JFrame {
 		btn_EnregistrerDessin.addActionListener(e -> {
 				Sauvegarde sauvegarde = new Sauvegarde();
 				//ListeDeFormes lf=new ListeDeFormes();
-				sauvegarde.sauvegarderFormesXML(this.m_canevas.getFormes());
+				sauvegarde.sauvegarderFormesXML(this.m_canevas);
 				//	ArrayList<Forme> listeFormes = m_listeFormesAdessiner.getListeFormes();
 		});
 		
