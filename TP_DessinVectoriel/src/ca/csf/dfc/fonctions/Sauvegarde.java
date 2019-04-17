@@ -33,6 +33,7 @@ public class Sauvegarde {
 	private static final String ATTR_Y2 = "y2";
 	
 	public static void ecrireFormesXML(XMLStreamWriter p_doc, ArrayList<Forme> p_dessin) throws XMLStreamException{
+		
 		for (Forme p_forme : p_dessin) {
 			// <forme ...
 			p_doc.writeStartElement(ELEM_FORME);
