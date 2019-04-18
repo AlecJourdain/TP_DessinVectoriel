@@ -73,6 +73,8 @@ public class Charger {
 		float epaisseurTrait = Float.parseFloat(p_doc.getAttributeValue("", ATTR_EPAISSEUR_TRAIT));
 		int couleurRemplissage = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_REMPLISSAGE));
 		int couleurTrait = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_CONTOUR));
+		
+		
 
 		f = facto.creationForme(typeForme);
 		f.setX1(x1);
@@ -80,8 +82,8 @@ public class Charger {
 		f.setY1(y1);
 		f.setY2(y2);
 		f.setEpaisseurTrait((int)(epaisseurTrait));
-		f.setCouleurRemplissage(couleurRemplissage);
-		f.setCouleurTrait(couleurTrait);
+		f.setCouleurRemplissageXML(couleurRemplissage);
+		f.setCouleurTraitXML(couleurTrait);
 		p_doc.next();
 		return f;
 
