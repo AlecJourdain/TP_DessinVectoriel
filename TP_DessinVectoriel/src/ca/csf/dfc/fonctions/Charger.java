@@ -73,7 +73,7 @@ public class Charger {
 		int couleurRemplissage = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_REMPLISSAGE));
 		int couleurTrait = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_CONTOUR));
 
-		f = facto.creationForme(typeForme);
+		f = FactoryForme.creationForme(typeForme);
 		f.setX1(x1);
 		f.setX2(x2);
 		f.setY1(y1);

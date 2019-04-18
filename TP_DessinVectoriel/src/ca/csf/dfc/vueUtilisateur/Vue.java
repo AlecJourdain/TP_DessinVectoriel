@@ -8,8 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
+
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -23,7 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -31,16 +30,16 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import javax.xml.stream.XMLStreamException;
+
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
-import ca.csf.dfc.fonctions.ExporterSVG;
+
 import ca.csf.dfc.fonctions.Sauvegarde;
 import ca.csf.dfc.vueTest.IllegalFormeTypeCourantException;
-import ca.csf.dfc.dessin.Forme;
-import ca.csf.dfc.dessin.ListeDeFormes;
+
+
 import ca.csf.dfc.fonctions.Charger;
-import ca.csf.dfc.fonctions.Sauvegarde;
+
 
 
 
@@ -168,7 +167,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("X");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});
@@ -199,7 +198,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("L");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});
@@ -211,7 +210,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("R");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});
@@ -223,7 +222,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("E");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});
@@ -382,7 +381,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("X");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});		
@@ -425,7 +424,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("L");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});		
@@ -440,7 +439,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("R");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});		
@@ -455,7 +454,7 @@ public class Vue extends JFrame {
 			try {
 				m_canevas.setFormeTypeCourant("E");
 			} catch (IllegalFormeTypeCourantException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});		
@@ -587,7 +586,7 @@ public class Vue extends JFrame {
 			try {
 				charger.chargerFormes(file, this.m_canevas);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		}

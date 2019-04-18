@@ -2,18 +2,13 @@ package ca.csf.dfc.vueTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.util.ArrayList;
-
-import javax.swing.BorderFactory;
-
 import org.junit.jupiter.api.Test;
-
 import ca.csf.dfc.JustOneEnum.TypeAction;
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
-import ca.csf.dfc.dessin.Rectangle;
 import ca.csf.dfc.vueUtilisateur.Canevas;
 
 class CanevasTest {
