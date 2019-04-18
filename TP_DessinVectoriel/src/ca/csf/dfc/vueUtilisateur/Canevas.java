@@ -305,7 +305,6 @@ public class Canevas extends JComponent{
 
 		// Dessine les formes
 		m_listeFormesAdessiner.forEach(f -> f.dessiner(d2));
-
 		
 
 		// Guide pour le dessin lorsque l'utilisateur trace la forme
