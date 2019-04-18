@@ -8,8 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
+
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -23,7 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -31,15 +30,17 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import javax.xml.stream.XMLStreamException;
+
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
-import ca.csf.dfc.fonctions.ExporterSVG;
+
 import ca.csf.dfc.fonctions.Sauvegarde;
-import ca.csf.dfc.dessin.Forme;
-import ca.csf.dfc.dessin.ListeDeFormes;
+import ca.csf.dfc.vueTest.IllegalFormeTypeCourantException;
+
+
 import ca.csf.dfc.fonctions.Charger;
-import ca.csf.dfc.fonctions.Sauvegarde;
+import ca.csf.dfc.fonctions.ExporterSVG;
+
 
 
 
@@ -164,7 +165,12 @@ public class Vue extends JFrame {
 		selection.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.SELECTIONNER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("X");
+			try {
+				m_canevas.setFormeTypeCourant("X");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});
 		
 		//couleurRamplisage
@@ -190,21 +196,36 @@ public class Vue extends JFrame {
 		line.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("L");
+			try {
+				m_canevas.setFormeTypeCourant("L");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});
 				
 		//rectangle
 		rectangle.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("R");
+			try {
+				m_canevas.setFormeTypeCourant("R");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});
 						
 		//elipse
 		elipse.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("E");
+			try {
+				m_canevas.setFormeTypeCourant("E");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});
 		
 		// Sous-menu Edition
@@ -358,7 +379,12 @@ public class Vue extends JFrame {
 		btn_SelectionDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.SELECTIONNER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("X");
+			try {
+				m_canevas.setFormeTypeCourant("X");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});		
 			
 		// creer btn_RemplissageDessin
@@ -396,7 +422,12 @@ public class Vue extends JFrame {
 		btn_LigneDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("L");
+			try {
+				m_canevas.setFormeTypeCourant("L");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});		
 					
 		// creer btn_RectangleDessin
@@ -406,7 +437,12 @@ public class Vue extends JFrame {
 		btn_RectangleDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("R");
+			try {
+				m_canevas.setFormeTypeCourant("R");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});		
 
 		// creer btn_EllipseDessin
@@ -416,7 +452,12 @@ public class Vue extends JFrame {
 		btn_EllipseDessin.addActionListener(e -> {
 			m_canevas.setTypeActionPerformee(TypeAction.DESSINER);
 			m_canevas.setFormeSelectionnee(null);
-			m_canevas.setFormeTypeCourant("E");
+			try {
+				m_canevas.setFormeTypeCourant("E");
+			} catch (IllegalFormeTypeCourantException e1) {
+				
+				e1.printStackTrace();
+			}
 		});		
 		
 		//additions boutons sur panneu gauche
@@ -507,10 +548,10 @@ public class Vue extends JFrame {
 		if(souvegarderSous.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
 		{				
 			this.nameXML = souvegarderSous.getSelectedFile().toString();
-			//ici le code pour sauvegarder
-			/*if (!this.nameXML .endsWith(".xml")) this.nameXML += ".xml";
-			Sauvegarde sauvegarde = new Sauvegarde();				
-			sauvegarde.sauvegarderFormesXML(this.m_canevas,this.nameXML);//*/			   
+			if (!this.nameXML .endsWith(".svg")) this.nameXML += ".svg";
+			ExporterSVG expSVG = new ExporterSVG();
+			expSVG.ecrireFichierSVG(this.m_canevas.getFormes(),this.nameXML);
+						   
 		 }
 		
 	}
@@ -546,7 +587,7 @@ public class Vue extends JFrame {
 			try {
 				charger.chargerFormes(file, this.m_canevas);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		}

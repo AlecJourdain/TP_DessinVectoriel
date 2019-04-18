@@ -2,14 +2,12 @@ package ca.csf.dfc.vueTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
-
-import javax.swing.BorderFactory;
-
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
-
 import ca.csf.dfc.JustOneEnum.TypeAction;
+import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
 import ca.csf.dfc.vueUtilisateur.Canevas;
 
@@ -46,19 +44,72 @@ class CanevasTest {
 		assertEquals(dimensionEspaceTravailDefault, canevas.getPreferredSize());			
 			
 	}
-	/*@Test
-	void testSetFormeTypeCourant() {
-		fail("Not yet implemented");
+	@Test
+	void testSetFormeTypeCourant_Nominal() {
+		// Arrange
+		String formeTypeCourantRectangle = "R";
+		String formeTypeCourantLigne = "L";
+		String formeTypeCourantEllipse = "E";
+		String formeTypeCourantAttendre = "X";
+		// Act et Assert
+		try {
+			canevas.setFormeTypeCourant(formeTypeCourantRectangle);
+		} catch (IllegalFormeTypeCourantException e) {
+			
+			e.printStackTrace();
+		}
+		assertEquals(formeTypeCourantRectangle, canevas.getFormeTypeCourant());
+		
+		try {
+			canevas.setFormeTypeCourant(formeTypeCourantLigne);
+		} catch (IllegalFormeTypeCourantException e) {
+			
+			e.printStackTrace();
+		}
+		assertEquals(formeTypeCourantLigne, canevas.getFormeTypeCourant());
+		
+		try {
+			canevas.setFormeTypeCourant(formeTypeCourantEllipse);
+		} catch (IllegalFormeTypeCourantException e) {
+			
+			e.printStackTrace();
+		}
+		assertEquals(formeTypeCourantEllipse, canevas.getFormeTypeCourant());
+		
+		try {
+			canevas.setFormeTypeCourant(formeTypeCourantAttendre);
+		} catch (IllegalFormeTypeCourantException e) {
+			
+			e.printStackTrace();
+		}
+		assertEquals(formeTypeCourantAttendre, canevas.getFormeTypeCourant());
+	}
+	
+	@Test
+	void testSetFormeTypeCourant_Exception() {
+		
+		assertThrows(IllegalFormeTypeCourantException.class,
+				() -> {String formeTypeCourantErreur = "W";
+						canevas.setFormeTypeCourant(formeTypeCourantErreur);},
+				"");
 	}
 
 	@Test
-	void testSetTypeActionPerformee() {
-		fail("Not yet implemented");
+	void testSetTypeActionPerformee_NOMINAL() {
+		// Arrange
+		canevas.setTypeActionPerformee(TypeAction.ATTENDRE);
+		// Act et Assert
+		assertEquals(TypeAction.ATTENDRE, canevas.getTypeActionPerformee());
 	}
 
 	@Test
-	void testSetFormeSelectionnee() {
-		fail("Not yet implemented");
+	void testSetFormeSelectionnee_NOMINAL() {
+		// Arrange
+		Forme petiteForme = FactoryForme.creationForme("L");
+		canevas.setFormeSelectionnee(petiteForme);
+		// Act et Assert
+		assertEquals(petiteForme, canevas.getFormeSelectionnee());
+		
 	}
 
 	@Test
@@ -95,7 +146,19 @@ class CanevasTest {
 
 	@Test
 	void testSetFormes() {
-		fail("Not yet implemented");
+		// Arrange
+		ArrayList<Forme> petiteListe = new ArrayList<Forme>();
+		petiteListe.add(FactoryForme.creationForme("L"));
+		petiteListe.add(FactoryForme.creationForme("R"));
+		petiteListe.add(FactoryForme.creationForme("E"));
+		// Act
+		canevas.setFormes(petiteListe);
+		// Assert
+		assertEquals(petiteListe.get(0), canevas.getFormes().get(0));
+		assertEquals(petiteListe.get(1), canevas.getFormes().get(1));
+		assertEquals(petiteListe.get(2), canevas.getFormes().get(2));
+		
+		assertEquals(3, canevas.getFormes().size());
 	}//*/
 
 }

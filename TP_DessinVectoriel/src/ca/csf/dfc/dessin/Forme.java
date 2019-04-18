@@ -34,9 +34,6 @@ public abstract class Forme {
 	 * @param p_x1 Nouvelle valeur
 	 */
 	public void setX1(int p_x1) {
-		if(p_x1 < 0) {
-			throw new IllegalArgumentException("Valeur X1 non conforme");
-		}
 		this.m_x1 = p_x1;
 	}
 	/**
@@ -51,9 +48,6 @@ public abstract class Forme {
 	 * @param p_x2 Nouvelle valeur
 	 */
 	public void setX2(int p_x2) {
-		if(p_x2 < 0) {
-			throw new IllegalArgumentException("Valeur X2 non conforme");
-		}
 		this.m_x2 = p_x2;
 	}
 	/**
@@ -68,9 +62,6 @@ public abstract class Forme {
 	 * @param p_y1 Nouvelle valeur
 	 */
 	public void setY1(int p_y1) {
-		if(p_y1 < 0) {
-			throw new IllegalArgumentException("Valeur Y1 non conforme");
-		}
 		this.m_y1 = p_y1;
 	}
 	/**
@@ -78,7 +69,6 @@ public abstract class Forme {
 	 * @return le y2
 	 */
 	public int getY2() {
-		
 		return this.m_y2;
 	}
 	/**
@@ -86,9 +76,6 @@ public abstract class Forme {
 	 * @param p_y2 Nouvelle valeur
 	 */
 	public void setY2(int p_y2) {
-		if(p_y2 < 0) {
-			throw new IllegalArgumentException("Valeur Y2 non conforme");
-		}
 		this.m_y2 = p_y2;
 	}
 
@@ -105,10 +92,6 @@ public abstract class Forme {
 	 * @param p_couleurTrait Nouvelle valeur
 	 */
 	public void setCouleurTrait(Color p_couleurTrait) {
-		Color testCouleur = new Color(2);
-		if(p_couleurTrait.getClass() != testCouleur.getClass()) {
-			throw new IllegalArgumentException("La valeur entre n'est pas une couleur");
-		}
 		this.m_couleurTrait = p_couleurTrait;
 	}
 
@@ -125,17 +108,13 @@ public abstract class Forme {
 	 * @param p_couleurRemplissage Nouvelle valeur
 	 */
 	public void setCouleurRemplissage(Color p_couleurRemplissage) {
-		Color testCouleur = new Color(2);
-		if(p_couleurRemplissage.getClass() != testCouleur.getClass()) {
-			throw new IllegalArgumentException("La valeur entre n'est pas une couleur");
-		}
 		this.m_couleurRemplissage = p_couleurRemplissage;
 	}
 	
-	public void setCouleurRemplissageXML(int p_couleurRemplissage) {
+	public void setCouleurRemplissage(int p_couleurRemplissage) {
 		this.m_couleurRemplissage = new Color(p_couleurRemplissage);
 	}
-	public void setCouleurTraitXML(int p_couleurRemplissage) {
+	public void setCouleurTrait(int p_couleurRemplissage) {
 		this.m_couleurTrait = new Color(p_couleurRemplissage);
 	}
 
@@ -163,8 +142,8 @@ public abstract class Forme {
 		return this.m_type;
 	}
 	public void dessiner(IDessiner p_dessin) {
-		
 	}
+	
 	
 	public void redimensionner(int p_x1, int p_y1, int p_x2, int p_y2) {
 		this.m_x1 = p_x1;

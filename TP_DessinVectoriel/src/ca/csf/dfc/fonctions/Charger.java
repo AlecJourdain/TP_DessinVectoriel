@@ -64,6 +64,7 @@ public class Charger {
 	public Forme lireForme(XMLStreamReader p_doc) throws XMLStreamException {
 		Forme f = null;
 		FactoryForme facto = new FactoryForme();
+		
 		String typeForme = p_doc.getAttributeValue("", ATTR_TYPEFORME);
 		int x1 = Integer.parseInt(p_doc.getAttributeValue("", ATTR_X1));
 		int y1 = Integer.parseInt(p_doc.getAttributeValue("", ATTR_Y1));
@@ -72,17 +73,15 @@ public class Charger {
 		float epaisseurTrait = Float.parseFloat(p_doc.getAttributeValue("", ATTR_EPAISSEUR_TRAIT));
 		int couleurRemplissage = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_REMPLISSAGE));
 		int couleurTrait = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_CONTOUR));
-		
-		
 
-		f = facto.creationForme(typeForme);
+		f = FactoryForme.creationForme(typeForme);
 		f.setX1(x1);
 		f.setX2(x2);
 		f.setY1(y1);
 		f.setY2(y2);
 		f.setEpaisseurTrait((int)(epaisseurTrait));
-		f.setCouleurRemplissageXML(couleurRemplissage);
-		f.setCouleurTraitXML(couleurTrait);
+		f.setCouleurRemplissage(couleurRemplissage);
+		f.setCouleurTrait(couleurTrait);
 		p_doc.next();
 		return f;
 
