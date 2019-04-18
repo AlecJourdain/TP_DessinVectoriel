@@ -2,7 +2,7 @@ package ca.csf.dfc.vueTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,7 @@ import ca.csf.dfc.vueUtilisateur.Canevas;
 class CanevasTest {
 
 	Canevas canevas = new Canevas();
+	
 	
 	
 	@Test
@@ -113,36 +114,38 @@ class CanevasTest {
 	}
 
 	@Test
-	void testSetDimensionEspaceTravailIntInt() {
-		fail("Not yet implemented");
+	void testSetDimensionEspaceTravailIntInt_nominal() {
+		canevas.setDimensionEspaceTravail(300, 150);
+		assertEquals(new Dimension(300, 150), canevas.getDimensionEspaceTravail());
 	}
 
 	@Test
 	void testSetDimensionEspaceTravailDimension() {
-		fail("Not yet implemented");
+		canevas.setDimensionEspaceTravail(new Dimension(300, 150));
+		assertEquals(new Dimension(300, 150), canevas.getDimensionEspaceTravail());
 	}
 
 	
 
 	@Test
 	void testSetCouleurRemplisageForm() {
-		fail("Not yet implemented");
+		canevas.setCouleurRemplisageForm(Color.cyan);
+		assertEquals(Color.cyan, canevas.getCouleurRemplisageForm());
 	}
 
 	@Test
 	void testSetCouleurTraitForm() {
-		fail("Not yet implemented");
+		canevas.setCouleurTraitForm(Color.green);
+		assertEquals(Color.green, canevas.getCouleurTraitForm());
 	}
 
 	@Test
 	void testSetEpaisseurTraitForm() {
-		fail("Not yet implemented");
+		canevas.setEpaisseurTraitForm(2);
+		assertEquals(2, canevas.getEpaisseurTraitForm());
 	}
 
-	@Test
-	void testSetCanevasParDefaut() {
-		fail("Not yet implemented");
-	}
+	
 
 	@Test
 	void testSetFormes() {
