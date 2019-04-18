@@ -39,6 +39,7 @@ import ca.csf.dfc.vueTest.IllegalFormeTypeCourantException;
 
 
 import ca.csf.dfc.fonctions.Charger;
+import ca.csf.dfc.fonctions.ExporterSVG;
 
 
 
