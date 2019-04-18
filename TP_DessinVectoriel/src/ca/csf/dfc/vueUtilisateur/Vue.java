@@ -504,6 +504,7 @@ public class Vue extends JFrame {
 		if(souvegarderSous.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
 		{				
 			this.nameXML = souvegarderSous.getSelectedFile().toString();
+			//ici le code pour sauvegarder
 			/*if (!this.nameXML .endsWith(".xml")) this.nameXML += ".xml";
 			Sauvegarde sauvegarde = new Sauvegarde();				
 			sauvegarde.sauvegarderFormesXML(this.m_canevas,this.nameXML);//*/			   
