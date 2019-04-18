@@ -10,9 +10,6 @@ package ca.csf.dfc.dessin;
 public class FactoryForme {
 
 	public static Forme creationForme(String p_typeForme) {
-		if(!(p_typeForme == "R" || p_typeForme == "E" || p_typeForme == "L" )) {
-			throw new IllegalArgumentException("Forme non conforme");
-		}
 		Forme forme = null;
 		switch(p_typeForme) {
 			case "L":
