@@ -142,8 +142,8 @@ public abstract class Forme {
 		return this.m_type;
 	}
 	public void dessiner(IDessiner p_dessin) {
-		
 	}
+	
 	
 	public void redimensionner(int p_x1, int p_y1, int p_x2, int p_y2) {
 		this.m_x1 = p_x1;

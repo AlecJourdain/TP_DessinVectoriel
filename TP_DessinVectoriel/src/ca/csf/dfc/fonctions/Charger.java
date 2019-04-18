@@ -64,6 +64,7 @@ public class Charger {
 	public Forme lireForme(XMLStreamReader p_doc) throws XMLStreamException {
 		Forme f = null;
 		FactoryForme facto = new FactoryForme();
+		
 		String typeForme = p_doc.getAttributeValue("", ATTR_TYPEFORME);
 		int x1 = Integer.parseInt(p_doc.getAttributeValue("", ATTR_X1));
 		int y1 = Integer.parseInt(p_doc.getAttributeValue("", ATTR_Y1));
