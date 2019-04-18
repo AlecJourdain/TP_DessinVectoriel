@@ -7,6 +7,8 @@ import java.awt.Color;
 
 import org.junit.jupiter.api.Test;
 
+
+import ca.csf.dfc.Dessiner.DessinerTest;
 import ca.csf.dfc.dessin.Rectangle;
 
 class RectangleTests {
@@ -57,6 +59,7 @@ class RectangleTests {
 	@Test
 	void dessiner() {
 		Rectangle rect = new Rectangle();
+		DessinerTest d2 = new DessinerTest();
 		rect.setX1(1);
 		rect.setX2(2);
 		rect.setY1(3);
@@ -64,6 +67,10 @@ class RectangleTests {
 		rect.setEpaisseurTrait(3);
 		rect.setCouleurRemplissage(Color.black);
 		rect.setCouleurTrait(Color.black);
+		
+		rect.dessiner(d2);
+		
+		assertEquals(1, d2.m_nbAppelDessinerRectangle2D);
 	}
 	
 	

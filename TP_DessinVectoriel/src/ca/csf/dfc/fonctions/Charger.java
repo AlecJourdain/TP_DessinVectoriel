@@ -72,6 +72,8 @@ public class Charger {
 		float epaisseurTrait = Float.parseFloat(p_doc.getAttributeValue("", ATTR_EPAISSEUR_TRAIT));
 		int couleurRemplissage = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_REMPLISSAGE));
 		int couleurTrait = Integer.parseInt(p_doc.getAttributeValue("", ATTR_COULEUR_CONTOUR));
+		
+		
 
 		f = facto.creationForme(typeForme);
 		f.setX1(x1);
