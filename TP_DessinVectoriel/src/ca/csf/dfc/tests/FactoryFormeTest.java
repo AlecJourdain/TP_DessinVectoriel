@@ -25,6 +25,12 @@ class FactoryFormeTest {
 		FactoryForme factory = new FactoryForme();
 		assertEquals("E", factory.creationForme("E").getType());
 	}
+	
+	@Test
+	void creationNull() {
+		FactoryForme factory = new FactoryForme();
+		assertThrows(IllegalArgumentException.class, () -> factory.creationForme("X"));
+	}
 
 
 }
