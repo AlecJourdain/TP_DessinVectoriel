@@ -78,7 +78,7 @@ public class Charger {
 		f.setX2(x2);
 		f.setY1(y1);
 		f.setY2(y2);
-		f.setEpaisseurTrait(epaisseurTrait);
+		f.setEpaisseurTrait((int)(epaisseurTrait));
 		f.setCouleurRemplissage(couleurRemplissage);
 		f.setCouleurTrait(couleurTrait);
 		p_doc.next();
