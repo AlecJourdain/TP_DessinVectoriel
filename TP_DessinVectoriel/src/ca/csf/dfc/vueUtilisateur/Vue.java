@@ -34,10 +34,13 @@ import javax.swing.filechooser.FileSystemView;
 import javax.xml.stream.XMLStreamException;
 
 import ca.csf.dfc.JustOneEnum.TypeAction;
+import ca.csf.dfc.fonctions.ExporterSVG;
+import ca.csf.dfc.fonctions.Sauvegarde;
 import ca.csf.dfc.dessin.Forme;
 import ca.csf.dfc.dessin.ListeDeFormes;
 import ca.csf.dfc.fonctions.Charger;
 import ca.csf.dfc.fonctions.Sauvegarde;
+
 
 
 
@@ -516,7 +519,7 @@ public class Vue extends JFrame {
 		
 		int rst = JOptionPane.showConfirmDialog(
 				null,
-				"Est-ce que vous sauvgardez avant de créer un nouveau dessin?",
+				"Est-ce que vous sauvgardez avant de crï¿½er un nouveau dessin?",
 				"Souvergarder",
 				JOptionPane.YES_NO_OPTION);
 		
