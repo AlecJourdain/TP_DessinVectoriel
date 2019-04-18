@@ -17,7 +17,7 @@ public abstract class Forme {
 	protected int m_y2;
 	protected Color m_couleurTrait;
 	protected Color m_couleurRemplissage;
-	protected float m_epaisseurTrait;
+	protected int m_epaisseurTrait;
 	
 	public Forme() {};
 	
@@ -122,7 +122,7 @@ public abstract class Forme {
 	 * Retourne le epaisseurTrait
 	 * @return le epaisseurTrait
 	 */
-	public float getEpaisseurTrait() {
+	public int getEpaisseurTrait() {
 		return this.m_epaisseurTrait;
 	}
 
@@ -130,7 +130,7 @@ public abstract class Forme {
 	 * Pour modifier le epaisseurTrait
 	 * @param p_epaisseurTrait Nouvelle valeur
 	 */
-	public void setEpaisseurTrait(float p_epaisseurTrait) {
+	public void setEpaisseurTrait(int p_epaisseurTrait) {
 		this.m_epaisseurTrait = p_epaisseurTrait;
 	}
 
