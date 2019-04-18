@@ -29,7 +29,7 @@ class FactoryFormeTest {
 	@Test
 	void creationNull() {
 		FactoryForme factory = new FactoryForme();
-		assertThrows(IllegalArgumentException.class, () -> factory.creationForme("X"));
+		assertNull(factory.creationForme("X"));
 	}
 
 

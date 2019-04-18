@@ -14,7 +14,7 @@ class LigneTests {
 
 	@Test
 	void ConstructeurParDefault() {
-		Ellipse ligne = new Ellipse();
+		Ligne ligne = new Ligne();
 		assertEquals(0, ligne.getX1());
 		assertEquals(0, ligne.getY1());
 		assertEquals(0, ligne.getX2());
