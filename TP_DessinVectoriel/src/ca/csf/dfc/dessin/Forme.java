@@ -110,6 +110,13 @@ public abstract class Forme {
 	public void setCouleurRemplissage(Color p_couleurRemplissage) {
 		this.m_couleurRemplissage = p_couleurRemplissage;
 	}
+	
+	public void setCouleurRemplissage(int p_couleurRemplissage) {
+		this.m_couleurRemplissage = new Color(p_couleurRemplissage);
+	}
+	public void setCouleurTrait(int p_couleurRemplissage) {
+		this.m_couleurTrait = new Color(p_couleurRemplissage);
+	}
 
 	/**
 	 * Retourne le epaisseurTrait
