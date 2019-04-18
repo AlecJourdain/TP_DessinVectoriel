@@ -52,7 +52,8 @@ public class Canevas extends JComponent{
 	//Pour la couleur de remplissage et de trait des figures	
 	private Color 	m_couleurTrait 			= Color.black;
 	private Color 	m_couleurRemplissage 	= Color.black;
-	private int 	m_epaisseurTrait = 2;
+	public static final int EPAISSEUR_TRAIT_DEFAULT = 2;
+	private int 	m_epaisseurTrait;
 	
 	//Pour les formes
 	public static final TypeAction TYPEACTION_PAR_DEFAUT = TypeAction.ATTENDRE;
@@ -252,6 +253,10 @@ public class Canevas extends JComponent{
 		this.m_formeTypeCourant = p_formeTypeCourant;
 	}
 	
+	public String getFormeTypeCourant() {
+		return m_formeTypeCourant;
+	}
+
 	/**
 	 * Retourne le typeActionPerformee.
 	 * @return le typeActionPerformee
@@ -332,8 +337,10 @@ public class Canevas extends JComponent{
 	}
 	
 	public void setEspaceTravailParDefaut() {	
-		this.m_DimensionEspaceTravail = new Dimension(LARGEUR_DEFAULT_ESPACE_TRAVAIL, HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
-		this.setPreferredSize(this.m_DimensionEspaceTravail);		
+		this.m_DimensionEspaceTravail = new Dimension(
+				LARGEUR_DEFAULT_ESPACE_TRAVAIL, 
+				HAUTEUR_DEFAULT_ESPACE_TRAVAIL);
+		setDimensionEspaceTravail(this.m_DimensionEspaceTravail);		
 		this.setBorder(	BorderFactory.createLineBorder(Color.gray,1));				
 	}
 	
