@@ -120,11 +120,11 @@ public class ExporterSVG {
 		}
 	}
 	
-	public void ecrireFichierSVG(ArrayList<Forme> p_listeFormes, String p_nom) {
+	public void ecrireFichierSVG(ArrayList<Forme> p_listeFormes) {
 		XMLStreamWriter doc = null;
 		
 		try {
-			FileWriter output = new FileWriter(new File(p_nom));
+			FileWriter output = new FileWriter(new File("data.svg"));
 			
 			
 			doc = XMLOutputFactory.newInstance().createXMLStreamWriter(output);

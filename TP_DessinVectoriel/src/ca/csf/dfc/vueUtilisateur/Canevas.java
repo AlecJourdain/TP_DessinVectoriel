@@ -20,7 +20,6 @@ import ca.csf.dfc.Dessiner.DessinerG2D;
 import ca.csf.dfc.JustOneEnum.TypeAction;
 import ca.csf.dfc.dessin.FactoryForme;
 import ca.csf.dfc.dessin.Forme;
-import ca.csf.dfc.vueTest.IllegalFormeTypeCourantException;
 
 
 /**
@@ -250,10 +249,7 @@ public class Canevas extends JComponent{
 	 * Pour modifier le formeTypeCourant.
 	 * @param p_formeTypeCourant Nouvelle valeur.
 	 */
-	public void setFormeTypeCourant(String p_formeTypeCourant) throws IllegalFormeTypeCourantException {
-		if (!(p_formeTypeCourant == "R" || p_formeTypeCourant == "E" || p_formeTypeCourant == "L" || p_formeTypeCourant == "X")) {
-			throw new IllegalFormeTypeCourantException("Ce type de forme n'est pas reconnu.");
-		}
+	public void setFormeTypeCourant(String p_formeTypeCourant) {
 		this.m_formeTypeCourant = p_formeTypeCourant;
 	}
 	
@@ -305,7 +301,6 @@ public class Canevas extends JComponent{
 
 		// Dessine les formes
 		m_listeFormesAdessiner.forEach(f -> f.dessiner(d2));
-
 		
 
 		// Guide pour le dessin lorsque l'utilisateur trace la forme
